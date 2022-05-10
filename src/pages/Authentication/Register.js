@@ -58,7 +58,7 @@ const Register = props => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>Register | Skote - React Admin & Dashboard Template</title>
+        <title>Register | Mozas</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-dark">
@@ -202,8 +202,7 @@ const Register = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} Mozas.
                 </p>
               </div>
             </Col>
