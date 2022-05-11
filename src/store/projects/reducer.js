@@ -24,7 +24,6 @@ const projects = (state = INIT_STATE, action) => {
         ...state,
         projects: action.payload,
       }
-
     case GET_PROJECTS_FAIL:
       return {
         ...state,
@@ -33,7 +32,7 @@ const projects = (state = INIT_STATE, action) => {
     case ADD_PROJECT_SUCCESS:
       return {
         ...state,
-        projects: [...state.projects, action.payload],
+        projects: [...state.projects, action.payload ],
       }
 
     case ADD_PROJECT_FAIL:
@@ -77,7 +76,6 @@ const projects = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
-
 
     case GET_PROJECT_DETAIL_FAIL:
       return {
