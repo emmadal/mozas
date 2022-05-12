@@ -41,7 +41,6 @@ const ProjectsCreate = () => {
         formattedSize: formatBytes(file.size),
       })
     )
-
     setselectedFiles(files)
   }
 
@@ -70,14 +69,15 @@ const ProjectsCreate = () => {
       projectdesc: Yup.string().required("Please Enter Your Project Description"),
       projectbudget: Yup.string().required("Please Enter Your Porject Budget"),
     }),
-    onSubmit: values => {
+    onSubmit: (values) => {
       dispatch(addProjectSuccess(values))
     },
   })
 
-  const { projects } = useSelector(state => (
+  const { projects, error } = useSelector(state => (
     { 
       projects: state.projects.projects,
+      error: state.projects.error,
     }
   ))
 
@@ -100,17 +100,11 @@ const ProjectsCreate = () => {
                       Projet ajouté avec succès
                     </UncontrolledAlert>
                   ) : null}
-                  {projects.length && !projects.includes(false) ? (
-                    <UncontrolledAlert color="danger">
-                      Impossible de créer ce projet. Veuillez vérifier vos
-                      paramètres réseau.
-                    </UncontrolledAlert>
-                  ) : null}
                   <CardTitle className="mb-4">
                     Créer un nouveau projet
                   </CardTitle>
                   <Form
-                    onSubmit={e => {
+                    onSubmit={(e) => {
                       e.preventDefault()
                       validation.handleSubmit()
                       return false
@@ -138,7 +132,7 @@ const ProjectsCreate = () => {
                           }
                           type="text"
                           className="form-control"
-                          placeholder="Enter Project Name..."
+                          placeholder="Nom du projet"
                         />
                         {validation.touched.projectname &&
                         validation.errors.projectname ? (
@@ -148,6 +142,7 @@ const ProjectsCreate = () => {
                         ) : null}
                       </Col>
                     </FormGroup>
+
                     <FormGroup className="mb-4" row>
                       <Label
                         htmlFor="projectdesc"
@@ -171,7 +166,7 @@ const ProjectsCreate = () => {
                               : false
                           }
                           rows="3"
-                          placeholder="Enter Project Description..."
+                          placeholder="Description du projet"
                         />
                         {validation.touched.projectdesc &&
                         validation.errors.projectdesc ? (
@@ -203,7 +198,7 @@ const ProjectsCreate = () => {
                               : false
                           }
                           type="text"
-                          placeholder="Enter Project Budget..."
+                          placeholder="Budget du projet"
                           className="form-control"
                         />
                         {validation.touched.projectbudget &&
@@ -222,6 +217,7 @@ const ProjectsCreate = () => {
                         </Label>
                         <Col lg="9">
                           <Dropzone
+                            multiple={true}
                             onDrop={acceptedFiles => {
                               handleAcceptedFiles(acceptedFiles)
                             }}
@@ -284,6 +280,7 @@ const ProjectsCreate = () => {
                         </Col>
                       </Row>
                     </FormGroup>
+
                     <Row className="justify-content-end">
                       <Col lg="9">
                         <Button type="submit" color="primary">
@@ -291,6 +288,7 @@ const ProjectsCreate = () => {
                         </Button>
                       </Col>
                     </Row>
+
                   </Form>
                 </CardBody>
               </Card>

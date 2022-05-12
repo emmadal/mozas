@@ -57,7 +57,7 @@ function* onDeleteProject({ payload: project }) {
   }
 }
 
-function* onAddNewProject({ payload: project  }) {
+function* onAddNewProject({ payload: project }) {
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = yield call(fireBaseBackend.addProject, project)

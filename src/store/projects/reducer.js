@@ -14,7 +14,7 @@ import {
 const INIT_STATE = {
   projects: [],
   projectDetail: {},
-  error: {},
+  error: null,
 }
 
 const projects = (state = INIT_STATE, action) => {
@@ -33,6 +33,7 @@ const projects = (state = INIT_STATE, action) => {
       return {
         ...state,
         projects: [...state.projects, action.payload ],
+        error: null
       }
 
     case ADD_PROJECT_FAIL:

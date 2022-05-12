@@ -148,28 +148,27 @@ class FirebaseAuthBackend {
    */
   uploadProjectFiles = (files, refName) => {
     const storage = firebase.storage();
-    return new Promise((resolve, reject) => {
-      let items = []
-      for (const i of files) {
-        const storageRef = storage
-          .ref(`${refName}`)
-          .child(`${i.name}`)
-          .put(i, { cacheControl: "no-store" })
-        storageRef
-          .then(() => {
-            storage
-              .ref(`${refName}`)
-              .child(`${i.name}`)
-              .getDownloadURL().then((fileURL) => {
-                items.push(fileURL)
-                resolve(items)
-              })
-          })
-          .catch(err => {
-            reject(this._handleError(err))
-          })
+      return new Promise((resolve, reject) => {
+        for (const i of files) {
+          const storageRef = storage
+            .ref(`${refName}`)
+            .child(`${i.name}`)
+            .put(i, { cacheControl: "no-store" })
+          storageRef
+            .then(() => {
+              storage
+                .ref(`${refName}`)
+                .child(`${i.name}`)
+                .getDownloadURL()
+                .then(fileURL => {
+                  resolve(new Array(fileURL))
+                })
+            })
+            .catch(err => {
+              reject(this._handleError(err))
+            })
         }
-    })
+      })
   }
 
   /**
@@ -179,11 +178,14 @@ class FirebaseAuthBackend {
     const collection = firebase.firestore().collection("projects")
     return new Promise((resolve, reject) => {
       const data = {
+        id: new Date().getTime(),
         uid: firebase.auth().currentUser.uid,
         createdDate: firebase.firestore.FieldValue.serverTimestamp(),
-        projectName: projectname,
-        projectDesc: projectdesc,
-        ProjectBudget: projectbudget,
+        name: projectname,
+        desc: projectdesc,
+        budget: projectbudget,
+        status: 'En attente',
+        members: []
       }
       // upload file to firebase storage
       this.uploadProjectFiles(projectfiles, "projectfiles")
