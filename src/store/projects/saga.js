@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects"
 
 // Crypto Redux States
-import { GET_PROJECTS, GET_PROJECT_DETAIL, DELETE_PROJECT, UPDATE_PROJECT, ADD_PROJECT_SUCCESS } from "./actionTypes"
+import { GET_PROJECTS, GET_PROJECT_DETAIL, DELETE_PROJECT, UPDATE_PROJECT, ADD_PROJECT_SUCCESS, GET_PROJECTS_SUCCESS, UPDATE_PROJECT_SUCCESS } from "./actionTypes"
 import {
   getProjectsSuccess,
   getProjectsFail,
@@ -23,8 +23,10 @@ const fireBaseBackend = getFirebaseBackend()
 
 function* fetchProjects() {
   try {
-    const response = yield call(getProjects)
-    yield put(getProjectsSuccess(response))
+    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
+      const response = yield call(fireBaseBackend.getAllProjects)
+      yield put(getProjectsSuccess(response))
+    }
   } catch (error) {
     yield put(getProjectsFail(error))
   }
@@ -41,8 +43,10 @@ function* fetchProjectDetail({ projectId }) {
 
 function* onUpdateProject({ payload: project }) {
   try {
-    const response = yield call(updateProject, project)
-    yield put(updateProjectSuccess(response))
+    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
+      const response = yield call(fireBaseBackend.updateProject, project)
+      yield put(updateProjectSuccess(response))
+    }
   } catch (error) {
     yield put(updateProjectFail(error))
   }
@@ -69,10 +73,10 @@ function* onAddNewProject({ payload: project }) {
 }
 
 function* projectsSaga() {
-  yield takeEvery(GET_PROJECTS, fetchProjects)
+  yield takeEvery(GET_PROJECTS_SUCCESS, fetchProjects)
   yield takeEvery(GET_PROJECT_DETAIL, fetchProjectDetail)
   yield takeEvery(ADD_PROJECT_SUCCESS, onAddNewProject)
-  yield takeEvery(UPDATE_PROJECT, onUpdateProject)
+   yield takeEvery(UPDATE_PROJECT_SUCCESS, onUpdateProject)
   yield takeEvery(DELETE_PROJECT, onDeleteProject)
 }
 

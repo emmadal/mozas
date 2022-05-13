@@ -147,28 +147,28 @@ class FirebaseAuthBackend {
    * Upload project files
    */
   uploadProjectFiles = (files, refName) => {
-    const storage = firebase.storage();
-      return new Promise((resolve, reject) => {
-        for (const i of files) {
-          const storageRef = storage
-            .ref(`${refName}`)
-            .child(`${i.name}`)
-            .put(i, { cacheControl: "no-store" })
-          storageRef
-            .then(() => {
-              storage
-                .ref(`${refName}`)
-                .child(`${i.name}`)
-                .getDownloadURL()
-                .then(fileURL => {
-                  resolve(new Array(fileURL))
-                })
-            })
-            .catch(err => {
-              reject(this._handleError(err))
-            })
-        }
-      })
+    const storage = firebase.storage()
+    return new Promise((resolve, reject) => {
+      for (const i of files) {
+        const storageRef = storage
+          .ref(`${refName}`)
+          .child(`${i.name}`)
+          .put(i, { cacheControl: "no-store" })
+        storageRef
+          .then(() => {
+            storage
+              .ref(`${refName}`)
+              .child(`${i.name}`)
+              .getDownloadURL()
+              .then(fileURL => {
+                resolve(new Array(fileURL))
+              })
+          })
+          .catch(err => {
+            reject(this._handleError(err))
+          })
+      }
+    })
   }
 
   /**
@@ -176,22 +176,22 @@ class FirebaseAuthBackend {
    */
   addProject = ({ projectname, projectdesc, projectbudget, projectfiles }) => {
     const collection = firebase.firestore().collection("projects")
+    const id = new Date().getTime()
     return new Promise((resolve, reject) => {
       const data = {
-        id: new Date().getTime(),
+        id: `${id}`,
         uid: firebase.auth().currentUser.uid,
         createdDate: firebase.firestore.FieldValue.serverTimestamp(),
         name: projectname,
         desc: projectdesc,
         budget: projectbudget,
-        status: 'En attente',
-        members: []
+        status: "En attente",
+        members: [],
       }
       // upload file to firebase storage
       this.uploadProjectFiles(projectfiles, "projectfiles")
         .then(files => {
-          collection
-            .add({ ...data, files })
+          collection.doc(`${id}`).set({ ...data, files })
             .then(() => {
               resolve(true)
               console.log("Document successfully written!")
@@ -202,6 +202,41 @@ class FirebaseAuthBackend {
             })
         })
         .catch(err => reject(this._handleError(err)))
+    })
+  }
+
+  /**
+   * Get all projects
+   */
+  getAllProjects = () => {
+    const collection = firebase.firestore().collection("projects")
+    const e = []
+    return new Promise((resolve, reject) => {
+      collection
+        .get()
+        .then(res => {
+          res.docs.map(doc => e.push(doc.data()))
+          resolve(e)
+        })
+        .catch(err => reject(this._handleError(err)))
+    })
+  }
+
+  /**
+   * Update project
+   */
+  updateProject = ({name, desc, status, budget, id}) => {
+    const collection = firebase.firestore().collection("projects")
+    return new Promise((resolve, reject) => {
+      collection.doc(`${id}`).update({
+        name,
+        desc,
+        status,
+        budget,
+      }).then((e) => {
+        console.log('data updated')
+        resolve(true)
+      }).catch(err => reject(this._handleError(err)))
     })
   }
 
