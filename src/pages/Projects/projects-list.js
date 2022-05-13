@@ -142,10 +142,7 @@ const ProjectsList = () => {
 
           <Row>
             <Col>
-              <Table
-                className="project-list-table table-nowrap align-middle table-borderless"
-                responsive
-              >
+              <Table className="project-list-table table-nowrap align-middle table-borderless">
                 <thead>
                   <tr>
                     <th scope="col" style={{ width: "100px" }}>

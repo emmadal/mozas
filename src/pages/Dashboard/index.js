@@ -63,11 +63,11 @@ const Dashboard = props => {
     },
   ];
 
-  useEffect(() => {
-    setTimeout(() => {
-      setSubscribemodal(true);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setSubscribemodal(true);
+  //   }, 2000);
+  // }, []);
 
   const [periodData, setPeriodData] = useState([]);
   const [periodType, setPeriodType] = useState("yearly");
@@ -90,14 +90,11 @@ const Dashboard = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Dashboard | Skote - React Admin & Dashboard Template</title>
+          <title>Dashboard | Mozas - Admin</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}
-          <Breadcrumbs
-            title={props.t("Dashboards")}
-            breadcrumbItem={props.t("Dashboard")}
-          />
+          <Breadcrumbs title="Page d'accueil" breadcrumbItem="Page d'accueil" />
 
           <Row>
             <Col xl="4">
@@ -148,7 +145,7 @@ const Dashboard = props => {
                               "nav-link"
                             )}
                             onClick={() => {
-                              onChangeChartPeriod("weekly");
+                              onChangeChartPeriod("weekly")
                             }}
                             id="one_month"
                           >
@@ -163,7 +160,7 @@ const Dashboard = props => {
                               "nav-link"
                             )}
                             onClick={() => {
-                              onChangeChartPeriod("monthly");
+                              onChangeChartPeriod("monthly")
                             }}
                             id="one_month"
                           >
@@ -178,7 +175,7 @@ const Dashboard = props => {
                               "nav-link"
                             )}
                             onClick={() => {
-                              onChangeChartPeriod("yearly");
+                              onChangeChartPeriod("yearly")
                             }}
                             id="one_month"
                           >
@@ -224,14 +221,14 @@ const Dashboard = props => {
         centered
         data-toggle="modal"
         toggle={() => {
-          setSubscribemodal(!subscribemodal);
+          setSubscribemodal(!subscribemodal)
         }}
       >
         <div>
           <ModalHeader
             className="border-bottom-0"
             toggle={() => {
-              setSubscribemodal(!subscribemodal);
+              setSubscribemodal(!subscribemodal)
             }}
           ></ModalHeader>
         </div>
@@ -250,9 +247,7 @@ const Dashboard = props => {
                   Subscribe our newletter and get notification to stay update.
                 </p>
 
-                <div
-                  className="input-group rounded bg-light"
-                >
+                <div className="input-group rounded bg-light">
                   <Input
                     type="email"
                     className="form-control bg-transparent border-0"
@@ -276,13 +271,13 @@ const Dashboard = props => {
         className="exampleModal"
         tabIndex="-1"
         toggle={() => {
-          setmodal(!modal);
+          setmodal(!modal)
         }}
       >
         <div>
           <ModalHeader
             toggle={() => {
-              setmodal(!modal);
+              setmodal(!modal)
             }}
           >
             Order Details
@@ -364,7 +359,7 @@ const Dashboard = props => {
               type="button"
               color="secondary"
               onClick={() => {
-                setmodal(!modal);
+                setmodal(!modal)
               }}
             >
               Close
@@ -373,7 +368,7 @@ const Dashboard = props => {
         </div>
       </Modal>
     </React.Fragment>
-  );
+  )
 };
 
 Dashboard.propTypes = {
