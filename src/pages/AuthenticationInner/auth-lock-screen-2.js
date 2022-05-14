@@ -35,7 +35,7 @@ const LockScreen2 = (props) => {
     <React.Fragment>
       <div>
         <MetaTags>
-          <title>Lock Screen 2 | Skote - React Admin & Dashboard Template</title>
+          <title>Lock Screen 2 | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid className="p-0">
           <Row className="g-0">

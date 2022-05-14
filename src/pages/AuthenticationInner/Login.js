@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>Login | Skote - React Admin & Dashboard Template</title>
+        <title>Login | Tableau de bord | Mozas</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-dark">

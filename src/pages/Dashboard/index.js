@@ -90,7 +90,7 @@ const Dashboard = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Dashboard | Mozas - Admin</title>
+          <title>Tableau de bord | Mozas - Admin</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}

@@ -12,7 +12,7 @@ const ResponsiveTables = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Responsive Table | Skote - React Admin & Dashboard Template</title>
+          <title>Responsive Table | Tableau de bord | Mozas</title>
         </MetaTags>
         <div className="container-fluid">
           <Breadcrumbs title="Tables" breadcrumbItem="Responsive Table" />

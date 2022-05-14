@@ -36,7 +36,7 @@ const Register2 = () => {
     <React.Fragment>
       <div>
         <MetaTags>
-          <title>Register 2 | Skote - React Admin & Dashboard Template</title>
+          <title>Register 2 | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid className="p-0">
           <Row className="g-0">

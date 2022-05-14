@@ -30,7 +30,7 @@ const ForgetPasswordPage = props => {
       email: '',
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
+      email: Yup.string().required("Veuillez entrer votre Email"),
     }),
     onSubmit: (values) => {
       dispatch(userForgetPassword(values, props.history));
@@ -46,7 +46,7 @@ const ForgetPasswordPage = props => {
     <React.Fragment>
       <MetaTags>
         <title>
-          Forget Password | Skote - React Admin & Dashboard Template
+          Mot de passe oublié | Mozas
         </title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
@@ -112,7 +112,7 @@ const ForgetPasswordPage = props => {
                         <Input
                           name="email"
                           className="form-control"
-                          placeholder="Enter email"
+                          placeholder="Entrez votre Email"
                           type="email"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
@@ -131,7 +131,7 @@ const ForgetPasswordPage = props => {
                             className="btn btn-primary w-md "
                             type="submit"
                           >
-                            Reset
+                            Reinitialisation
                           </button>
                         </Col>
                       </Row>
@@ -141,14 +141,13 @@ const ForgetPasswordPage = props => {
               </Card>
               <div className="mt-5 text-center">
                 <p>
-                  Go back to{" "}
+                  Revenir à{" "}
                   <Link to="login" className="font-weight-medium text-primary">
-                    Login
+                    Connexion
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} Mozas.
                 </p>
               </div>
             </Col>

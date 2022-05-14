@@ -163,7 +163,7 @@ const Chat = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Chat | Skote - React Admin & Dashboard Template</title>
+          <title>Chat | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}

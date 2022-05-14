@@ -43,7 +43,7 @@ const InvoiceDetail = props => {
       <div className="page-content">
         <MetaTags>
           <title>
-            Invoice Detail | Skote - React Admin & Dashboard Template
+            Invoice Detail | Tableau de bord | Mozas
           </title>
         </MetaTags>
         <Container fluid>

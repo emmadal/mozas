@@ -31,7 +31,7 @@ const FormXeditable = () => {
       <div className="page-content">
         <MetaTags>
           <title>
-            Form Xeditable | Skote - React Admin & Dashboard Template
+            Form Xeditable | Tableau de bord | Mozas
           </title>
         </MetaTags>
         <Container fluid={true}>

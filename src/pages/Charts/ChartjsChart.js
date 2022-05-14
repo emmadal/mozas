@@ -18,7 +18,7 @@ const ChartjsChart = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Chartjs Charts | Skote - React Admin & Dashboard Template</title>
+          <title>Chartjs Charts | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid={true}>
           <Breadcrumbs title="Charts" breadcrumbItem="Chartjs Charts" />

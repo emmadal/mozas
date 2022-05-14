@@ -26,7 +26,7 @@ const FormEditors = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Form Editors | Skote - React Admin & Dashboard Template</title>
+          <title>Form Editors | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid={true}>
           <Breadcrumbs title="Forms" breadcrumbItem="Form Editors" />

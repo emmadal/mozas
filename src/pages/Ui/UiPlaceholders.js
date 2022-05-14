@@ -11,7 +11,7 @@ const UiPlaceholders = () => {
         <React.Fragment>
             <div className="page-content">
                 <MetaTags>
-                    <title>Alerts | Skote - React Admin & Dashboard Template</title>
+                    <title>Alerts | Tableau de bord | Mozas</title>
                 </MetaTags>
                 <Container fluid={true}>
                     <Row>

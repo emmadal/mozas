@@ -211,7 +211,7 @@ const FormValidations = () => {
       <div className="page-content">
         <MetaTags>
           <title>
-            Form Validation | Skote - React Admin & Dashboard Template
+            Form Validation | Tableau de bord | Mozas
           </title>
         </MetaTags>
         <Container fluid={true}>

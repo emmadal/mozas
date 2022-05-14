@@ -30,7 +30,7 @@ const UiToast = () => {
         <React.Fragment>
             <div className="page-content">
                 <MetaTags>
-                    <title>Toast | Skote - React Admin & Dashboard Template</title>
+                    <title>Toast | Tableau de bord | Mozas</title>
                 </MetaTags>
                 <Container fluid={true}>
                     <Breadcrumbs title="UI Elements" breadcrumbItem="Toast" />

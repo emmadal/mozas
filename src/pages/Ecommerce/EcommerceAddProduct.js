@@ -59,7 +59,7 @@ const EcommerceAddProduct = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Add Product | Skote - React Admin & Dashboard Template</title>
+          <title>Add Product | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}

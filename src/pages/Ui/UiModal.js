@@ -72,7 +72,7 @@ const UiModal = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Modals | Skote - React Admin & Dashboard Template</title>
+          <title>Modals | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid={true}>
           <Breadcrumbs title="UI Elements" breadcrumbItem="Modals" />

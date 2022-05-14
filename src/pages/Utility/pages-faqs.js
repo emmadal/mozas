@@ -26,7 +26,7 @@ const PagesFaqs = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>FAQs | Skote - React Admin & Dashboard Template</title>
+          <title>FAQs | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}

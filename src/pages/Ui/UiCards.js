@@ -36,7 +36,7 @@ const UiCards = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Cards | Skote - React Admin & Dashboard Template</title>
+          <title>Cards | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid={true}>
           <Breadcrumbs title="UI Elements" breadcrumbItem="Cards" />

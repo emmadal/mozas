@@ -41,7 +41,7 @@ const UiRangeSlider = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Range Slider | Skote - React Admin & Dashboard Template</title>
+          <title>Range Slider | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid={true}>
           <Breadcrumbs title="UI Elements" breadcrumbItem="Range Slider" />

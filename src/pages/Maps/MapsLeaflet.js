@@ -19,7 +19,7 @@ const MapsLeaflet = () => {
     <React.Fragment>
       <div className="page-content">
       <MetaTags>
-          <title>Leaflet Maps | Skote - React Admin & Dashboard Template</title>
+          <title>Leaflet Maps | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           <Breadcrumbs title="Maps" breadcrumbItem="Leaflet Maps" />

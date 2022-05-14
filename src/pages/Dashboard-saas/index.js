@@ -48,7 +48,7 @@ const DashboardSaas = props => {
       <div className="page-content">
         <MetaTags>
           <title>
-            Saas Dashboard | Skote - React Admin & Dashboard Template
+           Tableau de bord | Mozas
           </title>
         </MetaTags>
         <Container fluid>

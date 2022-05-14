@@ -84,7 +84,7 @@ const UserProfile = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Profile | Skote - React Admin & Dashboard Template</title>
+          <title>Profile | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}

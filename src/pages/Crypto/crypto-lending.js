@@ -90,7 +90,7 @@ const CryptoLending = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Lending | Skote - React Admin & Dashboard Template</title>
+          <title>Lending | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}

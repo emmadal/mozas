@@ -61,7 +61,7 @@ const Index = () => {
     <React.Fragment>
       <div className="page-content">
           <MetaTags>
-            <title>File Manager | Skote - React Admin & Dashboard Template</title>
+            <title>File Manager | Tableau de bord | Mozas</title>
           </MetaTags>
         <Container fluid>
           <Breadcrumbs title="Apps" breadcrumbItem="File Manager" />

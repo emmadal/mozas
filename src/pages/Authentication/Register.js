@@ -31,9 +31,9 @@ const Register = props => {
       password: '',
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      username: Yup.string().required("Please Enter Your Username"),
-      password: Yup.string().required("Please Enter Your Password"),
+      email: Yup.string().required("Entrez votre Email"),
+      username: Yup.string().required("Entrez votre Nom d'utilisateur"),
+      password: Yup.string().required("Entrez votre Mot de passe"),
     }),
     onSubmit: (values) => {
       dispatch(registerUser(values));
@@ -58,7 +58,7 @@ const Register = props => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>Register | Mozas</title>
+        <title>S&#39;enregistrer | Mozas</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-dark">
@@ -74,8 +74,8 @@ const Register = props => {
                   <Row>
                     <Col className="col-7">
                       <div className="text-primary p-4">
-                        <h5 className="text-primary">Free Register</h5>
-                        <p>Get your free Skote account now.</p>
+                        <h5 className="text-primary">Création de compte</h5>
+                        <p>Creer votre compte Mozas.</p>
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -101,15 +101,15 @@ const Register = props => {
                   <div className="p-2">
                     <Form
                       className="form-horizontal"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        validation.handleSubmit();
-                        return false;
+                      onSubmit={e => {
+                        e.preventDefault()
+                        validation.handleSubmit()
+                        return false
                       }}
                     >
                       {user && user ? (
                         <Alert color="success">
-                          Register User Successfully
+                          Enregistrement effectué avec succès
                         </Alert>
                       ) : null}
 
@@ -123,52 +123,68 @@ const Register = props => {
                           id="email"
                           name="email"
                           className="form-control"
-                          placeholder="Enter email"
+                          placeholder="Email"
                           type="email"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.email || ""}
                           invalid={
-                            validation.touched.email && validation.errors.email ? true : false
+                            validation.touched.email && validation.errors.email
+                              ? true
+                              : false
                           }
                         />
                         {validation.touched.email && validation.errors.email ? (
-                          <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
+                          <FormFeedback type="invalid">
+                            {validation.errors.email}
+                          </FormFeedback>
                         ) : null}
                       </div>
 
                       <div className="mb-3">
-                        <Label className="form-label">Username</Label>
+                        <Label className="form-label">Nom d&#39;utilisateur</Label>
                         <Input
                           name="username"
                           type="text"
-                          placeholder="Enter username"
+                          placeholder="Nom d'utilisateur"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.username || ""}
                           invalid={
-                            validation.touched.username && validation.errors.username ? true : false
+                            validation.touched.username &&
+                            validation.errors.username
+                              ? true
+                              : false
                           }
                         />
-                        {validation.touched.username && validation.errors.username ? (
-                          <FormFeedback type="invalid">{validation.errors.username}</FormFeedback>
+                        {validation.touched.username &&
+                        validation.errors.username ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.username}
+                          </FormFeedback>
                         ) : null}
                       </div>
                       <div className="mb-3">
-                        <Label className="form-label">Password</Label>
+                        <Label className="form-label">Mot de passe</Label>
                         <Input
                           name="password"
                           type="password"
-                          placeholder="Enter Password"
+                          placeholder="Mot de passe"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           value={validation.values.password || ""}
                           invalid={
-                            validation.touched.password && validation.errors.password ? true : false
+                            validation.touched.password &&
+                            validation.errors.password
+                              ? true
+                              : false
                           }
                         />
-                        {validation.touched.password && validation.errors.password ? (
-                          <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
+                        {validation.touched.password &&
+                        validation.errors.password ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.password}
+                          </FormFeedback>
                         ) : null}
                       </div>
 
@@ -177,16 +193,17 @@ const Register = props => {
                           className="btn btn-primary btn-block "
                           type="submit"
                         >
-                          Register
+                          Création de compte
                         </button>
                       </div>
 
                       <div className="mt-4 text-center">
                         <p className="mb-0">
-                          By registering you agree to the Skote{" "}
+                          En vous inscrivant, vous acceptez les{" "}
                           <Link to="#" className="text-primary">
-                            Terms of Use
-                          </Link>
+                            Conditions d&#39;utilisation
+                          </Link>{" "}
+                          de Mozas
                         </p>
                       </div>
                     </Form>
@@ -195,22 +212,20 @@ const Register = props => {
               </Card>
               <div className="mt-5 text-center">
                 <p>
-                  Already have an account ?{" "}
+                  Vous avez déjà un compte ?{" "}
                   <Link to="/login" className="font-weight-medium text-primary">
                     {" "}
-                    Login
+                    Se connecter
                   </Link>{" "}
                 </p>
-                <p>
-                  © {new Date().getFullYear()} Mozas.
-                </p>
+                <p>© {new Date().getFullYear()} Mozas.</p>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
     </React.Fragment>
-  );
+  )
 };
 
 export default Register;

@@ -11,7 +11,7 @@ const IconDripicons = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Dripicons | Skote - React Admin & Dashboard Template</title>
+          <title>Dripicons | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           <Breadcrumbs title="Icons" breadcrumbItem="Dripicons" />

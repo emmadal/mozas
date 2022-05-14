@@ -52,7 +52,7 @@ const UiLightbox = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Lightbox | Skote - React Admin & Dashboard Template</title>
+          <title>Lightbox | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid={true}>
           <Breadcrumbs title="UI Elements" breadcrumbItem="Lightbox" />

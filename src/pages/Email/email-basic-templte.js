@@ -11,7 +11,7 @@ const EmailBasicTemplte = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Basic Action | Skote - React Admin & Dashboard Template</title>
+          <title>Basic Action | Tableau de bord | Mozas</title>
         </MetaTags>
         <div className="container-fluid">
           <Breadcrumbs title="Email Template" breadcrumbItem="Basic Action" />

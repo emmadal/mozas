@@ -11,7 +11,7 @@ const ConfirmMail = () => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>Confirm Mail | Skote - React Admin & Dashboard Template</title>
+        <title>Confirm Mail | Tableau de bord | Mozas</title>
       </MetaTags>
       <div className="account-pages my-5 pt-sm-5">
 

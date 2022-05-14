@@ -79,7 +79,7 @@ const CryptoKYCApplication = props => {
       <div className="page-content">
         <MetaTags>
           <title>
-            KYC Application | Skote - React Admin & Dashboard Template
+            KYC Application | Tableau de bord | Mozas
           </title>
         </MetaTags>
         <Container fluid>

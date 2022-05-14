@@ -13,7 +13,7 @@ const ConfirmMail2 = () => {
     <React.Fragment>
       <div>
         <MetaTags>
-          <title>Confirm Mail 2 | Skote - React Admin & Dashboard Template</title>
+          <title>Confirm Mail 2 | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid className="p-0">
           <Row className="row g-0">

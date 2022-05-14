@@ -10,7 +10,7 @@ const EmailTemplateBilling = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Billing Email | Skote - React Admin & Dashboard Template</title>
+          <title>Billing Email | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           <Breadcrumbs

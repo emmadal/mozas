@@ -52,7 +52,7 @@ const FormRepeater = () => {
       <div className="page-content">
         <MetaTags>
           <title>
-            Form Repeater | Skote - React Admin & Dashboard Template
+            Form Repeater | Tableau de bord | Mozas
           </title>
         </MetaTags>
         <Container fluid={true}>

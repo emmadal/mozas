@@ -35,7 +35,7 @@ const TasksKanban = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Kanban Board | Skote - React Admin & Dashboard Template</title>
+          <title>Kanban Board | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}

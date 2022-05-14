@@ -260,7 +260,7 @@ const Calender = props => {
       />
       <div className="page-content">
         <MetaTags>
-          <title>Calendar | Skote - React Admin & Dashboard Template</title>
+          <title>Calendar | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid={true}>
           {/* Render Breadcrumb */}

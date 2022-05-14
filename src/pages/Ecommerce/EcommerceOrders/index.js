@@ -357,7 +357,7 @@ const EcommerceOrders = props => {
       />
       <div className="page-content">
         <MetaTags>
-          <title>Orders | Skote - React Admin & Dashboard Template</title>
+          <title>Orders | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           <Breadcrumbs title="Ecommerce" breadcrumbItem="Orders" />

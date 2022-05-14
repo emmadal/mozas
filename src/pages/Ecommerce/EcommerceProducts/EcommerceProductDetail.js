@@ -133,7 +133,7 @@ const EcommerceProductDetail = props => {
       <div className="page-content">
         <MetaTags>
           <title>
-            Product Detail | Skote - React Admin & Dashboard Template
+            Product Detail | Tableau de bord | Mozas
           </title>
         </MetaTags>
         <Container fluid>

@@ -43,7 +43,7 @@ const CryptoWallet = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Wallet | Skote - React Admin & Dashboard Template</title>
+          <title>Wallet | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}

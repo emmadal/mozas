@@ -11,7 +11,7 @@ const EmailAlertTemplte = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Alert Email | Skote - React Admin & Dashboard Template</title>
+          <title>Alert Email | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           <Breadcrumbs title="Email Template" breadcrumbItem="Alert Email" />

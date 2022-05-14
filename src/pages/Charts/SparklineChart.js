@@ -18,7 +18,7 @@ const SparklineChart = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Sparkline Charts | Skote - React Admin & Dashboard Template</title>
+          <title>Sparkline Charts | Tableau de bord | Mozas</title>
         </MetaTags>
         <div className="container-fluid">
           {/* Render Breadcrumb */}

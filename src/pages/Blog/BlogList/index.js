@@ -13,7 +13,7 @@ const Index = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Blog List | Skote - React Admin & Dashboard Template</title>
+          <title>Blog List | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           <Breadcrumbs title="Blog" breadcrumbItem="Blog List" />
