@@ -86,8 +86,8 @@ const Navbar_Page = props => {
               </Nav>
             </ScrollspyNav>
             <div className="ms-lg-2">
-              <Link to="#" className="btn btn-outline-success w-xs">
-                Sign in
+              <Link to="login" className="btn btn-outline-success w-xs">
+                Se connecter
               </Link>
             </div>
           </Collapse>

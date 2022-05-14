@@ -52,19 +52,19 @@ const Section = () => {
             <Col lg="5">
               <div className="text-white-50">
                 <h1 className="text-white font-weight-semibold mb-3 hero-title">
-                  Skote - Ico Landing for a cryptocurrency business
+                  Le financement participatif dédié aux projets.
                 </h1>
                 <p className="font-size-14">
-                  It will be as simple as occidental in fact to an English
-                  person, it will seem like simplified as a skeptical Cambridge
+                  Le moyen le plus simple d&#39;investir dans des projets
+                  viables.
                 </p>
 
                 <div className="d-flex flex-wrap gap-2 mt-4">
                   <Link to="#" className="btn btn-success me-1">
-                    Get Whitepaper
+                    Découvrir nos projets
                   </Link>
                   <Link to="#" className="btn btn-light">
-                    How it work
+                    Découvrir nos projets
                   </Link>
                 </div>
               </div>
@@ -125,7 +125,7 @@ const Section = () => {
         </Container>
       </section>
     </React.Fragment>
-  );
+  )
 };
 
 export default Section;

@@ -36,7 +36,7 @@ const CryptoIcoLanding = () => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>ICO Landing | Tableau de bord | Mozas</title>
+        <title>Mozas - Accueil</title>
       </MetaTags>
       {/* import navbar */}
       <Navbar navClass={navClass} imglight={imglight} />
