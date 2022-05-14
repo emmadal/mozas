@@ -32,7 +32,7 @@ import DeleteModal from "components/Common/DeleteModal";
 
 import {
   updateProjectSuccess as onupdateProjectSuccess,
-  deleteProject as onDeleteProject,
+  deleteProjectSuccess as onDeleteProjectSuccess,
   getProjectsSuccess as onGetProjectsSuccess
 } from "store/actions"
 
@@ -117,7 +117,7 @@ const ProjectsList = () => {
   }
 
   const handleDeleteOrder = () => {
-    dispatch(onDeleteProject(project))
+    dispatch(onDeleteProjectSuccess(project))
     setDeleteModal(false)
   }
 
@@ -156,7 +156,7 @@ const ProjectsList = () => {
                 </thead>
                 <tbody>
                   {map(projects, (project, index) => (
-                    <tr key={project.id}>
+                    <tr key={project?.id}>
                       <td>{index + 1}</td>
                       <td>
                         <h5 className="text-truncate font-size-14">
@@ -349,7 +349,9 @@ const ProjectsList = () => {
             </Col>
           </Row>
 
-          {projects && projects.length ? null : (
+          {projects && projects.length === 0 ? (
+            <h4 className="text-center">Aucun projet disponible</h4>
+          ) : projects && projects.length ? null : (
             <Row>
               <Col xs="12">
                 <div className="text-center my-3">

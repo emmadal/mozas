@@ -191,7 +191,9 @@ class FirebaseAuthBackend {
       // upload file to firebase storage
       this.uploadProjectFiles(projectfiles, "projectfiles")
         .then(files => {
-          collection.doc(`${id}`).set({ ...data, files })
+          collection
+            .doc(`${id}`)
+            .set({ ...data, files })
             .then(() => {
               resolve(true)
               console.log("Document successfully written!")
@@ -225,18 +227,37 @@ class FirebaseAuthBackend {
   /**
    * Update project
    */
-  updateProject = ({name, desc, status, budget, id}) => {
+  updateProject = ({ name, desc, status, budget, id }) => {
     const collection = firebase.firestore().collection("projects")
     return new Promise((resolve, reject) => {
-      collection.doc(`${id}`).update({
-        name,
-        desc,
-        status,
-        budget,
-      }).then((e) => {
-        console.log('data updated')
+      collection
+        .doc(`${id}`)
+        .update({
+          name,
+          desc,
+          status,
+          budget,
+        })
+        .then(e => {
+          console.log("data updated")
+          resolve(true)
+        })
+        .catch(err => reject(this._handleError(err)))
+    })
+  }
+
+  /**
+   * Delete project
+   */
+  deleteProject = ({id}) => {
+    const collection = firebase.firestore().collection("projects")
+    return new Promise((resolve, reject) => {
+      collection.doc(`${id}`).delete().then(() => {
         resolve(true)
-      }).catch(err => reject(this._handleError(err)))
+      }).catch((err) => {
+        console.log('unable to delete document: ', err)
+        this._handleError(reject(err))
+      })
     })
   }
 

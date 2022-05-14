@@ -68,7 +68,7 @@ const projects = (state = INIT_STATE, action) => {
       return {
         ...state,
         projects: state.projects.filter(
-          project => project.id.toString() !== action.payload.id.toString()
+          project => project.id !== action.payload.id.toString()
         ),
       }
 
