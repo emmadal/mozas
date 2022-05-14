@@ -149,9 +149,9 @@ const SidebarContent = props => {
                 <li>
                   <Link to="/projects-list">Liste des projets</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/projects-overview">Detail projet</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/projects-create">Nouveau projet</Link>
                 </li>

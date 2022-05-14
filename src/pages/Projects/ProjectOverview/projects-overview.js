@@ -25,8 +25,7 @@ const ProjectsOverview = props => {
 
   const { projectDetail } = useSelector(state => ({
     projectDetail: state.projects.projectDetail,
-  }));
-
+  }))
   const {
     match: { params },
   } = props;
@@ -43,13 +42,11 @@ const ProjectsOverview = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>
-            Project Overview | Tableau de bord | Mozas
-          </title>
+          <title>Resumé du projet | Tableau de bord | Mozas</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Projects" breadcrumbItem="Project Overview" />
+          <Breadcrumbs title="Projets" breadcrumbItem="Resumé du projet" />
 
           {!isEmpty(projectDetail) && (
             <>
@@ -64,15 +61,15 @@ const ProjectsOverview = props => {
               </Row>
 
               <Row>
-                <Col lg="4">
+                {/* <Col lg="4">
                   <OverviewChart options={options} series={series} />
-                </Col>
+                </Col> */}
 
-                <Col lg="4">
+                <Col sm="6">
                   <AttachedFiles files={projectDetail.files} />
                 </Col>
 
-                <Col lg="4">
+                <Col sm="6">
                   <Comments comments={projectDetail.comments} />
                 </Col>
               </Row>
@@ -81,7 +78,7 @@ const ProjectsOverview = props => {
         </Container>
       </div>
     </React.Fragment>
-  );
+  )
 };
 
 ProjectsOverview.propTypes = {

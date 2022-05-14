@@ -1,7 +1,7 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects"
 
 // Crypto Redux States
-import { GET_PROJECTS, GET_PROJECT_DETAIL, DELETE_PROJECT, UPDATE_PROJECT, ADD_PROJECT_SUCCESS, GET_PROJECTS_SUCCESS, UPDATE_PROJECT_SUCCESS, DELETE_PROJECT_SUCCESS } from "./actionTypes"
+import { GET_PROJECTS, GET_PROJECT_DETAIL, DELETE_PROJECT, UPDATE_PROJECT, ADD_PROJECT_SUCCESS, GET_PROJECTS_SUCCESS, UPDATE_PROJECT_SUCCESS, DELETE_PROJECT_SUCCESS, GET_PROJECT_DETAIL_SUCCESS } from "./actionTypes"
 import {
   getProjectsSuccess,
   getProjectsFail,
@@ -34,8 +34,13 @@ function* fetchProjects() {
 
 function* fetchProjectDetail({ projectId }) {
   try {
-    const response = yield call(getProjectsDetails, projectId)
-    yield put(getProjectDetailSuccess(response))
+    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
+      const response = yield call(fireBaseBackend.getProjectsDetails, projectId)
+      yield put(getProjectDetailSuccess(response))
+    } else {
+      const response = yield call(getProjectsDetails, projectId)
+      yield put(getProjectDetailSuccess(response))
+    }
   } catch (error) {
     yield put(getProjectDetailFail(error))
   }
@@ -80,6 +85,7 @@ function* onAddNewProject({ payload: project }) {
 function* projectsSaga() {
   yield takeLatest(GET_PROJECTS_SUCCESS, fetchProjects)
   yield takeLatest(GET_PROJECT_DETAIL, fetchProjectDetail)
+  // yield takeLatest(GET_PROJECT_DETAIL_SUCCESS, fetchProjectDetail)
   yield takeLatest(ADD_PROJECT_SUCCESS, onAddNewProject)
   yield takeLatest(UPDATE_PROJECT_SUCCESS, onUpdateProject)
   yield takeLatest(DELETE_PROJECT_SUCCESS, onDeleteProject)

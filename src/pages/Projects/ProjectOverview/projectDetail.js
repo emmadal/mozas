@@ -2,26 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import { map, get } from "lodash";
 import { Card, CardBody, Col, Row } from "reactstrap";
-import img1 from "../../../assets/images/companies/img-1.png";
 
 const ProjectDetail = ({ project }) => {
   return (
     <Card>
       <CardBody>
         <div className="d-flex">
-          <img src={img1} alt="" className="avatar-sm me-4" />
+          <img src={`${project?.files[0]?.link}`} alt="" className="avatar-md me-4 img-fluid" />
 
           <div className="flex-grow-1 overflow-hidden">
-            <h5 className="text-truncate font-size-15">{project.name}</h5>
-            <p className="text-muted">{project.description}</p>
+            <h5 className="text-truncate font-size-15">{project?.name}</h5>
+            <p className="text-muted">{project?.desc}</p>
           </div>
         </div>
 
-        <h5 className="font-size-15 mt-4">Project Details :</h5>
+        <h5 className="font-size-15 mt-4">Détails du projet :</h5>
 
-        <p className="text-muted">
-          {get(project, "projectDetails.description")}
-        </p>
+        <p className="text-muted">{get(project, "project.desc")}</p>
 
         <div className="text-muted mt-4">
           {project.projectDetails &&
@@ -37,25 +34,25 @@ const ProjectDetail = ({ project }) => {
           <Col sm="4" xs="6">
             <div className="mt-4">
               <h5 className="font-size-14">
-                <i className="bx bx-calendar me-1 text-primary" /> Start Date
+                <i className="bx bx-calendar me-1 text-primary" /> Date de début
               </h5>
-              <p className="text-muted mb-0">{project.startDate}</p>
+              <p className="text-muted mb-0">{project?.startDate}</p>
             </div>
           </Col>
 
           <Col sm="4" xs="6">
             <div className="mt-4">
               <h5 className="font-size-14">
-                <i className="bx bx-calendar-check me-1 text-primary" /> Due
-                Date
+                <i className="bx bx-calendar-check me-1 text-primary" /> Date de
+                fin
               </h5>
-              <p className="text-muted mb-0">{project.dueDate}</p>
+              <p className="text-muted mb-0">{project?.dueDate}</p>
             </div>
           </Col>
         </Row>
       </CardBody>
     </Card>
-  );
+  )
 };
 
 ProjectDetail.propTypes = {

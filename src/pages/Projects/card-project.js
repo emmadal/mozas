@@ -8,113 +8,66 @@ import {
   CardBody,
   Col,
   UncontrolledTooltip,
-} from "reactstrap";
-import images from "assets/images";
-import companies from "assets/images/companies";
+  CardTitle,
+  CardSubtitle,
+  Row
+} from "reactstrap"
+import Slidewithcaption from "../Ui/CarouselTypes/slidewithcaption"
 
 const CardProject = ({ projects }) => {
   return (
     <React.Fragment>
+      {projects && projects.length === 0 ? (
+        <h4 className="text-center">Aucun projet disponible</h4>
+      ) : projects && projects.length ? null : (
+        <Row>
+          <Col xs="12">
+            <div className="text-center my-3">
+              <Link to="#" className="text-success">
+                <i className="bx bx-loader bx-spin font-size-18 align-middle me-2" />
+                Chargement
+              </Link>
+            </div>
+          </Col>
+        </Row>
+      )}
+
       {map(projects, (project, key) => (
         <Col xl="4" sm="6" key={key}>
           <Card>
             <CardBody>
-              <div className="d-flex">
-                <div className="avatar-md me-4">
-                  <span className="avatar-title rounded-circle bg-light text-danger font-size-16">
-                    <img src={companies[project.img]} alt="" height="30" />
-                  </span>
-                </div>
-
-                <div className="flex-grow-1 overflow-hidden">
-                  <h5 className="text-truncate font-size-15">
-                    <Link
-                      to={`/projects-overview/${project.id}`}
-                      className="text-dark"
-                    >
-                      {project.name}
-                    </Link>
-                  </h5>
-                  <p className="text-muted mb-4">{project.description}</p>
-
-                  <div className="avatar-group">
-                    {project.team.map((team, key) =>
-                      !team.img || team.img !== "Null" ? (
-                        <React.Fragment key={key}>
-                          <div className="avatar-group-item">
-                            <Link
-                              to="#"
-                              className="d-inline-block"
-                              id={"member" + key}
-                            >
-                              <img
-                                src={images[team.img]}
-                                className="rounded-circle avatar-xs"
-                                alt=""
-                              />
-                              <UncontrolledTooltip
-                                placement="top"
-                                target={"member" + key}
-                              >
-                                {team.fullname}
-                              </UncontrolledTooltip>
-                            </Link>
-                          </div>
-                        </React.Fragment>
-                      ) : (
-                        <React.Fragment key={key}>
-                          <div className="avatar-group-item">
-                            <Link
-                              to="#"
-                              className="d-inline-block"
-                              id={"member" + key}
-                            >
-                              <div className="avatar-xs">
-                                <span
-                                  className={
-                                    "avatar-title rounded-circle bg-soft bg-" +
-                                    team.color +
-                                    " text-" +
-                                    team.color +
-                                    " font-size-16"
-                                  }
-                                >
-                                  {team.name}
-                                </span>
-                                <UncontrolledTooltip
-                                  placement="top"
-                                  target={"member" + key}
-                                >
-                                  {team.fullname}
-                                </UncontrolledTooltip>
-                              </div>
-                            </Link>
-                          </div>
-                        </React.Fragment>
-                      )
-                    )}
-                  </div>
-                </div>
-              </div>
+              <CardTitle>
+                <Link
+                  to={`/projects-overview/${project.id}`}
+                  className="text-dark"
+                >
+                  {project?.name}
+                </Link>
+              </CardTitle>
+              <CardSubtitle className="mb-3">{project?.desc}</CardSubtitle>
+              <Slidewithcaption images={project.files} />
             </CardBody>
             <div className="px-4 py-3 border-top">
               <ul className="list-inline mb-0">
                 <li className="list-inline-item me-3">
-                  <Badge className={"bg-" + project.color}>
-                    {project.status}
+                  <Badge
+                    color={
+                      project.status === "En attente"
+                        ? "primary"
+                        : project.status === "Terminé"
+                        ? "success"
+                        : project.status === "En cours"
+                        ? "info"
+                        : ""
+                    }
+                  >
+                    {project?.status}
                   </Badge>
                 </li>
                 <li className="list-inline-item me-3" id="dueDate">
                   <i className="bx bx-calendar me-1" /> {project.dueDate}
                   <UncontrolledTooltip placement="top" target="dueDate">
-                    Due Date
-                  </UncontrolledTooltip>
-                </li>
-                <li className="list-inline-item me-3" id="comments">
-                  <i className="bx bx-comment-dots me-1" />{" "}
-                  {project.commentsCount}
-                  <UncontrolledTooltip placement="top" target="comments">
-                    Comments
+                    Date de fin
                   </UncontrolledTooltip>
                 </li>
               </ul>
@@ -123,7 +76,7 @@ const CardProject = ({ projects }) => {
         </Col>
       ))}
     </React.Fragment>
-  );
+  )
 };
 
 CardProject.propTypes = {

@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 import {
   Carousel,
   CarouselItem,
@@ -6,29 +7,6 @@ import {
   CarouselIndicators,
   CarouselCaption,
 } from "reactstrap"
-
-// Carousel images
-import img3 from "../../../assets/images/small/img-3.jpg"
-import img4 from "../../../assets/images/small/img-4.jpg"
-import img5 from "../../../assets/images/small/img-5.jpg"
-
-const items = [
-  {
-    src: img3,
-    altText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    caption: "First slide label",
-  },
-  {
-    src: img4,
-    altText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    caption: "Second slide label",
-  },
-  {
-    src: img5,
-    altText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    caption: "Third slide label",
-  },
-]
 
 class Slidewithcaption extends Component {
   constructor(props) {
@@ -40,7 +18,7 @@ class Slidewithcaption extends Component {
     this.onExiting = this.onExiting.bind(this)
     this.onExited = this.onExited.bind(this)
   }
-
+  
   onExiting() {
     this.animating = true
   }
@@ -52,7 +30,7 @@ class Slidewithcaption extends Component {
   next() {
     if (this.animating) return
     const nextIndex =
-      this.state.activeIndex === items.length - 1
+      this.state.activeIndex === this.props.images.length - 1
         ? 0
         : this.state.activeIndex + 1
     this.setState({ activeIndex: nextIndex })
@@ -62,7 +40,7 @@ class Slidewithcaption extends Component {
     if (this.animating) return
     const nextIndex =
       this.state.activeIndex === 0
-        ? items.length - 1
+        ? this.props.images.length - 1
         : this.state.activeIndex - 1
     this.setState({ activeIndex: nextIndex })
   }
@@ -74,23 +52,25 @@ class Slidewithcaption extends Component {
 
   render() {
     const { activeIndex } = this.state
-
-    const slides = items.map(item => {
+    const {images} = this.props
+    const slides = images.map(item => {
       return (
         <CarouselItem
           onExiting={this.onExiting}
           onExited={this.onExited}
-          key={item.src}
+          key={item?.link}
         >
           <img
-            src={item.src}
+            src={item?.link}
             className="d-block img-fluid"
-            alt={item.altText}
+            alt={item?.altText}
+            height={100}
+            width={100}
           />
-          <CarouselCaption
-            captionText={item.altText}
-            captionHeader={item.caption}
-          />
+          {/* <CarouselCaption
+            captionText={item?.altText}
+            captionHeader={item?.caption}
+          /> */}
         </CarouselItem>
       )
     })
@@ -103,25 +83,29 @@ class Slidewithcaption extends Component {
           previous={this.previous}
         >
           <CarouselIndicators
-            items={items}
+            items={images}
             activeIndex={activeIndex}
             onClickHandler={this.goToIndex}
           />
           {slides}
           <CarouselControl
             direction="prev"
-            directionText="Previous"
+            directionText="Préçedent"
             onClickHandler={this.previous}
           />
           <CarouselControl
             direction="next"
-            directionText="Next"
+            directionText="Suivant"
             onClickHandler={this.next}
           />
         </Carousel>
       </React.Fragment>
     )
   }
+}
+
+Slidewithcaption.propTypes = {
+  images: PropTypes.array,
 }
 
 export default Slidewithcaption

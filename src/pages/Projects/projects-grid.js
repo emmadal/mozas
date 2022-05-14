@@ -17,7 +17,10 @@ import Breadcrumbs from "components/Common/Breadcrumb";
 //Import Cards
 import CardProject from "./card-project";
 
-import { getProjects as onGetProjects } from "store/actions";
+import {
+  getProjects as onGetProjects,
+  getProjectsSuccess as onGetProjectsSuccess,
+} from "store/actions"
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -33,7 +36,8 @@ const ProjectsGrid = props => {
   const [totalPage] = useState(5);
 
   useEffect(() => {
-    dispatch(onGetProjects());
+    // dispatch(onGetProjects());
+    dispatch(onGetProjectsSuccess())
   }, [dispatch]);
 
   const handlePageClick = page => {
@@ -45,7 +49,7 @@ const ProjectsGrid = props => {
       <div className="page-content">
         <MetaTags>
           <title>
-            Projects Grid | Tableau de bord | Mozas
+            Grille des projets | Tableau de bord | Mozas
           </title>
         </MetaTags>
         <Container fluid>

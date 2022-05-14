@@ -8,7 +8,7 @@ const AttachedFiles = ({ files }) => {
   return (
     <Card>
       <CardBody>
-        <CardTitle className="mb-4">Attached Files</CardTitle>
+        <CardTitle className="mb-4">Fichiers</CardTitle>
         <div className="table-responsive">
           <Table className="table table-nowrap table-centered table-hover mb-0">
             <tbody>
@@ -27,7 +27,7 @@ const AttachedFiles = ({ files }) => {
                         {file.name}
                       </Link>
                     </h5>
-                    <small>Size : {file.size}</small>
+                    {/* <small>Size : {file.size}</small> */}
                   </td>
                   <td>
                     <div className="text-center">

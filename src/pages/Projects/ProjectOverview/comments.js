@@ -9,7 +9,7 @@ const Comments = ({ comments }) => {
   return (
     <Card>
       <CardBody>
-        <CardTitle className="mb-4">Comments</CardTitle>
+        <CardTitle className="mb-4">Commentaires</CardTitle>
         {map(comments, (comment, index) => (
           <div className="d-flex mb-4" key={index}>
             <div className="me-3">
@@ -61,14 +61,14 @@ const Comments = ({ comments }) => {
             </div>
             <div className="ml-3">
               <Link to="" className="text-primary">
-                Reply
+                Repondre
               </Link>
             </div>
           </div>
         ))}
         <div className="text-center mt-4 pt-2">
           <Link to="#" className="btn btn-primary btn-sm">
-            View more
+            Voir plus
           </Link>
         </div>
       </CardBody>

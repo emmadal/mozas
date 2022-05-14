@@ -161,7 +161,7 @@ class FirebaseAuthBackend {
               .child(`${i.name}`)
               .getDownloadURL()
               .then(fileURL => {
-                resolve(new Array(fileURL))
+                resolve([{name: fileURL.split('.')[0], link: fileURL}])
               })
           })
           .catch(err => {
@@ -249,15 +249,32 @@ class FirebaseAuthBackend {
   /**
    * Delete project
    */
-  deleteProject = ({id}) => {
+  deleteProject = ({ id }) => {
     const collection = firebase.firestore().collection("projects")
     return new Promise((resolve, reject) => {
-      collection.doc(`${id}`).delete().then(() => {
-        resolve(true)
-      }).catch((err) => {
-        console.log('unable to delete document: ', err)
-        this._handleError(reject(err))
-      })
+      collection
+        .doc(`${id}`)
+        .delete()
+        .then(() => {
+          resolve(true)
+        })
+        .catch(err => {
+          console.log("unable to delete document: ", err)
+          this._handleError(reject(err))
+        })
+    })
+  }
+
+  /**
+   * Get one project
+   */
+  getProjectsDetails = (id) => {
+    const collection = firebase.firestore().collection('projects')
+    return new Promise((resolve, reject) => {
+      collection
+        .doc(`${id}`)
+        .get().then((e) => resolve(e.data()))
+        .catch((err) => reject(this._handleError(err)))
     })
   }
 

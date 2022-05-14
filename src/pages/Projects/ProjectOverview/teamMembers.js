@@ -9,7 +9,7 @@ const TeamMembers = ({ team }) => {
   return (
     <Card>
       <CardBody>
-        <CardTitle className="mb-4">Team Members</CardTitle>
+        <CardTitle className="mb-4">Investisseurs</CardTitle>
 
         <div className="table-responsive">
           <Table className="table align-middle table-nowrap">
