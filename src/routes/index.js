@@ -326,7 +326,7 @@ const publicRoutes = [
   { path: "/pages-comingsoon", component: PagesComingsoon },
   { path: "/pages-404", component: Pages404 },
   { path: "/pages-500", component: Pages500 },
-  { path: "/crypto-ico-landing", component: CryptoIcoLanding },
+  { path: "/", component: CryptoIcoLanding },
 
   // Authentication Inner
   { path: "/pages-login", component: Login1 },

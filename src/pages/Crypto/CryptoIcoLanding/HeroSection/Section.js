@@ -63,9 +63,9 @@ const Section = () => {
                   <Link to="#" className="btn btn-success me-1">
                     Découvrir nos projets
                   </Link>
-                  <Link to="#" className="btn btn-light">
+                  {/* <Link to="#" className="btn btn-light">
                     Découvrir nos projets
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </Col>
@@ -76,7 +76,7 @@ const Section = () => {
                 </CardHeader>
                 <CardBody>
                   <div className="text-center">
-                    <h5>Time left to Ico :</h5>
+                    {/* <h5>Time left to Ico :</h5> */}
                     <div className="mt-4">
                       <div className="counter-number ico-countdown">
                         <Countdown date="2021/12/31" renderer={renderer} />

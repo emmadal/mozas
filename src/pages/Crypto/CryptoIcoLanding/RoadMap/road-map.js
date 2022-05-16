@@ -12,8 +12,8 @@ const RoadMap = () => {
           <Row>
             <Col lg="12">
               <div className="text-center mb-5">
-                <div className="small-title">Timeline</div>
-                <h4>Our Roadmap</h4>
+                {/* <div className="small-title">Timeline</div> */}
+                <h4>Nos projets</h4>
               </div>
             </Col>
           </Row>

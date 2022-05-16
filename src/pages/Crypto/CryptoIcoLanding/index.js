@@ -57,10 +57,10 @@ const CryptoIcoLanding = () => {
       <RoadMap />
 
       {/* our team */}
-      <OurTeam />
+      {/* <OurTeam /> */}
 
       {/* blog */}
-      <Blog />
+      {/* <Blog /> */}
 
       {/* faqs */}
       <FAQs />

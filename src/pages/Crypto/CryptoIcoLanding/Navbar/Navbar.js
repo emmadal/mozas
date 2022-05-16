@@ -16,12 +16,12 @@ import logodark from "../../../../assets/images/logo-dark.png";
 import logolight from "../../../../assets/images/logo-light.png";
 
 const navItems = [
-  { id: 1, idnm: "home", navheading: "Home" },
-  { id: 2, idnm: "about", navheading: "About" },
-  { id: 3, idnm: "features", navheading: "Features" },
-  { id: 3, idnm: "roadmap", navheading: "Roadmap" },
-  { id: 4, idnm: "team", navheading: "Team" },
-  { id: 5, idnm: "news", navheading: "News" },
+  { id: 1, idnm: "home", navheading: "Accueil" },
+  { id: 2, idnm: "about", navheading: "Qui sommes nous" },
+  { id: 3, idnm: "features", navheading: "Solutions d'investissment" },
+  { id: 3, idnm: "roadmap", navheading: "Nos Projets" },
+  // { id: 4, idnm: "team", navheading: "Team" },
+  // { id: 5, idnm: "news", navheading: "Blog" },
   { id: 6, idnm: "faqs", navheading: "FAQs" },
 ];
 

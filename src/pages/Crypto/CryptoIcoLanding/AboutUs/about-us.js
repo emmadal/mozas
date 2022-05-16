@@ -21,7 +21,7 @@ const AboutUs = () => {
           <Row>
             <Col lg="12">
               <div className="text-center mb-5">
-                <div className="small-title">About us</div>
+                <div className="small-title">Qui sommes nous</div>
                 <h4>What is ICO Token?</h4>
               </div>
             </Col>
