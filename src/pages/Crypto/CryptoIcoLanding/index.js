@@ -20,6 +20,7 @@ const CryptoIcoLanding = () => {
   // Use ComponentDidMount
   useEffect(() => {
     window.addEventListener("scroll", scrollNavigation, true)
+    return () => window.addEventListener("scroll", scrollNavigation, true)
   },[])
 
   function scrollNavigation() {

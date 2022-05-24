@@ -11,7 +11,9 @@ class FirebaseAuthBackend {
       firebase.initializeApp(firebaseConfig)
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          localStorage.setItem("authUser", JSON.stringify(user))
+          this.getUserByUID(user?.uid).then(e => {
+            localStorage.setItem("authUser", JSON.stringify({...user, type: e?.type}))
+          })
         } else {
           localStorage.removeItem("authUser")
         }
@@ -22,6 +24,38 @@ class FirebaseAuthBackend {
   /**
    * Registers the user with given details
    */
+
+  addNewUser = user => {
+    return new Promise((resolve, reject) => {
+      const collection = firebase.firestore().collection("users")
+      const details = {
+        id: new Date().getTime(),
+        uid: user?.uid,
+        fullName: user?.displayName ?? "",
+        email: user?.email ?? "",
+        photo: user?.photoURL ?? "",
+        phoneNumber: user?.phoneNumber ?? "",
+        initialAmount: 0.0,
+        projects: [],
+        balance: [],
+        type: "user",
+        createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
+        lastLoginTime: firebase.firestore.FieldValue.serverTimestamp(),
+      }
+      collection
+        .doc(user?.uid)
+        .set(details)
+        .then(
+          e => {
+            resolve(true)
+          },
+          error => {
+            reject(this._handleError(error))
+          }
+        )
+    })
+  }
+
   registerUser = (email, password) => {
     return new Promise((resolve, reject) => {
       firebase
@@ -29,6 +63,7 @@ class FirebaseAuthBackend {
         .createUserWithEmailAndPassword(email, password)
         .then(
           user => {
+            resolve(this.addNewUser(user.user))
             resolve(firebase.auth().currentUser)
           },
           error => {
@@ -55,6 +90,20 @@ class FirebaseAuthBackend {
           }
         )
     })
+  }
+
+  /**
+   * Get user by Id
+   */
+  getUserByUID = (userUID) => {
+   const collection = firebase.firestore().collection("users")
+   return new Promise((resolve, reject) => {
+     collection
+       .doc(`${userUID}`)
+       .get()
+       .then(e => resolve(e.data()))
+       .catch(err => reject(this._handleError(err)))
+   })
   }
 
   /**
