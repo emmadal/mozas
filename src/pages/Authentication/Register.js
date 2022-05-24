@@ -6,12 +6,6 @@ import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFee
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-// action
-import { registerUser, apiError } from "../../store/actions";
-
-//redux
-import { useSelector, useDispatch } from "react-redux";
-
 import { Link } from "react-router-dom";
 
 // import images
@@ -19,8 +13,6 @@ import profileImg from "../../assets/images/profile-img.png";
 import logoImg from "../../assets/images/logo.svg";
 
 const Register = props => {
-  const dispatch = useDispatch();
-
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -36,24 +28,9 @@ const Register = props => {
       password: Yup.string().required("Entrez votre Mot de passe"),
     }),
     onSubmit: (values) => {
-      dispatch(registerUser(values));
+      // dispatch(registerUser(values));
     }
   });
-
-  const { user, registrationError, loading } = useSelector(state => ({
-    user: state.Account.user,
-    registrationError: state.Account.registrationError,
-    loading: state.Account.loading,
-  }));
-
-  // handleValidSubmit
-  const handleValidSubmit = values => {
-    dispatch(registerUser(values));
-  };
-
-  useEffect(() => {
-    dispatch(apiError(""));
-  }, []);
 
   return (
     <React.Fragment>

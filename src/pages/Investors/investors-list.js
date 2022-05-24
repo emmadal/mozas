@@ -12,21 +12,11 @@ import {
 //Import Component
 import Breadcrumbs from "components/Common/Breadcrumb"
 
-import {
-  getInvestorsSuccess as onGetInvestorsSuccess,
-} from "store/actions"
-
-//redux
-import { useSelector, useDispatch } from "react-redux"
-
 const InvestorsList = () => {
-  const dispatch = useDispatch()
-  const { investors } = useSelector(state => ({
-    investors: state.investors.investors,
-  }))
+  const investors = []
 
   useEffect(() => {
-    dispatch(onGetInvestorsSuccess())
+    // dispatch(onGetInvestorsSuccess())
   }, [dispatch])
 
   return (

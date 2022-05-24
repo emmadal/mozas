@@ -10,23 +10,13 @@ import paginationFactory, {
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
 
 import { Button, Card, CardBody, Col, Row, Badge } from "reactstrap"
-import { getOrders as onGetOrders } from "store/actions"
-
-import EcommerceOrdersModal from "../Ecommerce/EcommerceOrders/EcommerceOrdersModal"
-
-//redux
-import { useSelector, useDispatch } from "react-redux"
 
 const LatestTranaction = props => {
-  const dispatch = useDispatch()
-
-  const { orders } = useSelector(state => ({
-    orders: state.ecommerce.orders,
-  }))
+  const orders = []
 
   useEffect(() => {
-    dispatch(onGetOrders())
-  }, [dispatch]);
+    // dispatch(onGetOrders())
+  }, []);
 
   const selectRow = {
     mode: "checkbox",
@@ -164,7 +154,7 @@ const LatestTranaction = props => {
 
   return (
     <React.Fragment>
-      <EcommerceOrdersModal isOpen={modal1} toggle={toggleViewModal} />
+      {/* <EcommerceOrdersModal isOpen={modal1} toggle={toggleViewModal} /> */}
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title">Latest Transaction</div>

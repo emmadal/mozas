@@ -116,7 +116,7 @@ class FirebaseAuthBackend {
         .signInWithEmailAndPassword(email, password)
         .then(
           user => {
-            resolve(firebase.auth().currentUser)
+          resolve(firebase.auth().currentUser)
           },
           error => {
             reject(this._handleError(error))

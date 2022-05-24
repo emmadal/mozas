@@ -17,27 +17,18 @@ import Breadcrumbs from "components/Common/Breadcrumb";
 //Import Cards
 import CardProject from "./card-project";
 
-import {
-  getProjects as onGetProjects,
-  getProjectsSuccess as onGetProjectsSuccess,
-} from "store/actions"
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
 
 const ProjectsGrid = props => {
-  const dispatch = useDispatch();
-
-  const { projects } = useSelector(state => ({
-    projects: state.projects.projects,
-  }));
+  const [projects, setProjetcs] = useState([])
 
   const [page, setPage] = useState(1);
   const [totalPage] = useState(5);
 
   useEffect(() => {
-    // dispatch(onGetProjects());
-    dispatch(onGetProjectsSuccess())
+    // dispatch(onGetProjectsSuccess())
   }, [dispatch]);
 
   const handlePageClick = page => {

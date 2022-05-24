@@ -12,9 +12,6 @@ import { withRouter, Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-// action
-import { userForgetPassword } from "../../store/actions";
-
 // import images
 import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/logo.svg";
@@ -33,7 +30,7 @@ const ForgetPasswordPage = props => {
       email: Yup.string().required("Veuillez entrer votre Email"),
     }),
     onSubmit: (values) => {
-      dispatch(userForgetPassword(values, props.history));
+      // dispatch(userForgetPassword(values, props.history));
     }
   });
 

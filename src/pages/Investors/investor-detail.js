@@ -2,35 +2,24 @@ import React, { useEffect } from "react"
 import MetaTags from "react-meta-tags"
 import PropTypes from "prop-types"
 import { withRouter } from "react-router-dom"
-import { connect } from "react-redux"
 import { isEmpty } from "lodash"
 import { Col, Container, Row, Card, CardBody, CardTitle, CardHeader } from "reactstrap"
 
 //Import Breadcrumb
 import Breadcrumbs from "components/Common/Breadcrumb"
 
-import { getInvestorDetail as onGetInvestorDetail } from "store/investors/actions"
-
-//redux
-import { useSelector, useDispatch } from "react-redux"
-
 const InvestorDetail = props => {
-  const dispatch = useDispatch()
-
-  const { investorDetail } = useSelector(state => ({
-    investorDetail: state.investors.investorDetail,
-  }))
   const {
     match: { params },
   } = props
 
   useEffect(() => {
     if (params && params.id) {
-      dispatch(onGetInvestorDetail(params.id))
+      // dispatch(onGetInvestorDetail(params.id))
     } else {
-      dispatch(onGetInvestorDetail(0)) //remove this after full integration
+      // dispatch(onGetInvestorDetail(0)) //remove this after full integration
     }
-  }, [params, onGetInvestorDetail])
+  }, [params])
 
   return (
     <React.Fragment>

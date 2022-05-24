@@ -7,10 +7,6 @@ import {
   DropdownItem,
 } from "reactstrap"
 
-//i18n
-import { withTranslation } from "react-i18next"
-// Redux
-import { connect } from "react-redux"
 import { withRouter, Link } from "react-router-dom"
 
 // users
@@ -92,11 +88,4 @@ ProfileMenu.propTypes = {
   t: PropTypes.any
 }
 
-const mapStatetoProps = state => {
-  const { error, success } = state.Profile
-  return { error, success }
-}
-
-export default withRouter(
-  connect(mapStatetoProps, {})(withTranslation()(ProfileMenu))
-)
+export default withRouter(ProfileMenu)

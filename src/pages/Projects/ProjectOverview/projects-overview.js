@@ -9,11 +9,8 @@ import { Col, Container, Row } from "reactstrap";
 //Import Breadcrumb
 import Breadcrumbs from "components/Common/Breadcrumb";
 
-import { getProjectDetail as onGetProjectDetail } from "store/projects/actions";
 import ProjectDetail from "./projectDetail";
 import TeamMembers from "./teamMembers";
-import OverviewChart from "./overviewChart";
-import { options, series } from "common/data/projects";
 import AttachedFiles from "./attachedFiles";
 import Comments from "./comments";
 
@@ -22,19 +19,17 @@ import { useSelector, useDispatch } from "react-redux";
 
 const ProjectsOverview = props => {
   const dispatch = useDispatch();
+  const projectDetail = {}
 
-  const { projectDetail } = useSelector(state => ({
-    projectDetail: state.projects.projectDetail,
-  }))
   const {
     match: { params },
   } = props;
 
   useEffect(() => {
     if (params && params.id) {
-      dispatch(onGetProjectDetail(params.id));
+      // dispatch(onGetProjectDetail(params.id));
     } else {
-      dispatch(onGetProjectDetail(0)); //remove this after full integration
+      // dispatch(onGetProjectDetail(0)); //remove this after full integration
     }
   }, [params, onGetProjectDetail]);
 
@@ -56,7 +51,7 @@ const ProjectsOverview = props => {
                 </Col>
 
                 <Col lg="4">
-                  <TeamMembers team={projectDetail.team} />
+                  <TeamMembers team={projectDetail?.team} />
                 </Col>
               </Row>
 
@@ -66,11 +61,11 @@ const ProjectsOverview = props => {
                 </Col> */}
 
                 <Col sm="6">
-                  <AttachedFiles files={projectDetail.files} />
+                  <AttachedFiles files={projectDetail?.files} />
                 </Col>
 
                 <Col sm="6">
-                  <Comments comments={projectDetail.comments} />
+                  <Comments comments={projectDetail?.comments} />
                 </Col>
               </Row>
             </>

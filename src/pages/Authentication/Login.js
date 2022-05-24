@@ -5,8 +5,6 @@ import React from "react";
 import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
 
 //redux
-import { useSelector, useDispatch } from "react-redux";
-
 import { withRouter, Link } from "react-router-dom";
 
 // Formik validation
@@ -17,9 +15,6 @@ import { useFormik } from "formik";
 import { GoogleLogin } from "react-google-login";
 // import TwitterLogin from "react-twitter-auth"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-
-// actions
-import { loginUser, socialLogin } from "../../store/actions";
 
 // import images
 import profile from "assets/images/profile-img.png";
@@ -44,18 +39,10 @@ const Login = props => {
       password: Yup.string().required("Entrez votre Mot de passe"),
     }),
     onSubmit: (values) => {
-      dispatch(loginUser(values, props.history));
+      // dispatch(loginUser(values, props.history));
     }
   });
 
-  const { error } = useSelector(state => ({
-    error: state.Login.error,
-  }));
-
-  // handleValidSubmit
-  const handleValidSubmit = (event, values) => {
-    dispatch(loginUser(values, props.history));
-  };
 
   const signIn = (res, type) => {
     if (type === "google" && res) {
@@ -142,7 +129,7 @@ const Login = props => {
                         return false;
                       }}
                     >
-                      {error ? <Alert color="danger">{error}</Alert> : null}
+                      {/* {error ? <Alert color="danger">{error}</Alert> : null} */}
 
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>

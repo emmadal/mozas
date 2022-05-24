@@ -12,7 +12,6 @@ import {
   CardSubtitle,
   Row
 } from "reactstrap"
-import Slidewithcaption from "../Ui/CarouselTypes/slidewithcaption"
 
 const CardProject = ({ projects }) => {
   return (
@@ -45,7 +44,6 @@ const CardProject = ({ projects }) => {
                 </Link>
               </CardTitle>
               <CardSubtitle className="mb-3">{project?.desc}</CardSubtitle>
-              <Slidewithcaption images={project.files} />
             </CardBody>
             <div className="px-4 py-3 border-top">
               <ul className="list-inline mb-0">

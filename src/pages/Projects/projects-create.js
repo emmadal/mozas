@@ -23,15 +23,11 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-//redux
-import { useDispatch, useSelector } from "react-redux";
-
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
-import { addProjectSuccess } from "store/actions";
 
 const ProjectsCreate = () => {
-  const dispatch = useDispatch()
+  const [projects, setProjects] = useState([])
   const [selectedFiles, setselectedFiles] = useState([])
 
   function handleAcceptedFiles(files) {
@@ -70,16 +66,9 @@ const ProjectsCreate = () => {
       projectbudget: Yup.string().required("Please Enter Your Porject Budget"),
     }),
     onSubmit: (values) => {
-      dispatch(addProjectSuccess(values))
+      // dispatch(addProjectSuccess(values))
     },
   })
-
-  const { projects, error } = useSelector(state => (
-    { 
-      projects: state.projects.projects,
-      error: state.projects.error,
-    }
-  ))
 
   return (
     <React.Fragment>

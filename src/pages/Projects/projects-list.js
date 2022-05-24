@@ -30,21 +30,10 @@ import { useFormik } from "formik";
 import Breadcrumbs from "components/Common/Breadcrumb";
 import DeleteModal from "components/Common/DeleteModal";
 
-import {
-  updateProjectSuccess as onupdateProjectSuccess,
-  deleteProjectSuccess as onDeleteProjectSuccess,
-  getProjectsSuccess as onGetProjectsSuccess
-} from "store/actions"
-
-//redux
-import { useSelector, useDispatch } from "react-redux";
-
 const ProjectsList = () => {
-  const dispatch = useDispatch()
+  const projects = []
   const [project, setProject] = useState(null)
-  const { projects } = useSelector(state => ({
-    projects: state.projects.projects,
-  }))
+  
   const [fileURL, setFileURL] = useState("")
   const [modal, setModal] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
@@ -76,7 +65,7 @@ const ProjectsList = () => {
         }
 
         // update project
-        dispatch(onupdateProjectSuccess(newUpdateProject))
+        // dispatch(onupdateProjectSuccess(newUpdateProject))
       }
       toggle()
     },
@@ -105,7 +94,7 @@ const ProjectsList = () => {
   }
 
   const handleDeleteProject = arg => {
-    dispatch(onDeleteProject(arg))
+    // dispatch(onDeleteProject(arg))
   }
 
   //delete order
@@ -117,13 +106,13 @@ const ProjectsList = () => {
   }
 
   const handleDeleteOrder = () => {
-    dispatch(onDeleteProjectSuccess(project))
+    // dispatch(onDeleteProjectSuccess(project))
     setDeleteModal(false)
   }
 
   useEffect(() => {
-    dispatch(onGetProjectsSuccess())
-  }, [dispatch])
+    // dispatch(onGetProjectsSuccess())
+  }, [])
 
   return (
     <React.Fragment>
