@@ -12,6 +12,7 @@ import chatSaga from "./chat/saga"
 import cryptoSaga from "./crypto/saga"
 import invoiceSaga from "./invoices/saga"
 import projectsSaga from "./projects/saga"
+import investorsSaga from "./investors/saga"
 import tasksSaga from "./tasks/saga"
 import mailsSaga from "./mails/saga"
 import contactsSaga from "./contacts/saga";
@@ -33,6 +34,7 @@ export default function* rootSaga() {
     fork(cryptoSaga),
     fork(invoiceSaga),
     fork(projectsSaga),
+    fork(investorsSaga),
     fork(tasksSaga),
     fork(contactsSaga),
     fork(dashboardSaga),

@@ -158,6 +158,18 @@ const SidebarContent = props => {
               </ul>
             </li>
 
+            <li>
+              <Link to="/#" className="has-arrow ">
+                <i className="bx bx-user"></i>
+                <span>Investisseurs</span>
+              </Link>
+              <ul className="sub-menu" aria-expanded="false">
+                <li>
+                  <Link to="/investors-list">Liste des investisseurs</Link>
+                </li>
+              </ul>
+            </li>
+
             <li className="menu-title">Pages</li>
             <li>
               <Link to="/#" className="">

@@ -161,7 +161,7 @@ class FirebaseAuthBackend {
               .child(`${i.name}`)
               .getDownloadURL()
               .then(fileURL => {
-                resolve([{name: fileURL.split('.')[0], link: fileURL}])
+                resolve([{ name: fileURL.split(".")[0], link: fileURL }])
               })
           })
           .catch(err => {
@@ -268,13 +268,45 @@ class FirebaseAuthBackend {
   /**
    * Get one project
    */
-  getProjectsDetails = (id) => {
-    const collection = firebase.firestore().collection('projects')
+  getProjectsDetails = id => {
+    const collection = firebase.firestore().collection("projects")
     return new Promise((resolve, reject) => {
       collection
         .doc(`${id}`)
-        .get().then((e) => resolve(e.data()))
-        .catch((err) => reject(this._handleError(err)))
+        .get()
+        .then(e => resolve(e.data()))
+        .catch(err => reject(this._handleError(err)))
+    })
+  }
+
+  /**
+   * Get all investors
+   */
+  getAllInvestors = () => {
+    const collection = firebase.firestore().collection("investors")
+    const e = []
+    return new Promise((resolve, reject) => {
+      collection
+        .get()
+        .then(res => {
+          res.docs.map(doc => e.push(doc.data()))
+          resolve(e)
+        })
+        .catch(err => reject(this._handleError(err)))
+    })
+  }
+
+  /**
+   * Get one investor
+   */
+  getInvestorsDetails = id => {
+    const collection = firebase.firestore().collection("investors")
+    return new Promise((resolve, reject) => {
+      collection
+        .doc(`${id}`)
+        .get()
+        .then(e => resolve(e.data()))
+        .catch(err => reject(this._handleError(err)))
     })
   }
 
@@ -286,6 +318,7 @@ class FirebaseAuthBackend {
       lastName: profile.family_name ? profile.family_name : profile.last_name,
       fullName: profile.name,
       email: profile.email,
+      type: "user",
       picture: profile.picture,
       createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
       lastLoginTime: firebase.firestore.FieldValue.serverTimestamp(),

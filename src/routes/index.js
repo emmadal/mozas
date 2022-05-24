@@ -170,6 +170,10 @@ import ContactsGrid from "../pages/Contacts/contacts-grid"
 import ContactsList from "../pages/Contacts/ContactList/contacts-list"
 import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile"
 
+//Investors
+import InvestorsList from "pages/Investors/investors-list"
+import InvestorDetail from "pages/Investors/investor-detail"
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
   { path: "/dashboard-saas", component: DashboardSaas },
@@ -228,6 +232,10 @@ const authProtectedRoutes = [
   { path: "/projects-overview", component: ProjectsOverview },
   { path: "/projects-overview/:id", component: ProjectsOverview },
   { path: "/projects-create", component: ProjectsCreate },
+
+  //Investors
+  { path: "/investors-list", component: InvestorsList },
+  { path: "/investor/:id", component: InvestorDetail },
 
   //Blog
   { path: "/blog-list", component: BlogList },
@@ -302,8 +310,8 @@ const authProtectedRoutes = [
   { path: "/ui-notifications", component: UiNotifications },
   { path: "/ui-offcanvas", component: UiOffCanvas },
   { path: "/ui-breadcrumb", component: UiBreadcrumb },
-  { path : "/ui-placeholders" , component : UiPlaceholders},
-  { path : "/ui-toasts" , component : UiToasts},
+  { path: "/ui-placeholders", component: UiPlaceholders },
+  { path: "/ui-toasts", component: UiToasts },
 
   //Utility
   { path: "/pages-starter", component: PagesStarter },

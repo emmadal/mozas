@@ -27,6 +27,9 @@ import invoices from "./invoices/reducer"
 //projects
 import projects from "./projects/reducer"
 
+//investors
+import investors from "./investors/reducer"
+
 //tasks
 import tasks from "./tasks/reducer"
 
@@ -56,6 +59,7 @@ const rootReducer = combineReducers({
   crypto,
   invoices,
   projects,
+  investors,
   tasks,
   contacts,
   Dashboard,

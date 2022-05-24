@@ -24,6 +24,9 @@ export * from "./invoices/actions"
 // projects
 export * from "./projects/actions"
 
+// investors
+export * from "./investors/actions"
+
 // tasks
 export * from "./tasks/actions"
 
