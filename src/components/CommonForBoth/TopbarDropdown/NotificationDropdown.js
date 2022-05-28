@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { Dropdown, DropdownToggle, DropdownMenu, Row, Col } from "reactstrap";
 import SimpleBar from "simplebar-react";
@@ -157,7 +156,3 @@ const NotificationDropdown = props => {
 };
 
 export default withTranslation()(NotificationDropdown);
-
-NotificationDropdown.propTypes = {
-  t: PropTypes.any
-};

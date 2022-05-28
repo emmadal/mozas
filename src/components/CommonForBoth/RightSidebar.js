@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Row, Col, FormGroup } from "reactstrap";
 
 import { connect } from "react-redux";
@@ -572,25 +571,6 @@ const RightSidebar = props => {
       <div className="rightbar-overlay"></div>
     </React.Fragment>
   );
-};
-
-RightSidebar.propTypes = {
-  changeLayout: PropTypes.func,
-  changeLayoutWidth: PropTypes.func,
-  changePreloader: PropTypes.func,
-  changeSidebarTheme: PropTypes.func,
-  changeSidebarThemeImage: PropTypes.func,
-  changeSidebarType: PropTypes.func,
-  changeTopbarTheme: PropTypes.func,
-  isPreloader: PropTypes.any,
-  layoutType: PropTypes.any,
-  layoutWidth: PropTypes.any,
-  leftSideBarTheme: PropTypes.any,
-  leftSideBarThemeImage: PropTypes.any,
-  leftSideBarType: PropTypes.any,
-  showRightSidebarAction: PropTypes.func,
-  topbarTheme: PropTypes.any,
-  onClose: PropTypes.func,
 };
 
 const mapStateToProps = state => {

@@ -1,7 +1,5 @@
 import React, { useEffect } from "react"
 import MetaTags from "react-meta-tags"
-import PropTypes from "prop-types"
-import { withRouter } from "react-router-dom"
 import { isEmpty } from "lodash"
 import { Col, Container, Row, Card, CardBody, CardTitle, CardHeader } from "reactstrap"
 
@@ -54,8 +52,4 @@ const InvestorDetail = props => {
   )
 }
 
-InvestorDetail.propTypes = {
-  match: PropTypes.object,
-}
-
-export default withRouter(InvestorDetail)
+export default InvestorDetail

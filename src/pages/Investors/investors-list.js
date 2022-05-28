@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import MetaTags from "react-meta-tags"
-import { Link, withRouter } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { map } from "lodash"
 import {
   Col,
@@ -16,8 +16,7 @@ const InvestorsList = () => {
   const investors = []
 
   useEffect(() => {
-    // dispatch(onGetInvestorsSuccess())
-  }, [dispatch])
+  }, [])
 
   return (
     <React.Fragment>
@@ -105,4 +104,4 @@ const InvestorsList = () => {
   )
 }
 
-export default withRouter(InvestorsList)
+export default InvestorsList

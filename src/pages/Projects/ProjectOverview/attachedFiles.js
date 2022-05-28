@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { Card, CardBody, CardTitle, Table } from "reactstrap"
 import { Link } from "react-router-dom"
 import { map } from "lodash"
@@ -44,10 +43,6 @@ const AttachedFiles = ({ files }) => {
       </CardBody>
     </Card>
   )
-}
-
-AttachedFiles.propTypes = {
-  files: PropTypes.array,
 }
 
 export default AttachedFiles

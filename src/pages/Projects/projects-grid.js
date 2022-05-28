@@ -8,7 +8,6 @@ import {
   PaginationLink,
   Row,
 } from "reactstrap";
-import { withRouter } from "react-router-dom";
 import { map } from "lodash";
 
 //Import Breadcrumb
@@ -18,9 +17,6 @@ import Breadcrumbs from "components/Common/Breadcrumb";
 import CardProject from "./card-project";
 
 
-//redux
-import { useSelector, useDispatch } from "react-redux";
-
 const ProjectsGrid = props => {
   const [projects, setProjetcs] = useState([])
 
@@ -29,7 +25,7 @@ const ProjectsGrid = props => {
 
   useEffect(() => {
     // dispatch(onGetProjectsSuccess())
-  }, [dispatch]);
+  }, []);
 
   const handlePageClick = page => {
     setPage(page);
@@ -88,4 +84,4 @@ const ProjectsGrid = props => {
   );
 };
 
-export default withRouter(ProjectsGrid);
+export default ProjectsGrid;

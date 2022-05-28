@@ -1,5 +1,4 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MetaTags from "react-meta-tags";
 import {
   Container,
@@ -35,13 +34,12 @@ import LatestTranaction from "./LatestTranaction";
 
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
+import { UserContext } from "App";
 
-//i18n
-import { withTranslation } from "react-i18next";
-
-const Dashboard = props => {
+const Dashboard = () => {
   const [modal, setmodal] = useState(false);
   const [subscribemodal, setSubscribemodal] = useState(false);
+  const {user} = useContext(UserContext)
 
   const reports = [
     { title: "Orders", iconClass: "bx-copy-alt", description: "1,235" },
@@ -52,12 +50,6 @@ const Dashboard = props => {
       description: "$16.2",
     },
   ];
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setSubscribemodal(true);
-  //   }, 2000);
-  // }, []);
 
   const [periodData, setPeriodData] = useState([]);
   const [periodType, setPeriodType] = useState("yearly");
@@ -71,9 +63,23 @@ const Dashboard = props => {
     // dispatch(onGetChartsData(pType));
   };
 
-  useEffect(() => {
-    // dispatch(onGetChartsData("yearly"));
-  }, []);
+
+  if (!user) {
+    return (
+      <div id="preloader">
+        <div id="status">
+          <div className="spinner-chase">
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <React.Fragment>
@@ -360,10 +366,5 @@ const Dashboard = props => {
   )
 };
 
-Dashboard.propTypes = {
-  t: PropTypes.any,
-  chartsData: PropTypes.any,
-  onGetChartsData: PropTypes.func,
-};
 
-export default withTranslation()(Dashboard);
+export default Dashboard;

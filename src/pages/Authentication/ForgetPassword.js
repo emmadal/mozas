@@ -1,12 +1,8 @@
-import PropTypes from "prop-types";
 import MetaTags from "react-meta-tags";
 import React from "react";
 import { Row, Col, Alert, Card, CardBody, Container, FormFeedback, Input, Label, Form } from "reactstrap";
 
-//redux
-import { useSelector, useDispatch } from "react-redux";
-
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Formik Validation
 import * as Yup from "yup";
@@ -17,8 +13,6 @@ import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/logo.svg";
 
 const ForgetPasswordPage = props => {
-  const dispatch = useDispatch();
-
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -34,11 +28,6 @@ const ForgetPasswordPage = props => {
     }
   });
 
-  const { forgetError, forgetSuccessMsg } = useSelector(state => ({
-    forgetError: state.ForgetPassword.forgetError,
-    forgetSuccessMsg: state.ForgetPassword.forgetSuccessMsg,
-  }));
-
   return (
     <React.Fragment>
       <MetaTags>
@@ -47,7 +36,7 @@ const ForgetPasswordPage = props => {
         </title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
+        <Link to="/login" className="text-dark">
           <i className="fas fa-home h2" />
         </Link>
       </div>
@@ -71,7 +60,7 @@ const ForgetPasswordPage = props => {
                 </div>
                 <CardBody className="pt-0">
                   <div>
-                    <Link to="/">
+                    <Link to="/login">
                       <div className="avatar-md profile-user-wid mb-4">
                         <span className="avatar-title rounded-circle bg-light">
                           <img
@@ -85,7 +74,7 @@ const ForgetPasswordPage = props => {
                     </Link>
                   </div>
                   <div className="p-2">
-                    {forgetError && forgetError ? (
+                    {/* {forgetError && forgetError ? (
                       <Alert color="danger" style={{ marginTop: "13px" }}>
                         {forgetError}
                       </Alert>
@@ -94,7 +83,7 @@ const ForgetPasswordPage = props => {
                       <Alert color="success" style={{ marginTop: "13px" }}>
                         {forgetSuccessMsg}
                       </Alert>
-                    ) : null}
+                    ) : null} */}
 
                     <Form
                       className="form-horizontal"
@@ -155,8 +144,4 @@ const ForgetPasswordPage = props => {
   );
 };
 
-ForgetPasswordPage.propTypes = {
-  history: PropTypes.object,
-};
-
-export default withRouter(ForgetPasswordPage);
+export default ForgetPasswordPage;

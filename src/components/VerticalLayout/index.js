@@ -1,40 +1,18 @@
-import PropTypes from "prop-types";
-import React, { useEffect } from "react";
-
-import { withRouter } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
 
 // Layout Related Components
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
+import { UserContext } from "App";
 
 const Layout = (props) => {
-
+  const {user} = useContext(UserContext)
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  const toggleMenuCallback = () => {
-    // if (leftSideBarType === "default") {
-    //   dispatch(changeSidebarType("condensed", isMobile));
-    // } else if (leftSideBarType === "condensed") {
-    //   dispatch(changeSidebarType("default", isMobile));
-    // }
-  };
+  const toggleMenuCallback = () => {};
 
-  //hides right sidebar on body click
-  const hideRightbar = (event) => {
-    // var rightbar = document.getElementById("right-bar");
-    // //if clicked in inside right bar, then do nothing
-    // if (rightbar && rightbar.contains(event.target)) {
-    //   return;
-    // } else {
-    //   //if clicked in outside of rightbar then fire action for hide rightbar
-    //    dispatch(showRightSidebarAction(false));
-    // }
-  };
-
-  /*
-  layout  settings
-  */
+  const hideRightbar = () => {};
 
   useEffect(() => {
     //init body click event fot toggle rightbar
@@ -44,6 +22,23 @@ const Layout = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if(!user){
+    return (
+      <div id="preloader">
+        <div id="status">
+          <div className="spinner-chase">
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+            <div className="chase-dot" />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <React.Fragment>
@@ -61,21 +56,4 @@ const Layout = (props) => {
   )
 };
 
-Layout.propTypes = {
-  changeLayoutWidth: PropTypes.func,
-  changeSidebarTheme: PropTypes.func,
-  changeSidebarThemeImage: PropTypes.func,
-  changeSidebarType: PropTypes.func,
-  changeTopbarTheme: PropTypes.func,
-  children: PropTypes.object,
-  isPreloader: PropTypes.any,
-  layoutWidth: PropTypes.any,
-  leftSideBarTheme: PropTypes.any,
-  leftSideBarThemeImage: PropTypes.any,
-  leftSideBarType: PropTypes.any,
-  location: PropTypes.object,
-  showRightSidebar: PropTypes.any,
-  topbarTheme: PropTypes.any,
-};
-
-export default withRouter(Layout);
+export default Layout;

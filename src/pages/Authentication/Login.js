@@ -1,31 +1,25 @@
-import PropTypes from "prop-types";
 import MetaTags from "react-meta-tags";
-import React from "react";
-
+import React, { useState } from "react";
 import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
 
-//redux
-import { withRouter, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // Formik validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-//Social Media Imports
-import { GoogleLogin } from "react-google-login";
-// import TwitterLogin from "react-twitter-auth"
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 // import images
 import profile from "assets/images/profile-img.png";
 import logo from "assets/images/logo.svg";
 
-//Import config
-import { facebook, google } from "../../config";
+import { UserContext } from "App"
+import { loginUser, getUserByUID } from "helpers/firebase_helper"
 
 const Login = props => {
-  const dispatch = useDispatch();
-
+  const { setUser } = React.useContext(UserContext)
+  const [err, setErr] = useState('')
+  const navigate = useNavigate()
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -38,8 +32,19 @@ const Login = props => {
       email: Yup.string().required("Entrez votre Email"),
       password: Yup.string().required("Entrez votre Mot de passe"),
     }),
-    onSubmit: (values) => {
-      // dispatch(loginUser(values, props.history));
+    onSubmit: async (values) => {
+      try {
+        const { email, password } = values
+        const res = await loginUser(email, password)
+        if (res) {
+          getUserByUID(res.uid).then(e => {
+            setUser(e)
+            navigate("/dashboard", {replace: true})
+          })
+        }
+      } catch (error) {
+        setErr(error.message)
+      }
     }
   });
 
@@ -64,18 +69,6 @@ const Login = props => {
     }
   };
 
-  //handleGoogleLoginResponse
-  const googleResponse = response => {
-    signIn(response, "google");
-  };
-
-  //handleTwitterLoginResponse
-  // const twitterResponse = e => {}
-
-  //handleFacebookLoginResponse
-  const facebookResponse = response => {
-    signIn(response, "facebook");
-  };
 
   return (
     <React.Fragment>
@@ -83,7 +76,7 @@ const Login = props => {
         <title>Connexion | Mozas</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
+        <Link to="/login" className="text-dark">
           <i className="fas fa-home h2" />
         </Link>
       </div>
@@ -107,7 +100,7 @@ const Login = props => {
                 </div>
                 <CardBody className="pt-0">
                   <div>
-                    <Link to="/" className="auth-logo-light">
+                    <Link to="/login" className="auth-logo-light">
                       <div className="avatar-md profile-user-wid mb-4">
                         <span className="avatar-title rounded-circle bg-light">
                           <img
@@ -129,8 +122,7 @@ const Login = props => {
                         return false;
                       }}
                     >
-                      {/* {error ? <Alert color="danger">{error}</Alert> : null} */}
-
+                      {err && <Alert color="danger">{err}</Alert>}
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>
                         <Input
@@ -221,8 +213,4 @@ const Login = props => {
   );
 };
 
-export default withRouter(Login);
-
-Login.propTypes = {
-  history: PropTypes.object,
-};
+export default Login;

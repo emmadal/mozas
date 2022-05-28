@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 import { map } from "lodash";
@@ -75,10 +74,6 @@ const CardProject = ({ projects }) => {
       ))}
     </React.Fragment>
   )
-};
-
-CardProject.propTypes = {
-  projects: PropTypes.array,
 };
 
 export default CardProject;

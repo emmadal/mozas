@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { map, get } from "lodash";
 import { Card, CardBody, Col, Row } from "reactstrap";
 
@@ -53,10 +52,6 @@ const ProjectDetail = ({ project }) => {
       </CardBody>
     </Card>
   )
-};
-
-ProjectDetail.propTypes = {
-  project: PropTypes.object,
 };
 
 export default ProjectDetail;

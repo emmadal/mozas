@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types'
-import { withRouter } from "react-router-dom"
 
 const NonAuthLayout = (props) => {
   return (
@@ -8,9 +6,5 @@ const NonAuthLayout = (props) => {
   );
 }
 
-NonAuthLayout.propTypes = {
-  children: PropTypes.any,
-  location: PropTypes.object
-}
 
-export default withRouter(NonAuthLayout)
+export default NonAuthLayout

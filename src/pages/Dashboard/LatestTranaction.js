@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
-import { withRouter, Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { isEmpty } from "lodash"
 import BootstrapTable from "react-bootstrap-table-next"
 import paginationFactory, {
@@ -213,4 +213,4 @@ LatestTranaction.propTypes = {
   onGetOrders: PropTypes.func,
 }
 
-export default withRouter(LatestTranaction)
+export default LatestTranaction

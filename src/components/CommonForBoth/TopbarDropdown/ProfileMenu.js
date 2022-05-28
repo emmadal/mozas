@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react"
-import PropTypes from 'prop-types'
+import React, { useState, useEffect, useContext } from "react"
 import {
   Dropdown,
   DropdownToggle,
@@ -7,30 +6,31 @@ import {
   DropdownItem,
 } from "reactstrap"
 
-import { withRouter, Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 // users
 import user1 from "../../../assets/images/users/avatar-1.jpg"
+import { UserContext } from "App"
+import { logout } from "helpers/firebase_helper"
 
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false)
+  const { user, setUser } = useContext(UserContext)
+  const navigate = useNavigate()
 
   const [username, setusername] = useState("Admin")
 
+  const logOut = () => {
+    logout().then(() => {
+      setUser(null)
+      navigate("/login", { replace: true })
+    })
+  }
+    
+
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
-      if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-        const obj = JSON.parse(localStorage.getItem("authUser"))
-        setusername(obj.displayName)
-      } else if (
-        process.env.REACT_APP_DEFAULTAUTH === "fake" ||
-        process.env.REACT_APP_DEFAULTAUTH === "jwt"
-      ) {
-        const obj = JSON.parse(localStorage.getItem("authUser"))
-        setusername(obj.username)
-      }
-    }
+    setusername(user?.fullName)
   }, [props.success])
 
   return (
@@ -50,31 +50,31 @@ const ProfileMenu = props => {
             src={user1}
             alt="Header Avatar"
           />
-          <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
-          <i className="mdi mdi-chevron-down d-none d-xl-inline-block"/>
+          <span className="d-none d-xl-inline-block ms-2 me-1">{user?.fullName}</span>
+          <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <DropdownItem tag="a" href="/profile">
             {" "}
-            <i className="bx bx-user font-size-16 align-middle me-1"/>
+            <i className="bx bx-user font-size-16 align-middle me-1" />
             Profil{" "}
           </DropdownItem>
           <DropdownItem tag="a" href="/crypto-wallet">
-            <i className="bx bx-wallet font-size-16 align-middle me-1"/>
+            <i className="bx bx-wallet font-size-16 align-middle me-1" />
             Wallet
           </DropdownItem>
           <DropdownItem tag="a" href="#">
             {/* <span className="badge bg-success float-end">11</span> */}
-            <i className="bx bx-wrench font-size-16 align-middle me-1"/>
+            <i className="bx bx-wrench font-size-16 align-middle me-1" />
             Paramètres
           </DropdownItem>
           {/* <DropdownItem tag="a" href="auth-lock-screen">
             <i className="bx bx-lock-open font-size-16 align-middle me-1"/>
             {props.t("Lock screen")}
           </DropdownItem> */}
-          <div className="dropdown-divider"/>
-          <Link to="/logout" className="dropdown-item">
-            <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger"/>
+          <div className="dropdown-divider" />
+          <Link to="/#" className="dropdown-item" onClick={logOut}>
+            <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
             <span>Déconnexion</span>
           </Link>
         </DropdownMenu>
@@ -83,9 +83,4 @@ const ProfileMenu = props => {
   )
 }
 
-ProfileMenu.propTypes = {
-  success: PropTypes.any,
-  t: PropTypes.any
-}
-
-export default withRouter(ProfileMenu)
+export default ProfileMenu

@@ -1,20 +1,25 @@
-import PropTypes from "prop-types"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 
-// //Import Scrollbar
+//Import Scrollbar
 import SimpleBar from "simplebar-react"
 
 // MetisMenu
 import MetisMenu from "metismenujs"
-import { withRouter } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { UserContext } from "App"
+
+//Navigation
+import {useLocation} from 'react-router-dom'
 
 const SidebarContent = props => {
   const ref = useRef()
+  const { user } = useContext(UserContext)
   const [usertype, setUserType] = useState('')
+  const location = useLocation()
   // Use ComponentDidMount and ComponentDidUpdate method symultaniously
   useEffect(() => {
-    const pathName = props.location.pathname
+    const pathName = location.pathname
+    // const pathName = props.location.pathname
 
     const initMenu = () => {
       new MetisMenu("#side-menu")
@@ -32,20 +37,15 @@ const SidebarContent = props => {
       }
     }
     initMenu()
-  }, [props.location.pathname])
+  }, [location.pathname])
 
   useEffect(() => {
     ref.current.recalculate()
   })
 
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
-      if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-        const obj = JSON.parse(localStorage.getItem("authUser"))
-        setUserType(obj?.type)
-      }
-    }
-  })
+    setUserType(user?.type)
+  }, [])
 
   function scrollElement(item) {
     if (item) {
@@ -108,10 +108,10 @@ const SidebarContent = props => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="/dashboard">{props.t("Default")}</Link>
+                      <Link to="/dashboard">Accueil</Link>
                     </li>
                     <li>
-                      <Link to="/dashboard-crypto">{props.t("Crypto")}</Link>
+                      <Link to="/dashboard-crypto">Crypto</Link>
                     </li>
                   </ul>
                 </li>
@@ -147,7 +147,7 @@ const SidebarContent = props => {
                 </li>
 
                 <li>
-                  <Link to="/#" className="has-arrow ">
+                  <Link to="/#" className="has-arrow">
                     <i className="bx bx-briefcase-alt-2"></i>
                     <span>Projets</span>
                   </Link>
@@ -165,7 +165,7 @@ const SidebarContent = props => {
                 </li>
 
                 <li>
-                  <Link to="/#" className="has-arrow ">
+                  <Link to="/#" className="has-arrow">
                     <i className="bx bx-user"></i>
                     <span>Investisseurs</span>
                   </Link>
@@ -231,9 +231,4 @@ const SidebarContent = props => {
   )
 }
 
-SidebarContent.propTypes = {
-  location: PropTypes.object,
-  t: PropTypes.any,
-}
-
-export default withRouter(SidebarContent)
+export default SidebarContent

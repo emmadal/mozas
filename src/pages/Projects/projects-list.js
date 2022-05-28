@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MetaTags from "react-meta-tags";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { map } from "lodash";
 import {
   Badge,
@@ -29,11 +29,11 @@ import { useFormik } from "formik";
 //Import Component
 import Breadcrumbs from "components/Common/Breadcrumb";
 import DeleteModal from "components/Common/DeleteModal";
+import { getAllProjects } from "helpers/firebase_helper";
 
 const ProjectsList = () => {
-  const projects = []
   const [project, setProject] = useState(null)
-  
+  const [projects, setProjects] = useState([])
   const [fileURL, setFileURL] = useState("")
   const [modal, setModal] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
@@ -63,7 +63,6 @@ const ProjectsList = () => {
           desc: values.description ?? project?.desc,
           status: values.status ?? project?.status,
         }
-
         // update project
         // dispatch(onupdateProjectSuccess(newUpdateProject))
       }
@@ -111,7 +110,11 @@ const ProjectsList = () => {
   }
 
   useEffect(() => {
-    // dispatch(onGetProjectsSuccess())
+    const getProjects = async () => {
+      const res = await getAllProjects()
+      setProjects([...res])
+    }
+    getProjects()
   }, [])
 
   return (
@@ -358,4 +361,4 @@ const ProjectsList = () => {
   )
 };
 
-export default withRouter(ProjectsList);
+export default ProjectsList;

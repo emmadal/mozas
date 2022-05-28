@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from 'prop-types';
 import ReactApexChart from "react-apexcharts"
 
 const StackedColumnChart = ({ periodData }) => {
@@ -64,7 +63,4 @@ const StackedColumnChart = ({ periodData }) => {
   );
 }
 
-StackedColumnChart.propTypes = {
-  periodData: PropTypes.any
-}
 export default StackedColumnChart;

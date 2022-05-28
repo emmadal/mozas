@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import MetaTags from "react-meta-tags";
 import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
 
@@ -6,13 +6,17 @@ import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFee
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 // import images
 import profileImg from "../../assets/images/profile-img.png";
 import logoImg from "../../assets/images/logo.svg";
+import { UserContext } from "App";
+import { registerUser } from "helpers/firebase_helper";
 
 const Register = props => {
+  const [err, setErr] = useState('')
+  const [user, serUser] = useState(false)
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -27,8 +31,9 @@ const Register = props => {
       username: Yup.string().required("Entrez votre Nom d'utilisateur"),
       password: Yup.string().required("Entrez votre Mot de passe"),
     }),
-    onSubmit: (values) => {
-      // dispatch(registerUser(values));
+    onSubmit: async (values) => {
+      const res = await registerUser(values)
+      setUser(res)
     }
   });
 
@@ -38,7 +43,7 @@ const Register = props => {
         <title>S&#39;enregistrer | Mozas</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
-        <Link to="/" className="text-dark">
+        <Link to="/login" className="text-dark">
           <i className="fas fa-home h2" />
         </Link>
       </div>
@@ -62,7 +67,7 @@ const Register = props => {
                 </div>
                 <CardBody className="pt-0">
                   <div>
-                    <Link to="/">
+                    <Link to="/login">
                       <div className="avatar-md profile-user-wid mb-4">
                         <span className="avatar-title rounded-circle bg-light">
                           <img
@@ -84,15 +89,13 @@ const Register = props => {
                         return false
                       }}
                     >
-                      {user && user ? (
+                      {user &&
                         <Alert color="success">
                           Enregistrement effectué avec succès
                         </Alert>
-                      ) : null}
+                      }
 
-                      {registrationError && registrationError ? (
-                        <Alert color="danger">{registrationError}</Alert>
-                      ) : null}
+                      {err && <Alert color="danger">{err}</Alert>}
 
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>

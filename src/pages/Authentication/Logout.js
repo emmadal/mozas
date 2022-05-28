@@ -1,18 +1,21 @@
-import PropTypes from "prop-types"
-import React, { useEffect } from "react"
-import { withRouter } from "react-router-dom"
+import React, { useEffect, useContext } from "react"
+import { UserContext } from "App"
+import { logout } from "helpers/firebase_helper"
+import { useNavigate } from "react-router-dom"
 
-const Logout = props => {
+
+const Logout = () => {
+  const { setUser } = useContext(UserContext)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    // dispatch(logoutUser(props.history))
-  }, [dispatch])
+    logout().then(() => {
+      setUser(null)
+      navigate("login", { replace: true })
+    })
+  }, [])
 
   return <></>
 }
 
-Logout.propTypes = {
-  history: PropTypes.object,
-}
-
-export default withRouter(Logout)
+export default Logout

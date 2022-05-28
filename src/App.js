@@ -1,12 +1,12 @@
-import React from "react"
+import React, { useState, useEffect, useCallback } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import { Switch, BrowserRouter as Router } from "react-router-dom"
+// Import firebase
+import {getAuth, onAuthStateChanged,} from 'firebase/auth'
+import { getUserByUID } from "helpers/firebase_helper"
 
 // Import Routes all
 import { authProtectedRoutes, publicRoutes } from "./routes"
-
-// Import all middleware
-import Authmiddleware from "./routes/route"
 
 // layouts Format
 import VerticalLayout from "./components/VerticalLayout/"
@@ -15,52 +15,56 @@ import NonAuthLayout from "./components/NonAuthLayout"
 // Import scss
 import "./assets/scss/theme.scss"
 
-// Import Firebase Configuration file
-import { initFirebaseBackend } from "./helpers/firebase_helper"
+// create global store context
+export const UserContext = React.createContext(null);
 
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_APIKEY,
-  authDomain: process.env.REACT_APP_AUTHDOMAIN,
-  // databaseURL: process.env.REACT_APP_DATABASEURL,
-  projectId: process.env.REACT_APP_PROJECTID,
-  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
-  appId: process.env.REACT_APP_APPID,
-  measurementId: process.env.REACT_APP_MEASUREMENTID,
-}
+
 
 // init firebase backend
-initFirebaseBackend(firebaseConfig)
 
 const App = () => {
+  const [user, setUser] = useState(null)
+
+  // Handle user state changes
+  const onAuthState = useCallback(() => {
+    onAuthStateChanged(getAuth(), res => {
+      if (res) {
+        getUserByUID(res.uid).then(e => {
+          setUser(e)
+        })
+      }
+    })
+  }, [setUser])
+
+  useEffect(() => {
+    const subscriber = onAuthState()
+    return () => subscriber
+  }, [onAuthState])
+
   return (
-    <React.Fragment>
-      <Router>
-        <Switch>
-          {publicRoutes.map((route, idx) => (
-            <Authmiddleware
+    <BrowserRouter>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Routes>
+          {publicRoutes.map((route, key) => (
+            <Route
+              key={key}
               path={route.path}
-              layout={NonAuthLayout}
-              component={route.component}
-              key={idx}
-              isAuthProtected={false}
-              exact
+              element={<NonAuthLayout>{route?.component}</NonAuthLayout>}
             />
           ))}
 
-          {authProtectedRoutes.map((route, idx) => (
-            <Authmiddleware
-              path={route.path}
-              layout={VerticalLayout}
-              component={route.component}
-              key={idx}
-              isAuthProtected={true}
-              exact
-            />
-          ))}
-        </Switch>
-      </Router>
-    </React.Fragment>
+          {user &&
+            authProtectedRoutes.map((route, key) => (
+              <Route
+                key={key}
+                path={route.path}
+                index={route?.index}
+                element={<VerticalLayout>{route?.component}</VerticalLayout>}
+              />
+            ))}
+        </Routes>
+      </UserContext.Provider>
+    </BrowserRouter>
   )
 }
 

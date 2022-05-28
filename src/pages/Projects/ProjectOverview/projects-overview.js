@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
 import MetaTags from "react-meta-tags";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
 import { isEmpty } from "lodash";
 import { Col, Container, Row } from "reactstrap";
 
@@ -13,17 +10,14 @@ import ProjectDetail from "./projectDetail";
 import TeamMembers from "./teamMembers";
 import AttachedFiles from "./attachedFiles";
 import Comments from "./comments";
+import { useParams } from "react-router-dom";
 
 //redux
-import { useSelector, useDispatch } from "react-redux";
 
-const ProjectsOverview = props => {
-  const dispatch = useDispatch();
+const ProjectsOverview = () => {
   const projectDetail = {}
+  const params = useParams()
 
-  const {
-    match: { params },
-  } = props;
 
   useEffect(() => {
     if (params && params.id) {
@@ -31,7 +25,7 @@ const ProjectsOverview = props => {
     } else {
       // dispatch(onGetProjectDetail(0)); //remove this after full integration
     }
-  }, [params, onGetProjectDetail]);
+  }, [params]);
 
   return (
     <React.Fragment>
@@ -76,8 +70,4 @@ const ProjectsOverview = props => {
   )
 };
 
-ProjectsOverview.propTypes = {
-  match: PropTypes.object,
-};
-
-export default withRouter(ProjectsOverview);
+export default ProjectsOverview;

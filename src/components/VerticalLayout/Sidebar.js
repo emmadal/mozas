@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import SidebarContent from "./SidebarContent";
 import logo from "../../assets/images/logo.svg";
@@ -40,4 +39,4 @@ const Sidebar = () => {
   )
 };
 
-export default withRouter(Sidebar)
+export default Sidebar

@@ -1,5 +1,5 @@
 import MetaTags from "react-meta-tags";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Container,
   Row,
@@ -18,40 +18,18 @@ import {
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-import { withRouter } from "react-router-dom";
-
 //Import Breadcrumb
 import Breadcrumb from "../../components/Common/Breadcrumb";
 
 import avatar from "../../assets/images/users/avatar-1.jpg";
+import { UserContext } from "App";
 
 const UserProfile = props => {
-  const dispatch = useDispatch();
 
-  const [email, setemail] = useState("");
-  const [name, setname] = useState("");
+  const {user} = useContext(UserContext)
+  const [email, setemail] = useState(user?.email ?? '');
+  const [name, setname] = useState(user?.displayName ?? "")
   const [idx, setidx] = useState(1);
-
-  useEffect(() => {
-    if (localStorage.getItem("authUser")) {
-      const obj = JSON.parse(localStorage.getItem("authUser"));
-      if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-        setname(obj.displayName);
-        setemail(obj.email);
-        setidx(obj.uid);
-      } else if (
-        process.env.REACT_APP_DEFAULTAUTH === "fake" ||
-        process.env.REACT_APP_DEFAULTAUTH === "jwt"
-      ) {
-        setname(obj.username);
-        setemail(obj.email);
-        setidx(obj.uid);
-      }
-      setTimeout(() => {
-        dispatch(resetProfileFlag());
-      }, 3000);
-    }
-  }, [dispatch, success]);
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -65,7 +43,6 @@ const UserProfile = props => {
       username: Yup.string().required("Please Enter Your UserName"),
     }),
     onSubmit: (values) => {
-      // dispatch(editProfile(values));
     }
   });
 
@@ -154,4 +131,4 @@ const UserProfile = props => {
   );
 };
 
-export default withRouter(UserProfile);
+export default UserProfile;

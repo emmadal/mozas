@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
 
@@ -18,11 +17,6 @@ const OverviewChart = ({ options, series }) => {
       </CardBody>
     </Card>
   );
-};
-
-OverviewChart.propTypes = {
-  options: PropTypes.object,
-  series: PropTypes.array,
 };
 
 export default OverviewChart;

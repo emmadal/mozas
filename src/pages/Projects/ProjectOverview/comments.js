@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
 import { map } from "lodash";
@@ -74,10 +73,6 @@ const Comments = ({ comments }) => {
       </CardBody>
     </Card>
   );
-};
-
-Comments.propTypes = {
-  comments: PropTypes.array,
 };
 
 export default Comments;
