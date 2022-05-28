@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import MetaTags from "react-meta-tags";
 import { isEmpty } from "lodash";
 import { Col, Container, Row } from "reactstrap";
@@ -12,20 +12,27 @@ import AttachedFiles from "./attachedFiles";
 import Comments from "./comments";
 import { useParams } from "react-router-dom";
 
-//redux
+//firebase
+import { getProjectsDetails } from "helpers/firebase_helper";
 
 const ProjectsOverview = () => {
-  const projectDetail = {}
+  const [projectDetail, setProjectDetail] = useState(null);
   const params = useParams()
+
+
+  const getProjectById = useCallback(async () => {
+    const res = await getProjectsDetails(params.id)
+    setProjectDetail(res)
+  }, [params])
 
 
   useEffect(() => {
     if (params && params.id) {
-      // dispatch(onGetProjectDetail(params.id));
-    } else {
-      // dispatch(onGetProjectDetail(0)); //remove this after full integration
+      getProjectById()
     }
   }, [params]);
+
+  console.log(projectDetail)
 
   return (
     <React.Fragment>
@@ -40,11 +47,11 @@ const ProjectsOverview = () => {
           {!isEmpty(projectDetail) && (
             <>
               <Row>
-                <Col lg="8">
+                <Col sm="8">
                   <ProjectDetail project={projectDetail} />
                 </Col>
 
-                <Col lg="4">
+                <Col sm="4">
                   <TeamMembers team={projectDetail?.team} />
                 </Col>
               </Row>
@@ -54,14 +61,19 @@ const ProjectsOverview = () => {
                   <OverviewChart options={options} series={series} />
                 </Col> */}
 
-                <Col sm="6">
+                <Col sm="8">
                   <AttachedFiles files={projectDetail?.files} />
                 </Col>
 
-                <Col sm="6">
-                  <Comments comments={projectDetail?.comments} />
+                <Col sm="4">
+                  {/* <Comments comments={projectDetail?.comments} /> */}
                 </Col>
               </Row>
+              <div className="text-center my-5">
+                <button className="btn btn-danger btn-block" type="submit">
+                  Investir dans ce projet
+                </button>
+              </div>
             </>
           )}
         </Container>

@@ -7,17 +7,20 @@ const ProjectDetail = ({ project }) => {
     <Card>
       <CardBody>
         <div className="d-flex">
-          <img src={`${project?.files[0]?.link}`} alt="" className="avatar-md me-4 img-fluid" />
+          <img
+            src={`${project?.files[0]?.link}`}
+            alt=""
+            className="avatar-md me-4 img-fluid"
+          />
 
           <div className="flex-grow-1 overflow-hidden">
             <h5 className="text-truncate font-size-15">{project?.name}</h5>
-            <p className="text-muted">{project?.desc}</p>
           </div>
         </div>
 
         <h5 className="font-size-15 mt-4">Détails du projet :</h5>
 
-        <p className="text-muted">{get(project, "project.desc")}</p>
+        <p className="text-muted text-wrap word-wrap">{project?.desc}</p>
 
         <div className="text-muted mt-4">
           {project.projectDetails &&
