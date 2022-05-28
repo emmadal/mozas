@@ -1,12 +1,13 @@
-import React from "react"
-
+import React, {useContext} from "react"
 import { Row, Col, Card, CardBody } from "reactstrap"
 import { Link } from "react-router-dom"
-
 import avatar1 from "../../assets/images/users/avatar-1.jpg"
 import profileImg from "../../assets/images/profile-img.png"
+import { UserContext } from "App"
 
 const WelcomeComp = () => {
+  const { user } = useContext(UserContext)
+  
   return (
     <React.Fragment>
       <Card className="overflow-hidden">
@@ -15,7 +16,6 @@ const WelcomeComp = () => {
             <Col xs="7">
               <div className="text-primary p-3">
                 <h5 className="text-primary">Bienvenue !</h5>
-                <p>Mozas Dashboard</p>
               </div>
             </Col>
             <Col xs="5" className="align-self-end">
@@ -28,33 +28,27 @@ const WelcomeComp = () => {
             <Col sm="4">
               <div className="avatar-md profile-user-wid mb-4">
                 <img
-                  src={avatar1}
-                  alt=""
+                  src={user?.photoURL ?? avatar1}
+                  alt={`${user?.fullName}`}
                   className="img-thumbnail rounded-circle"
                 />
               </div>
-              <h5 className="font-size-15 text-truncate">Henry Price</h5>
-              <p className="text-muted mb-0 text-truncate">UI/UX Designer</p>
             </Col>
 
             <Col sm="8">
               <div className="pt-4">
                 <Row>
-                  <Col xs="6">
-                    <h5 className="font-size-15">125</h5>
-                    <p className="text-muted mb-0">Projects</p>
+                  <Col sm="12">
+                    <h5 className="font-size-20 text-truncate">
+                      {user?.fullName}
+                    </h5>
+                    <p className="text-muted">{user?.email}</p>
                   </Col>
-                  <Col xs="6">
-                    <h5 className="font-size-15">$1245</h5>
-                    <p className="text-muted mb-0">Revenue</p>
-                  </Col>
+              
                 </Row>
                 <div className="mt-4">
-                  <Link
-                    to=""
-                    className="btn btn-primary  btn-sm"
-                  >
-                    View Profile <i className="mdi mdi-arrow-right ms-1"></i>
+                  <Link to="/profile" className="btn btn-primary  btn-sm">
+                    Voir le profil <i className="mdi mdi-arrow-right ms-1"></i>
                   </Link>
                 </div>
               </div>

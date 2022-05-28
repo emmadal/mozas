@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import MetaTags from "react-meta-tags";
 import {
   Container,
@@ -18,18 +18,12 @@ import { Link } from "react-router-dom";
 
 import classNames from "classnames";
 
-//import action
-// import { getChartsData as onGetChartsData } from "../../store/actions";
-
 import modalimage1 from "../../assets/images/product/img-7.png";
 import modalimage2 from "../../assets/images/product/img-4.png";
 
 // Pages Components
 import WelcomeComp from "./WelcomeComp";
-import MonthlyEarning from "./MonthlyEarning";
-import SocialSource from "./SocialSource";
-import ActivityComp from "./ActivityComp";
-import TopCities from "./TopCities";
+import ProjectsRelated from "./ProjectRelated";
 import LatestTranaction from "./LatestTranaction";
 
 //Import Breadcrumb
@@ -38,30 +32,17 @@ import { UserContext } from "App";
 
 const Dashboard = () => {
   const [modal, setmodal] = useState(false);
-  const [subscribemodal, setSubscribemodal] = useState(false);
   const {user} = useContext(UserContext)
 
   const reports = [
-    { title: "Orders", iconClass: "bx-copy-alt", description: "1,235" },
-    { title: "Revenue", iconClass: "bx-archive-in", description: "$35, 723" },
+    { title: "Projets", iconClass: "bx-copy-alt", description: "0" },
+    { title: "Solde (FCFA)", iconClass: "bx-archive-in", description: "0" },
     {
-      title: "Average Price",
+      title: "Jeton",
       iconClass: "bx-purchase-tag-alt",
-      description: "$16.2",
+      description: "0",
     },
   ];
-
-  const [periodData, setPeriodData] = useState([]);
-  const [periodType, setPeriodType] = useState("yearly");
-
-  useEffect(() => {
-    // setPeriodData(chartsData);
-  }, []);
-
-  const onChangeChartPeriod = pType => {
-    setPeriodType(pType);
-    // dispatch(onGetChartsData(pType));
-  };
 
 
   if (!user) {
@@ -85,7 +66,7 @@ const Dashboard = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Tableau de bord | Mozas - Admin</title>
+          <title>Tableau de bord | Mozas - {`${user?.fullName}`}</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}
@@ -94,7 +75,6 @@ const Dashboard = () => {
           <Row>
             <Col xl="4">
               <WelcomeComp />
-              <MonthlyEarning />
             </Col>
             <Col xl="8">
               <Row>
@@ -125,138 +105,22 @@ const Dashboard = () => {
                   </Col>
                 ))}
               </Row>
-
-              <Card>
-                <CardBody>
-                  <div className="d-sm-flex flex-wrap">
-                    <h4 className="card-title mb-4">Email Sent</h4>
-                    <div className="ms-auto">
-                      <ul className="nav nav-pills">
-                        <li className="nav-item">
-                          <Link
-                            to="#"
-                            className={classNames(
-                              { active: periodType === "weekly" },
-                              "nav-link"
-                            )}
-                            onClick={() => {
-                              onChangeChartPeriod("weekly")
-                            }}
-                            id="one_month"
-                          >
-                            Week
-                          </Link>{" "}
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="#"
-                            className={classNames(
-                              { active: periodType === "monthly" },
-                              "nav-link"
-                            )}
-                            onClick={() => {
-                              onChangeChartPeriod("monthly")
-                            }}
-                            id="one_month"
-                          >
-                            Month
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="#"
-                            className={classNames(
-                              { active: periodType === "yearly" },
-                              "nav-link"
-                            )}
-                            onClick={() => {
-                              onChangeChartPeriod("yearly")
-                            }}
-                            id="one_month"
-                          >
-                            Year
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  {/* <div className="clearfix"></div> */}
-                  {/* <StackedColumnChart periodData={periodData} /> */}
-                </CardBody>
-              </Card>
             </Col>
           </Row>
 
           <Row>
-            <Col xl="4">
-              <SocialSource />
-            </Col>
-            <Col xl="4">
-              <ActivityComp />
-            </Col>
-
-            <Col xl="4">
-              <TopCities />
+            <Col sm="12">
+              <ProjectsRelated />
             </Col>
           </Row>
 
           <Row>
-            <Col lg="12">
-              {/* <LatestTranaction /> */}
+            <Col sm="12">
+              <LatestTranaction />
             </Col>
           </Row>
         </Container>
       </div>
-
-      {/* subscribe ModalHeader */}
-      <Modal
-        isOpen={subscribemodal}
-        role="dialog"
-        autoFocus={true}
-        centered
-        data-toggle="modal"
-        toggle={() => {
-          setSubscribemodal(!subscribemodal)
-        }}
-      >
-        <div>
-          <ModalHeader
-            className="border-bottom-0"
-            toggle={() => {
-              setSubscribemodal(!subscribemodal)
-            }}
-          ></ModalHeader>
-        </div>
-        <div className="modal-body">
-          <div className="text-center mb-4">
-            <div className="avatar-md mx-auto mb-4">
-              <div className="avatar-title bg-light  rounded-circle text-primary h1">
-                <i className="mdi mdi-email-open"></i>
-              </div>
-            </div>
-
-            <div className="row justify-content-center">
-              <div className="col-xl-10">
-                <h4 className="text-primary">Subscribe !</h4>
-                <p className="text-muted font-size-14 mb-4">
-                  Subscribe our newletter and get notification to stay update.
-                </p>
-
-                <div className="input-group rounded bg-light">
-                  <Input
-                    type="email"
-                    className="form-control bg-transparent border-0"
-                    placeholder="Enter Email address"
-                  />
-                  <Button color="primary" type="button" id="button-addon2">
-                    <i className="bx bxs-paper-plane"></i>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Modal>
 
       <Modal
         isOpen={modal}

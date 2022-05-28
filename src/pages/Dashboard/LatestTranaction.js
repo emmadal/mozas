@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 import { isEmpty } from "lodash"
 import BootstrapTable from "react-bootstrap-table-next"
@@ -43,7 +42,7 @@ const LatestTranaction = props => {
   const EcommerceOrderColumns = toggleModal => [
     {
       dataField: "orderId",
-      text: "Order ID",
+      text: "ID",
       sort: true,
       // eslint-disable-next-line react/display-name
       formatter: (cellContent, row) => (
@@ -54,7 +53,7 @@ const LatestTranaction = props => {
     },
     {
       dataField: "billingName",
-      text: "Billing Name",
+      text: "Nom de facturation",
       sort: true,
     },
     {
@@ -69,7 +68,7 @@ const LatestTranaction = props => {
     },
     {
       dataField: "paymentStatus",
-      text: "Payment Status",
+      text: "Status du paiement",
       sort: true,
       // eslint-disable-next-line react/display-name
       formatter: (cellContent, row) => (
@@ -85,7 +84,7 @@ const LatestTranaction = props => {
     {
       dataField: "paymentMethod",
       isDummyField: true,
-      text: "Payment Method",
+      text: "Méthode de paiement",
       sort: true,
       // eslint-disable-next-line react/display-name
       formatter: (cellContent, row) => (
@@ -104,7 +103,7 @@ const LatestTranaction = props => {
     {
       dataField: "view",
       isDummyField: true,
-      text: "View Details",
+      text: "Voir détails",
       sort: true,
       // eslint-disable-next-line react/display-name
       formatter: () => (
@@ -114,7 +113,7 @@ const LatestTranaction = props => {
           className="btn-sm btn-rounded"
           onClick={toggleViewModal}
         >
-          View Details
+          Voir les détails
         </Button>
       ),
     },
@@ -122,9 +121,9 @@ const LatestTranaction = props => {
 
   useEffect(() => {
     if (orders && !orders.length) {
-      onGetOrders()
+      // onGetOrders()
     }
-  }, [onGetOrders, orders])
+  }, [orders])
 
   useEffect(() => {
     setOrderList(orders)
@@ -157,7 +156,7 @@ const LatestTranaction = props => {
       {/* <EcommerceOrdersModal isOpen={modal1} toggle={toggleViewModal} /> */}
       <Card>
         <CardBody>
-          <div className="mb-4 h4 card-title">Latest Transaction</div>
+          <div className="mb-4 h4 card-title">Transactions</div>
           <PaginationProvider
             pagination={paginationFactory(pageOptions)}
             keyField="id"
@@ -206,11 +205,6 @@ const LatestTranaction = props => {
       </Card>
     </React.Fragment>
   )
-}
-
-LatestTranaction.propTypes = {
-  orders: PropTypes.array,
-  onGetOrders: PropTypes.func,
 }
 
 export default LatestTranaction
