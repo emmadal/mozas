@@ -69,8 +69,9 @@ export const addNewUser = user => {
       photo: user?.photoURL ?? "",
       phoneNumber: user?.phoneNumber ?? "",
       initialAmount: 0.0,
+      token: [],
       projects: [],
-      balance: [],
+      transactions: [],
       type: "user",
       createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
       lastLoginTime: firebase.firestore.FieldValue.serverTimestamp(),
@@ -292,7 +293,7 @@ export const updateProject = ({ name, desc, status, budget, id }) => {
         console.log("data updated")
         resolve(true)
       })
-      .catch(err => reject(this._handleError(err)))
+      .catch(err => reject(err))
   })
 }
 
@@ -357,6 +358,42 @@ export const getInvestorsDetails = id => {
       .get()
       .then(e => resolve(e.data()))
       .catch(err => reject(this._handleError(err)))
+  })
+}
+
+/**
+ * Update transaction list
+ */
+export const addTransaction = (userId, data) => {
+  const collection = firebase.firestore().collection("users")
+  return new Promise((resolve, reject) => {
+    collection
+      .doc(`${userId}`)
+      .update({
+        transactions: firebase.firestore.FieldValue.arrayUnion(data) ?? [],
+      })
+      .then(() => {
+        resolve(true)
+      })
+      .catch(err => reject(err))
+  })
+}
+
+/**
+ * Send token to user after payment
+ */
+export const sendToken = (userId, data) => {
+  const collection = firebase.firestore().collection("users")
+  return new Promise((resolve, reject) => {
+    collection
+      .doc(`${userId}`)
+      .update({
+        token: firebase.firestore.FieldValue.arrayUnion(data) ?? [],
+      })
+      .then(() => {
+        resolve(true)
+      })
+      .catch(err => reject(err))
   })
 }
 

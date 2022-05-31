@@ -1,5 +1,4 @@
 import React from "react"
-import { Navigate } from "react-router-dom"
 
 // Profile
 import UserProfile from "../pages/Authentication/user-profile"
@@ -9,7 +8,6 @@ import ProjectsGrid from "../pages/Projects/projects-grid"
 import ProjectsList from "../pages/Projects/projects-list"
 import ProjectsOverview from "../pages/Projects/ProjectOverview/projects-overview"
 import ProjectsCreate from "../pages/Projects/projects-create"
-
 
 // Authentication related pages
 import Login from "../pages/Authentication/Login"
@@ -22,19 +20,25 @@ import Dashboard from "../pages/Dashboard/index"
 import DashboardCrypto from "../pages/Dashboard-crypto/index"
 
 //Investors
-import InvestorsList from "pages/Investors/investors-list"
-import InvestorDetail from "pages/Investors/investor-detail"
+import InvestorsList from "../pages/Investors/investors-list"
+import InvestorDetail from "../pages/Investors/investor-detail"
+
+// Payment 
+import Payment from "../pages/Payment/payment"
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <Dashboard />, index: true},
-  { path: "/dashboard-crypto", component: <DashboardCrypto />},
+  { path: "/dashboard", component: <Dashboard />, index: true },
+  { path: "/dashboard-crypto", component: <DashboardCrypto /> },
 
   //profile
-  { path: "/profile", component: <UserProfile />},
+  { path: "/profile", component: <UserProfile /> },
+
+  //payment
+  { path: "/payment/:projectId/:price", component: <Payment /> },
 
   //Projects
-  { path: "/projects-grid", component: <ProjectsGrid />},
-  { path: "/projects-list", component: <ProjectsList />},
+  { path: "/projects-grid", component: <ProjectsGrid /> },
+  { path: "/projects-list", component: <ProjectsList /> },
   { path: "/projects-overview", component: <ProjectsOverview /> },
   { path: "/projects-overview/:id", component: <ProjectsOverview /> },
   { path: "/projects-create", component: <ProjectsCreate /> },

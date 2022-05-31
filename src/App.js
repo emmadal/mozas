@@ -20,10 +20,20 @@ export const UserContext = React.createContext(null);
 
 
 
-// init firebase backend
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+// const stripePromise = loadStripe(
+//   "pk_test_51INL7fI5fH8xXkt995pWqqMfcaaaMia2YNbjjSxz05YqDA2CfUMjTs5WOqVT6WS5Ri8qi5FyRJx94GILtSMMJ1Jn00AQ2aE6wz"
+// )
 
 const App = () => {
   const [user, setUser] = useState(null)
+
+  // passing the client secret obtained from the server
+  // const options = {
+  //   clientSecret:
+  //     "sk_test_51INL7fI5fH8xXkt9JczBWIWEe7L3jG2PFT9xOt8dmamq05kuBLh0XyvjCSlb3Q9B8Kv9rJZEPItgu9LgVl4VdF8z00sXh1DbHS",
+  // }
 
   // Handle user state changes
   const onAuthState = useCallback(() => {

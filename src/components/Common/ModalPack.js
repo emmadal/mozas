@@ -1,4 +1,5 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
 import {
   Container,
   Row,
@@ -10,7 +11,14 @@ import {
   ModalBody,
   CardTitle,
 } from "reactstrap"
-const ModalPack = ({ show, onCloseClick }) => {
+
+const ModalPack = ({ show, onCloseClick, project }) => {
+  const navigate = useNavigate()
+
+  const navigateToPayment = (project, amount) => {
+    navigate(`/payment/${project?.id}/${amount}`, { state: { project } })
+  }
+
   return (
     <Modal isOpen={show} toggle={onCloseClick} size="xl">
       <ModalHeader className="fw-bold fs-">
@@ -28,7 +36,7 @@ const ModalPack = ({ show, onCloseClick }) => {
                   <div className="d-flex flex-column text-center">
                     <span>
                       <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-primary me-4"></i>{" "}
-                      Lorem
+                      20 jetons
                     </span>
                     <span>
                       <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-primary me-4"></i>{" "}
@@ -51,7 +59,7 @@ const ModalPack = ({ show, onCloseClick }) => {
                   <div className="text-center">
                     <button
                       className="btn btn-primary btn-block block  w-100"
-                      type="submit"
+                      onClick={() => navigateToPayment(project, 150000)}
                     >
                       Investir
                     </button>
@@ -68,7 +76,7 @@ const ModalPack = ({ show, onCloseClick }) => {
                   <div className="d-flex flex-column text-center">
                     <span>
                       <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-success me-4"></i>{" "}
-                      Lorem
+                      40 jetons
                     </span>
                     <span>
                       <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-success me-4"></i>{" "}
@@ -92,7 +100,7 @@ const ModalPack = ({ show, onCloseClick }) => {
                   <div className="text-center">
                     <button
                       className="btn btn-success btn-block block  w-100"
-                      type="submit"
+                      onClick={() => navigateToPayment(project, 250000)}
                     >
                       Investir
                     </button>
@@ -109,7 +117,7 @@ const ModalPack = ({ show, onCloseClick }) => {
                   <div className="d-flex flex-column text-center">
                     <span>
                       <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-warning me-4"></i>{" "}
-                      Lorem
+                      100 jetons
                     </span>
                     <span>
                       <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-warning me-4"></i>{" "}
@@ -133,7 +141,7 @@ const ModalPack = ({ show, onCloseClick }) => {
                   <div className="text-center">
                     <button
                       className="btn btn-warning btn-block block w-100"
-                      type="submit"
+                      onClick={() => navigateToPayment(project, 300000)}
                     >
                       Investir
                     </button>

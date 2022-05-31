@@ -116,7 +116,7 @@ const Dashboard = () => {
 
           <Row>
             <Col sm="12">
-              <LatestTranaction />
+              {/* <LatestTranaction /> */}
             </Col>
           </Row>
         </Container>

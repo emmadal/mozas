@@ -38,6 +38,7 @@ const ProjectsOverview = () => {
       <ModalPack
         show={showModal}
         onCloseClick={() => setShowModal(false)}
+        project={projectDetail}
       />
       <div className="page-content">
         <MetaTags>
@@ -73,7 +74,10 @@ const ProjectsOverview = () => {
                 </Col>
               </Row>
               <div className="text-center my-5">
-                <button className="btn btn-danger btn-block" onClick={handleOffer}>
+                <button
+                  className="btn btn-danger btn-block"
+                  onClick={handleOffer}
+                >
                   Investir dans ce projet
                 </button>
               </div>
