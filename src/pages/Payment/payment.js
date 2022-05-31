@@ -109,13 +109,13 @@ const Payment = () => {
         }
         await addTransaction(user?.uid, data)
         if (price >= 150000 && price < 250000) {
-          await sendToken(user?.uid, 20)
+          await sendToken(user?.uid, { id: new Date().getTime(), token: 20 })
         }
         if (price >= 250000 && price < 300000) {
-          await sendToken(user?.uid, 40)
+          await sendToken(user?.uid, {id: new Date().getTime(), token: 40})
         }
         if (price >= 300000) {
-          await sendToken(user?.uid, 100)
+          await sendToken(user?.uid, { id: new Date().getTime(), token: 100 })
         }
     }
   }
