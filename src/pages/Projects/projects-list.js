@@ -142,7 +142,7 @@ const ProjectsList = () => {
                     </th>
                     <th scope="col">Projets</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Budget(FCFA)</th>
+                    <th scope="col">Budget(€)</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>

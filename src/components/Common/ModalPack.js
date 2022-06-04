@@ -52,14 +52,11 @@ const ModalPack = ({ show, onCloseClick, project }) => {
                     </span>
                   </div>
                   <hr className="text-muted" />
-                  <h3 className="fw-bold fs-3 text-center my-3">
-                    {" "}
-                    150 000 FCFA
-                  </h3>
+                  <h3 className="fw-bold fs-3 text-center my-3"> 1000 €</h3>
                   <div className="text-center">
                     <button
                       className="btn btn-primary btn-block block  w-100"
-                      onClick={() => navigateToPayment(project, 150000)}
+                      onClick={() => navigateToPayment(project, 1000)}
                     >
                       Investir
                     </button>
@@ -92,15 +89,12 @@ const ModalPack = ({ show, onCloseClick, project }) => {
                     </span>
                   </div>
                   <hr className="text-muted" />
-                  <h3 className="fw-bold fs-3 text-center my-3">
-                    {" "}
-                    250 000 FCFA
-                  </h3>
+                  <h3 className="fw-bold fs-3 text-center my-3"> 2500 €</h3>
 
                   <div className="text-center">
                     <button
                       className="btn btn-success btn-block block  w-100"
-                      onClick={() => navigateToPayment(project, 250000)}
+                      onClick={() => navigateToPayment(project, 2500)}
                     >
                       Investir
                     </button>
@@ -133,15 +127,12 @@ const ModalPack = ({ show, onCloseClick, project }) => {
                     </span>
                   </div>
                   <hr className="text-muted" />
-                  <h3 className="fw-bold fs-3 text-center my-3">
-                    {" "}
-                    300 000 FCFA
-                  </h3>
+                  <h3 className="fw-bold fs-3 text-center my-3"> 5000 €</h3>
 
                   <div className="text-center">
                     <button
                       className="btn btn-warning btn-block block w-100"
-                      onClick={() => navigateToPayment(project, 300000)}
+                      onClick={() => navigateToPayment(project, 5000)}
                     >
                       Investir
                     </button>

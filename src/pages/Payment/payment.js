@@ -87,8 +87,8 @@ const Payment = () => {
           {
             description: "Investment in project",
             amount: {
-              currency_code: 'EUR',
-              value: 50.00,
+              currency_code: "EUR",
+              value: parseFloat(String(price)).toFixed(2),
             },
           },
         ],
@@ -108,13 +108,13 @@ const Payment = () => {
           creation_time: order.update_time,
         }
         await addTransaction(user?.uid, data)
-        if (price >= 150000 && price < 250000) {
+        if (price >= 1000 && price < 2500) {
           await sendToken(user?.uid, { id: new Date().getTime(), token: 20 })
         }
-        if (price >= 250000 && price < 300000) {
+        if (price >= 2500 && price < 5000) {
           await sendToken(user?.uid, {id: new Date().getTime(), token: 40})
         }
-        if (price >= 300000) {
+        if (price >= 5000) {
           await sendToken(user?.uid, { id: new Date().getTime(), token: 100 })
         }
     }
@@ -220,7 +220,7 @@ const Payment = () => {
                     Budget du projet{" "}
                   </h6>
                   <p className="text-danger fw-bold">
-                    {state.project.budget} FCFA
+                    {state.project.budget} €
                   </p>
                   <h6 className="text-muted fw-bold text-decoration-underline mt-3">
                     Status du projet{" "}
@@ -229,7 +229,7 @@ const Payment = () => {
                   <h6 className="text-muted fw-bold text-decoration-underline mt-3">
                     Montant à investir{" "}
                   </h6>
-                  <p className="text-danger fw-bold">{price} FCFA</p>
+                  <p className="text-danger fw-bold">{price} €</p>
                 </CardBody>
               </Card>
             </Col>
@@ -240,8 +240,7 @@ const Payment = () => {
               success
               confirmBtnBsStyle="success"
               onConfirm={() => setSuccess(false)}
-            >
-            </SweetAlert>
+            ></SweetAlert>
           ) : null}
         </Container>
       </div>

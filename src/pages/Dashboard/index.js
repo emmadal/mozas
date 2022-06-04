@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import MetaTags from "react-meta-tags";
 import {
   Container,
@@ -29,21 +29,48 @@ import LatestTranaction from "./LatestTranaction";
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { UserContext } from "App";
+import { getUserByUID } from "helpers/firebase_helper";
 
 const Dashboard = () => {
   const [modal, setmodal] = useState(false);
-  const {user} = useContext(UserContext)
+  const {user, setUser} = useContext(UserContext)
+
+  const computeToken = tokenArr => {
+    let token = 0
+    for (const i of tokenArr) {
+      token += i.token
+    }
+    return token
+  }
+
+  const computeInvestment = investmentArr => {
+    let sum = 0
+    for (const i of investmentArr) {
+      sum += Number(i.amount)
+    }
+    return sum
+  }
 
   const reports = [
     { title: "Projets", iconClass: "bx-copy-alt", description: "0" },
-    { title: "Solde (FCFA)", iconClass: "bx-archive-in", description: "0" },
+    {
+      title: "Investissement",
+      iconClass: "bx-archive-in",
+      description: computeInvestment(user.transactions),
+    },
     {
       title: "Jeton",
       iconClass: "bx-purchase-tag-alt",
-      description: "0",
+      description: computeToken(user.token),
     },
-  ];
+  ]
 
+  const getUser = useCallback(async () => {
+    const res = await getUserByUID(user?.uid)
+    setUser(res)
+  }, [user?.uid])
+
+  useEffect(() => getUser, [getUser])
 
   if (!user) {
     return (
@@ -116,7 +143,7 @@ const Dashboard = () => {
 
           <Row>
             <Col sm="12">
-              {/* <LatestTranaction /> */}
+              <LatestTranaction orders={user.transactions}/>
             </Col>
           </Row>
         </Container>

@@ -10,12 +10,7 @@ import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
 
 import { Button, Card, CardBody, Col, Row, Badge } from "reactstrap"
 
-const LatestTranaction = props => {
-  const orders = []
-
-  useEffect(() => {
-    // dispatch(onGetOrders())
-  }, []);
+const LatestTranaction = ({orders}) => {
 
   const selectRow = {
     mode: "checkbox",
@@ -37,52 +32,38 @@ const LatestTranaction = props => {
   // const toggleModal = () => {
   //   setModal1(!modal1)
   // }
+
   const toggleViewModal = () => setModal1(!modal1)
 
   const EcommerceOrderColumns = toggleModal => [
     {
-      dataField: "orderId",
+      dataField: "id",
       text: "ID",
       sort: true,
       // eslint-disable-next-line react/display-name
       formatter: (cellContent, row) => (
         <Link to="#" className="text-body fw-bold">
-          {row.orderId}
+          {row.id}
         </Link>
       ),
     },
     {
-      dataField: "billingName",
-      text: "Nom de facturation",
-      sort: true,
-    },
-    {
-      dataField: "orderdate",
+      dataField: "creation_time",
       text: "Date",
       sort: true,
-    },
-    {
-      dataField: "total",
-      text: "Total",
-      sort: true,
-    },
-    {
-      dataField: "paymentStatus",
-      text: "Status du paiement",
-      sort: true,
-      // eslint-disable-next-line react/display-name
       formatter: (cellContent, row) => (
-        <Badge
-          className={"font-size-12 badge-soft-" + row.badgeclass}
-          color={row.badgeClass}
-          pill
-        >
-          {row.paymentStatus}
-        </Badge>
+        <Link to="#" className="text-body fw-bold">
+          {new Date(row.creation_time).toLocaleString()}
+        </Link>
       ),
     },
     {
-      dataField: "paymentMethod",
+      dataField: "amount",
+      text: "Montant(€)",
+      sort: true,
+    },
+    {
+      dataField: "payment_method",
       isDummyField: true,
       text: "Méthode de paiement",
       sort: true,
@@ -92,49 +73,15 @@ const LatestTranaction = props => {
           <i
             className={
               row.paymentMethod !== "COD"
-                ? "fab fa-cc-" + toLowerCase1(row.paymentMethod) + " me-1"
+                ? "fab fa-cc-" + toLowerCase1(row.payment_method) + " me-1"
                 : "fab fas fa-money-bill-alt me-1"
             }
           />{" "}
-          {row.paymentMethod}
+          {row.payment_method}
         </>
       ),
     },
-    {
-      dataField: "view",
-      isDummyField: true,
-      text: "Voir détails",
-      sort: true,
-      // eslint-disable-next-line react/display-name
-      formatter: () => (
-        <Button
-          type="button"
-          color="primary"
-          className="btn-sm btn-rounded"
-          onClick={toggleViewModal}
-        >
-          Voir les détails
-        </Button>
-      ),
-    },
   ]
-
-  useEffect(() => {
-    if (orders && !orders.length) {
-      // onGetOrders()
-    }
-  }, [orders])
-
-  useEffect(() => {
-    setOrderList(orders)
-  }, [orders])
-
-  useEffect(() => {
-    if (!isEmpty(orders) && !!isEdit) {
-      setOrderList(orders)
-      setIsEdit(false)
-    }
-  }, [orders])
 
   const toggle = () => {
     setModal(!modal)
