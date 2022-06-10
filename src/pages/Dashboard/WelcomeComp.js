@@ -46,11 +46,6 @@ const WelcomeComp = () => {
                   </Col>
               
                 </Row>
-                <div className="mt-4">
-                  <Link to="/profile" className="btn btn-primary  btn-sm">
-                    Voir le profil <i className="mdi mdi-arrow-right ms-1"></i>
-                  </Link>
-                </div>
               </div>
             </Col>
           </Row>

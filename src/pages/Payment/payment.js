@@ -52,11 +52,14 @@ const Payment = () => {
   const { state } = useLocation()
   const {user} = useContext(UserContext)
   const project_name = state.project.name
+  const project_budget = state.project.budget
+  const projectId = state.project.id
   const elements = useElements()
   const [success, setSuccess] = useState(false)
   const stripe = useStripe()
   const { price } = useParams()
   const [methodType, setMethodType] = useState('')
+
   const handleSubmit = async(e) => {
     e.preventDefault()
     if (!stripe || !elements) {
@@ -96,26 +99,56 @@ const Payment = () => {
   }
   const onApprove = async (data, actions) => {
     const order = await actions.order.capture()
-    console.log('successfull order: ', order)
     if(order.status === 'COMPLETED'){
         setSuccess(!success)
-        const data = {
+        const req = {
           id: order.id,
           amount: order.purchase_units[0].amount.value,
           currency: order.purchase_units[0].amount.currency_code,
           payment_method: "Paypal",
           project_name,
           creation_time: order.update_time,
+          uid: user.uid
         }
-        await addTransaction(user?.uid, data)
+        await addTransaction(req)
         if (price >= 1000 && price < 2500) {
-          await sendToken(user?.uid, { id: new Date().getTime(), token: 20 })
+          const profit = parseFloat(String((price * 1.5) / 100)).toFixed(2)
+          const income = { id: String(new Date().getTime()), profit }
+          const project = {
+            projectId,
+            project_name,
+            project_budget,
+            token: 20,
+            amount_invested: price,
+          }
+          const token = { id: String(new Date().getTime()), token: 20 }
+          await sendToken(user?.uid, token, project, income)
         }
         if (price >= 2500 && price < 5000) {
-          await sendToken(user?.uid, {id: new Date().getTime(), token: 40})
+          const profit = parseFloat(String((price * 1.5) / 100)).toFixed(2)
+          const income = { id: String(new Date().getTime()), profit }
+          const project = {
+            projectId,
+            project_name,
+            project_budget,
+            token: 40,
+            amount_invested: price
+          }
+          const token = { id: String(new Date().getTime()), token: 40 }
+          await sendToken(user?.uid, token, project, income)
         }
         if (price >= 5000) {
-          await sendToken(user?.uid, { id: new Date().getTime(), token: 100 })
+          const profit = parseFloat(String((price * 1.5) / 100)).toFixed(2)
+          const income = { id: String(new Date().getTime()), profit }
+          const token = { id: String(new Date().getTime()), token: 100 }
+          const project = {
+            projectId,
+            project_name,
+            project_budget,
+            token: 100,
+            amount_invested: price
+          }
+          await sendToken(user?.uid, token, project, income)
         }
     }
   }

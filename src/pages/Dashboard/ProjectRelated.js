@@ -1,37 +1,38 @@
-import React, {useContext} from "react"
-import { Row, Col, Card, CardBody, CardTitle } from "reactstrap"
+import React, {useContext, useState} from "react"
+import { Row, Col, Card, CardBody } from "reactstrap"
+import BootstrapTable from "react-bootstrap-table-next"
 import { Link } from "react-router-dom"
-import { isEmpty } from "lodash"
-
-// datatable related plugins
-import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, {
-  PaginationProvider, PaginationListStandalone,
-  SizePerPageDropdownStandalone
-} from 'react-bootstrap-table2-paginator';
-
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+  PaginationListStandalone,
+  PaginationProvider,
+} from "react-bootstrap-table2-paginator"
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
 import { UserContext } from "App"
-
-import "./datatables.scss"
 
 const ProjectsRelated = () => {
   const { user } = useContext(UserContext)
+    const [modal, setModal] = useState(false)
+    const [modal1, setModal1] = useState(false)
 
   const columns = [
     {
-      dataField: "id",
+      dataField: "projectId",
       text: "ID",
       sort: true,
     },
     {
-      dataField: "name",
+      dataField: "project_name",
       text: "Projet",
       sort: true,
     },
     {
+      dataField: "project_budget",
+      text: "Budget du projet(€)",
+      sort: true,
+    },
+    {
       dataField: "amount_invested",
-      text: "Montant investi",
+      text: "Montant investi(€)",
       sort: true,
     },
     {
@@ -41,41 +42,36 @@ const ProjectsRelated = () => {
     },
     {
       dataField: "startDate",
-      text: "Date de début",
+      text: "Debut",
       sort: true,
     },
     {
       dataField: "endDate",
-      text: "Date de fin",
+      text: "Fin",
       sort: true,
     },
   ]
+
+  const toggle = () => {
+    setModal(!modal)
+  }
 
   // Table Data
   const productData = user?.projects
 
   const defaultSorted = [
     {
-      dataField: "id",
+      dataField: "projectId",
       order: "asc",
     },
   ]
 
+  // Custom Pagination Toggle
   const pageOptions = {
     sizePerPage: 10,
     totalSize: productData.length, // replace later with size(customers),
     custom: true,
   }
-
-  // Custom Pagination Toggle
-  const sizePerPageList = [
-    { text: "5", value: 5 },
-    { text: "10", value: 10 },
-    { text: "15", value: 15 },
-    { text: "20", value: 20 },
-    { text: "25", value: 25 },
-    { text: "Tout", value: productData.length },
-  ]
 
   // Select All Button operation
   const selectRow = {
@@ -88,71 +84,51 @@ const ProjectsRelated = () => {
     <React.Fragment>
       <Card>
         <CardBody>
-          <CardTitle className="mb-4">Projets affiliés</CardTitle>
-          <div className="d-sm-flex flex-wrap">
-            <PaginationProvider
-              pagination={paginationFactory(pageOptions)}
-              keyField="id"
-              columns={columns}
-              data={productData}
-            >
-              {({ paginationProps, paginationTableProps }) => (
-                <ToolkitProvider
-                  keyField="id"
-                  columns={columns}
-                  data={productData}
-                  search
-                >
-                  {toolkitProps => (
-                    <React.Fragment>
-                      <Row className="mb-2">
-                        <Col md="4">
-                          <div className="search-box me-2 mb-2 d-inline-block">
-                            <div className="position-relative">
-                              <SearchBar {...toolkitProps.searchProps} />
-                              <i className="bx bx-search-alt search-icon" />
-                            </div>
-                          </div>
-                        </Col>
-                      </Row>
-
-                      <Row>
-                        <Col sm="12">
-                          <div className="table-responsive">
-                            <BootstrapTable
-                              keyField={"id"}
-                              responsive
-                              bordered={false}
-                              striped={false}
-                              defaultSorted={defaultSorted}
-                              selectRow={selectRow}
-                              classes={"table align-middle table-nowrap table-check"}
-                              headerWrapperClasses={"thead-light"}
-                              {...toolkitProps.baseProps}
-                              {...paginationTableProps}
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-
-                      <Row className="align-items-md-center mt-30">
-                        <Col className="inner-custom-pagination d-flex">
-                          <div className="d-inline">
-                            <SizePerPageDropdownStandalone
-                              {...paginationProps}
-                            />
-                          </div>
-                          <div className="text-md-right ms-auto">
-                            <PaginationListStandalone {...paginationProps} />
-                          </div>
-                        </Col>
-                      </Row>
-                    </React.Fragment>
-                  )}
-                </ToolkitProvider>
-              )}
-            </PaginationProvider>
-          </div>
+          <div className="mb-4 h4 card-title">Projet affiliés</div>
+          <PaginationProvider
+            pagination={paginationFactory(pageOptions)}
+            keyField="projectId"
+            columns={columns}
+            data={productData}
+          >
+            {({ paginationProps, paginationTableProps }) => (
+              <ToolkitProvider
+                keyField="projectId"
+                data={productData}
+                columns={columns}
+                bootstrap4
+                search
+              >
+                {toolkitProps => (
+                  <React.Fragment>
+                    <Row>
+                      <Col xl="12">
+                        <div className="table-responsive">
+                          <BootstrapTable
+                            keyField="projectId"
+                            responsive
+                            bordered={false}
+                            striped={false}
+                            defaultSorted={defaultSorted}
+                            selectRow={selectRow}
+                            classes={
+                              "table align-middle table-nowrap table-check"
+                            }
+                            headerWrapperClasses={"table-light"}
+                            {...toolkitProps.baseProps}
+                            {...paginationTableProps}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                    <div className="pagination pagination-rounded justify-content-end">
+                      <PaginationListStandalone {...paginationProps} />
+                    </div>
+                  </React.Fragment>
+                )}
+              </ToolkitProvider>
+            )}
+          </PaginationProvider>
         </CardBody>
       </Card>
     </React.Fragment>

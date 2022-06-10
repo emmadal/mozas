@@ -29,11 +29,22 @@ import LatestTranaction from "./LatestTranaction";
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { UserContext } from "App";
-import { getUserByUID } from "helpers/firebase_helper";
+import { getTransactions, getUserByUID } from "helpers/firebase_helper";
 
 const Dashboard = () => {
-  const [modal, setmodal] = useState(false);
-  const {user, setUser} = useContext(UserContext)
+  const [modal, setmodal] = useState(false)
+  const [transactions, setTransactions] = useState([])
+  const { user, setUser } = useContext(UserContext)
+
+  const getUser = async () => {
+    const res = await getUserByUID(user?.uid)
+    setUser(res)
+  }
+
+  const getUserTransactions = async () => {
+    const res = await getTransactions(user?.uid)
+    setTransactions([...res])
+  }
 
   const computeToken = tokenArr => {
     let token = 0
@@ -41,6 +52,14 @@ const Dashboard = () => {
       token += i.token
     }
     return token
+  }
+
+  const computeIncome = incomeArr => {
+    let p = parseFloat('0')
+    for (const i of incomeArr) {
+      p += Number(i.profit)
+    }
+    return p
   }
 
   const computeInvestment = investmentArr => {
@@ -52,25 +71,38 @@ const Dashboard = () => {
   }
 
   const reports = [
-    { title: "Projets", iconClass: "bx-copy-alt", description: "0" },
     {
-      title: "Investissement",
-      iconClass: "bx-archive-in",
-      description: computeInvestment(user.transactions),
+      title: "Projets",
+      iconClass: "bx-list-ul",
+      description: user?.projects.length,
+    },
+    {
+      title: "Financement(€)",
+      iconClass: "bx-money",
+      description: computeInvestment(transactions),
     },
     {
       title: "Jeton",
       iconClass: "bx-purchase-tag-alt",
       description: computeToken(user.token),
     },
+    {
+      title: "Gains(€)",
+      iconClass: "bx-archive-in",
+      description: computeIncome(user.income),
+    },
   ]
 
-  const getUser = useCallback(async () => {
-    const res = await getUserByUID(user?.uid)
-    setUser(res)
-  }, [user?.uid])
-
-  useEffect(() => getUser, [getUser])
+  useEffect(() => {
+    ;(async () => {
+      await getUser()
+    })()
+  }, [])
+  useEffect(() => {
+    ;(async () => {
+      await getUserTransactions()
+    })()
+  }, [])
 
   if (!user) {
     return (
@@ -100,10 +132,10 @@ const Dashboard = () => {
           <Breadcrumbs title="Page d'accueil" breadcrumbItem="Page d'accueil" />
 
           <Row>
-            <Col xl="4">
+            <Col sm="4">
               <WelcomeComp />
             </Col>
-            <Col xl="8">
+            <Col sm="8">
               <Row>
                 {/* Reports Render */}
                 {reports.map((report, key) => (
@@ -143,7 +175,7 @@ const Dashboard = () => {
 
           <Row>
             <Col sm="12">
-              <LatestTranaction orders={user.transactions}/>
+              <LatestTranaction transaction={transactions}/>
             </Col>
           </Row>
         </Container>

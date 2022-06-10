@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import { isEmpty } from "lodash"
 import BootstrapTable from "react-bootstrap-table-next"
 import paginationFactory, {
   PaginationListStandalone,
   PaginationProvider,
 } from "react-bootstrap-table2-paginator"
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
+import { Card, CardBody, Col, Row } from "reactstrap"
 
-import { Button, Card, CardBody, Col, Row, Badge } from "reactstrap"
-
-const LatestTranaction = ({orders}) => {
+const LatestTranaction = ({transaction}) => {
 
   const selectRow = {
     mode: "checkbox",
   }
-
   const [modal, setModal] = useState(false)
   const [modal1, setModal1] = useState(false)
-  const [orderList, setOrderList] = useState([])
-  const [isEdit, setIsEdit] = useState(false)
 
   //pagination customization
   const pageOptions = {
     sizePerPage: 6,
-    totalSize: orders.length, // replace later with size(orders),
+    totalSize: transaction.length, // replace later with size(orders),
     custom: true,
   }
   const { SearchBar } = Search
-
-  // const toggleModal = () => {
-  //   setModal1(!modal1)
-  // }
 
   const toggleViewModal = () => setModal1(!modal1)
 
@@ -108,12 +99,12 @@ const LatestTranaction = ({orders}) => {
             pagination={paginationFactory(pageOptions)}
             keyField="id"
             columns={EcommerceOrderColumns(toggle)}
-            data={orders}
+            data={transaction}
           >
             {({ paginationProps, paginationTableProps }) => (
               <ToolkitProvider
                 keyField="id"
-                data={orders}
+                data={transaction}
                 columns={EcommerceOrderColumns(toggle)}
                 bootstrap4
                 search

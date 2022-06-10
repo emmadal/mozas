@@ -64,14 +64,14 @@ export const addNewUser = user => {
     const details = {
       id: new Date().getTime(),
       uid: user?.uid,
+      metamask_acc: "",
       fullName: user?.displayName ?? "",
       email: user?.email ?? "",
       photo: user?.photoURL ?? "",
       phoneNumber: user?.phoneNumber ?? "",
-      initialAmount: 0.0,
       token: [],
       projects: [],
-      transactions: [],
+      income: [],
       type: "user",
       createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
       lastLoginTime: firebase.firestore.FieldValue.serverTimestamp(),
@@ -362,18 +362,33 @@ export const getInvestorsDetails = id => {
 }
 
 /**
- * Update transaction list
+ * Create transaction
  */
-export const addTransaction = (userId, data) => {
-  const collection = firebase.firestore().collection("users")
+export const addTransaction = (data) => {
+  const collection = firebase.firestore().collection("transactions")
   return new Promise((resolve, reject) => {
     collection
-      .doc(`${userId}`)
-      .update({
-        transactions: firebase.firestore.FieldValue.arrayUnion(data) ?? [],
-      })
-      .then(() => {
-        resolve(true)
+      .add({...data})
+      .then(() => resolve(true))
+      .catch(err => reject(err))
+  })
+}
+
+/**
+ * Get transactions by user
+ */
+export const getTransactions = userId => {
+  const collection = firebase.firestore().collection("transactions")
+  return new Promise((resolve, reject) => {
+    const query = collection.where("uid", "==", userId)
+    const data = []
+    query
+      .get()
+      .then(res => {
+        if (!res.empty) {
+          res.docs.map(e => data.push(e.data()))
+          resolve(data)
+        }
       })
       .catch(err => reject(err))
   })
@@ -382,13 +397,15 @@ export const addTransaction = (userId, data) => {
 /**
  * Send token to user after payment
  */
-export const sendToken = (userId, data) => {
+export const sendToken = (userId, data, project, income) => {
   const collection = firebase.firestore().collection("users")
   return new Promise((resolve, reject) => {
     collection
       .doc(`${userId}`)
       .update({
         token: firebase.firestore.FieldValue.arrayUnion(data) ?? [],
+        projects: firebase.firestore.FieldValue.arrayUnion(project) ?? [],
+        income: firebase.firestore.FieldValue.arrayUnion(income) ?? [],
       })
       .then(() => {
         resolve(true)
