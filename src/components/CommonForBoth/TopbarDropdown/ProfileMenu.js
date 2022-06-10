@@ -50,24 +50,31 @@ const ProfileMenu = props => {
             src={user1}
             alt="Header Avatar"
           />
-          <span className="d-none d-xl-inline-block ms-2 me-1">{user?.fullName}</span>
+          <span className="d-none d-xl-inline-block ms-2 me-1">
+            {user?.fullName}
+          </span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
-          <DropdownItem tag="a" href="/profile">
+          <Link to="/profile" className="dropdown-item">
             {" "}
             <i className="bx bx-user font-size-16 align-middle me-1" />
             Profil{" "}
-          </DropdownItem>
-          <DropdownItem tag="a" href="/crypto-wallet">
+          </Link>
+          {/* <DropdownItem tag="a" href="/profile">
+            {" "}
+            <i className="bx bx-user font-size-16 align-middle me-1" />
+            Profil{" "}
+          </DropdownItem> */}
+          {/* <DropdownItem tag="a" href="/crypto-wallet">
             <i className="bx bx-wallet font-size-16 align-middle me-1" />
             Wallet
-          </DropdownItem>
-          <DropdownItem tag="a" href="#">
-            {/* <span className="badge bg-success float-end">11</span> */}
+          </DropdownItem> */}
+          {/* <DropdownItem tag="a" href="#">
+            <span className="badge bg-success float-end">11</span>
             <i className="bx bx-wrench font-size-16 align-middle me-1" />
             Paramètres
-          </DropdownItem>
+          </DropdownItem> */}
           {/* <DropdownItem tag="a" href="auth-lock-screen">
             <i className="bx bx-lock-open font-size-16 align-middle me-1"/>
             {props.t("Lock screen")}

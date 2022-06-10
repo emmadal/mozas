@@ -316,6 +316,50 @@ export const deleteProject = ({ id }) => {
   })
 }
 
+
+/**
+ * Update user profile
+ */
+export const updateUserProfile = (user, data) => {
+  const collection = firebase.firestore().collection('users')
+  return new Promise((resolve, reject) => {
+    collection
+      .doc(`${user?.uid}`)
+      .update({
+        fullName: data?.fullName ?? user?.displayName,
+        metamask_acc: data?.wallet ?? user?.metamask_acc,
+      })
+      .then(() => {
+        getUserByUID(user?.uid).then(e => resolve(e))
+      })
+      .catch((err) => reject(err))
+  })
+}
+
+/**
+ * Update password user
+ */
+// export const updateUserPassword = async (oldPassword, newPassword) => {
+//   return new Promise((resolve, reject) => {
+//     const credential = EmailAuthProvider.credential(
+//       firebase.auth().currentUser.email,
+//       oldPassword
+//     )
+//     reauthenticateWithCredential(firebase.auth().currentUser, credential)
+//       .then(reauth => {
+//         if (reauth.user) {
+//           firebase.auth().
+//           updatePassword(getAuth().currentUser, newPassword)
+//             .then(() => resolve(true))
+//             .catch(error => reject(error))
+//         }
+//       })
+//       .catch(() => {
+//         reject("Your current password is incorrect")
+//       })
+//   })
+// }
+
 /**
  * Get one project
  */
