@@ -1,6 +1,17 @@
 import MetaTags from "react-meta-tags";
 import React from "react";
-import { Row, Col, Alert, Card, CardBody, Container, FormFeedback, Input, Label, Form } from "reactstrap";
+import {
+  Row,
+  Col,
+  UncontrolledAlert,
+  Card,
+  CardBody,
+  Container,
+  FormFeedback,
+  Input,
+  Label,
+  Form,
+} from "reactstrap"
 
 import { Link } from "react-router-dom";
 
@@ -31,9 +42,7 @@ const ForgetPasswordPage = props => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>
-          Mot de passe oublié | Mozas
-        </title>
+        <title>Mot de passe oublié | Mozas</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/login" className="text-dark">
@@ -75,22 +84,21 @@ const ForgetPasswordPage = props => {
                   </div>
                   <div className="p-2">
                     {/* {forgetError && forgetError ? (
-                      <Alert color="danger" style={{ marginTop: "13px" }}>
+                      <UncontrolledAlert className="alert-dismissible" color="danger">
                         {forgetError}
-                      </Alert>
+                      </UncontrolledAlert>
                     ) : null}
                     {forgetSuccessMsg ? (
-                      <Alert color="success" style={{ marginTop: "13px" }}>
+                      <UncontrolledAlert className="alert-dismissible" color="success">
                         {forgetSuccessMsg}
-                      </Alert>
+                      </UncontrolledAlert>
                     ) : null} */}
-
                     <Form
                       className="form-horizontal"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        validation.handleSubmit();
-                        return false;
+                      onSubmit={e => {
+                        e.preventDefault()
+                        validation.handleSubmit()
+                        return false
                       }}
                     >
                       <div className="mb-3">
@@ -104,11 +112,15 @@ const ForgetPasswordPage = props => {
                           onBlur={validation.handleBlur}
                           value={validation.values.email || ""}
                           invalid={
-                            validation.touched.email && validation.errors.email ? true : false
+                            validation.touched.email && validation.errors.email
+                              ? true
+                              : false
                           }
                         />
                         {validation.touched.email && validation.errors.email ? (
-                          <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
+                          <FormFeedback type="invalid">
+                            {validation.errors.email}
+                          </FormFeedback>
                         ) : null}
                       </div>
                       <Row className="mb-3">
@@ -128,20 +140,18 @@ const ForgetPasswordPage = props => {
               <div className="mt-5 text-center">
                 <p>
                   Revenir à{" "}
-                  <Link to="login" className="font-weight-medium text-primary">
+                  <Link to="/login" className="font-weight-medium text-primary">
                     Connexion
                   </Link>{" "}
                 </p>
-                <p>
-                  © {new Date().getFullYear()} Mozas.
-                </p>
+                <p>© {new Date().getFullYear()} Mozas.</p>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
     </React.Fragment>
-  );
+  )
 };
 
 export default ForgetPasswordPage;

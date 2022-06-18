@@ -38,14 +38,14 @@ export const loginUser = (email, password) => {
 /**
  * Registers the user with given details
  */
-export const registerUser = (email, password) => {
+export const registerUser = (data) => {
   return new Promise((resolve, reject) => {
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(data.email, data.password)
       .then(
         res => {
-          addNewUser(res.user).then((e) => resolve(e))
+          addNewUser(res.user, data).then((e) => resolve(e))
           // resolve(firebase.auth().currentUser)
         },
         error => {
@@ -58,14 +58,14 @@ export const registerUser = (email, password) => {
 /**
  * Add new user in the firestore database
  */
-export const addNewUser = user => {
+export const addNewUser = (user, data) => {
   return new Promise((resolve, reject) => {
     const collection = firebase.firestore().collection("users")
     const details = {
       id: new Date().getTime(),
       uid: user?.uid,
       metamask_acc: "",
-      fullName: user?.displayName ?? "",
+      fullName: user?.displayName ?? data.name,
       email: user?.email ?? "",
       photo: user?.photoURL ?? "",
       phoneNumber: user?.phoneNumber ?? "",

@@ -1,6 +1,17 @@
 import MetaTags from "react-meta-tags";
 import React, { useState } from "react";
-import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
+import {
+  Row,
+  Col,
+  CardBody,
+  Card,
+  UncontrolledAlert,
+  Container,
+  Form,
+  Input,
+  FormFeedback,
+  Label,
+} from "reactstrap"
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -19,6 +30,7 @@ import { loginUser, getUserByUID } from "helpers/firebase_helper"
 const Login = props => {
   const { setUser } = React.useContext(UserContext)
   const [err, setErr] = useState('')
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -35,40 +47,21 @@ const Login = props => {
     onSubmit: async (values) => {
       try {
         const { email, password } = values
+        setLoading(!loading)
         const res = await loginUser(email, password)
         if (res) {
+          setLoading(false)
           getUserByUID(res.uid).then(e => {
             setUser(e)
             navigate("/dashboard", {replace: true})
           })
         }
       } catch (error) {
-        setErr(error.message)
+        setLoading(false)
+        setErr("Mot de passe ou email incorrect")
       }
     }
   });
-
-
-  const signIn = (res, type) => {
-    if (type === "google" && res) {
-      const postData = {
-        name: res.profileObj.name,
-        email: res.profileObj.email,
-        token: res.tokenObj.access_token,
-        idToken: res.tokenId,
-      };
-      dispatch(socialLogin(postData, props.history, type));
-    } else if (type === "facebook" && res) {
-      const postData = {
-        name: res.name,
-        email: res.email,
-        token: res.accessToken,
-        idToken: res.tokenId,
-      };
-      dispatch(socialLogin(postData, props.history, type));
-    }
-  };
-
 
   return (
     <React.Fragment>
@@ -116,13 +109,22 @@ const Login = props => {
                   <div className="p-2">
                     <Form
                       className="form-horizontal"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        validation.handleSubmit();
-                        return false;
+                      onSubmit={e => {
+                        e.preventDefault()
+                        validation.handleSubmit()
+                        return false
                       }}
                     >
-                      {err && <Alert color="danger">{err}</Alert>}
+                      {err && (
+                        <UncontrolledAlert
+                          color="danger"
+                          role="alert"
+                          className="alert-dismissible"
+                        >
+                          {err}
+                        </UncontrolledAlert>
+                      )}
+
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>
                         <Input
@@ -134,11 +136,15 @@ const Login = props => {
                           onBlur={validation.handleBlur}
                           value={validation.values.email || ""}
                           invalid={
-                            validation.touched.email && validation.errors.email ? true : false
+                            validation.touched.email && validation.errors.email
+                              ? true
+                              : false
                           }
                         />
                         {validation.touched.email && validation.errors.email ? (
-                          <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
+                          <FormFeedback type="invalid">
+                            {validation.errors.email}
+                          </FormFeedback>
                         ) : null}
                       </div>
 
@@ -146,32 +152,25 @@ const Login = props => {
                         <Label className="form-label">Mot de passe</Label>
                         <Input
                           name="password"
+                          className="form-control"
                           value={validation.values.password || ""}
                           type="password"
                           placeholder="Mot de passe"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
                           invalid={
-                            validation.touched.password && validation.errors.password ? true : false
+                            validation.touched.password &&
+                            validation.errors.password
+                              ? true
+                              : false
                           }
                         />
-                        {validation.touched.password && validation.errors.password ? (
-                          <FormFeedback type="invalid">{validation.errors.password}</FormFeedback>
+                        {validation.touched.password &&
+                        validation.errors.password ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.password}
+                          </FormFeedback>
                         ) : null}
-                      </div>
-
-                      <div className="form-check">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id="customControlInline"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="customControlInline"
-                        >
-                          Se souvenir de moi
-                        </label>
                       </div>
 
                       <div className="mt-3 d-grid">
@@ -179,7 +178,10 @@ const Login = props => {
                           className="btn btn-primary btn-block"
                           type="submit"
                         >
-                          Se connecter
+                          Se connecter{" "}
+                          {loading ? (
+                            <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                          ) : null}
                         </button>
                       </div>
 
@@ -201,16 +203,14 @@ const Login = props => {
                     Creer un nouveau compte{" "}
                   </Link>{" "}
                 </p>
-                <p>
-                  © {new Date().getFullYear()} Mozas.{" "}
-                </p>
+                <p>© {new Date().getFullYear()} Mozas. </p>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
     </React.Fragment>
-  );
+  )
 };
 
 export default Login;

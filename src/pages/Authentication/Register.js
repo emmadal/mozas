@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import MetaTags from "react-meta-tags";
-import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
+import { UncontrolledAlert, Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
 
 // Formik Validation
 import * as Yup from "yup";
@@ -14,8 +14,10 @@ import logoImg from "../../assets/images/logo.svg";
 import { UserContext } from "App";
 import { registerUser } from "helpers/firebase_helper";
 
-const Register = props => {
+const Register = () => {
   const [err, setErr] = useState('')
+  const [successMsg, SetSuccessMsg] = useState("")
+  const [loading, setLoading] = useState(false)
   const [user, serUser] = useState(false)
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -23,17 +25,25 @@ const Register = props => {
 
     initialValues: {
       email: '',
-      username: '',
+      name: '',
       password: '',
     },
     validationSchema: Yup.object({
       email: Yup.string().required("Entrez votre Email"),
-      username: Yup.string().required("Entrez votre Nom d'utilisateur"),
+      name: Yup.string().required("Entrez votre Nom & Prénoms"),
       password: Yup.string().required("Entrez votre Mot de passe"),
     }),
     onSubmit: async (values) => {
-      const res = await registerUser(values)
-      setUser(res)
+      try {
+        setLoading(!loading)
+        const res = await registerUser(values)
+        if (res) {
+          setLoading(false)
+          SetSuccessMsg("Votre compte a ete crée ave succès")
+        }
+      } catch (error) {
+        setErr("Veuillez verifier votre connexion internet")
+      }
     }
   });
 
@@ -89,14 +99,22 @@ const Register = props => {
                         return false
                       }}
                     >
-                      {user &&
-                        <Alert color="success">
-                          Enregistrement effectué avec succès
-                        </Alert>
-                      }
-
-                      {err && <Alert color="danger">{err}</Alert>}
-
+                      {successMsg && (
+                        <UncontrolledAlert
+                          className="alert-dismissible"
+                          color="success"
+                        >
+                          {successMsg}
+                        </UncontrolledAlert>
+                      )}
+                      {err && (
+                        <UncontrolledAlert
+                          className="alert-dismissible"
+                          color="danger"
+                        >
+                          {err}
+                        </UncontrolledAlert>
+                      )}
                       <div className="mb-3">
                         <Label className="form-label">Email</Label>
                         <Input
@@ -122,25 +140,23 @@ const Register = props => {
                       </div>
 
                       <div className="mb-3">
-                        <Label className="form-label">Nom d&#39;utilisateur</Label>
+                        <Label className="form-label">Nom & Prénoms</Label>
                         <Input
-                          name="username"
+                          name="name"
                           type="text"
-                          placeholder="Nom d'utilisateur"
+                          placeholder="Nom & Prénoms"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.username || ""}
+                          value={validation.values.name || ""}
                           invalid={
-                            validation.touched.username &&
-                            validation.errors.username
+                            validation.touched.name && validation.errors.name
                               ? true
                               : false
                           }
                         />
-                        {validation.touched.username &&
-                        validation.errors.username ? (
+                        {validation.touched.name && validation.errors.name ? (
                           <FormFeedback type="invalid">
-                            {validation.errors.username}
+                            {validation.errors.name}
                           </FormFeedback>
                         ) : null}
                       </div>
@@ -173,7 +189,10 @@ const Register = props => {
                           className="btn btn-primary btn-block "
                           type="submit"
                         >
-                          Création de compte
+                          Création de compte{" "}
+                          {loading ? (
+                            <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                          ) : null}
                         </button>
                       </div>
 

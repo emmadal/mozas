@@ -16,8 +16,6 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import classNames from "classnames";
-
 import modalimage1 from "../../assets/images/product/img-7.png";
 import modalimage2 from "../../assets/images/product/img-4.png";
 
@@ -98,6 +96,7 @@ const Dashboard = () => {
       await getUser()
     })()
   }, [])
+
   useEffect(() => {
     ;(async () => {
       await getUserTransactions()
