@@ -159,7 +159,7 @@ const Payment = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Paiement | Mozas - Admin</title>
+          <title>Paiement | Mozah - Admin</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}

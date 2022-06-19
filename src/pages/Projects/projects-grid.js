@@ -36,7 +36,7 @@ const ProjectsGrid = props => {
       <div className="page-content">
         <MetaTags>
           <title>
-            Grille des projets | Tableau de bord | Mozas
+            Grille des projets | Tableau de bord | Mozah
           </title>
         </MetaTags>
         <Container fluid>

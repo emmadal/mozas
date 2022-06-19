@@ -115,7 +115,7 @@ const Dashboard = () => {
     <React.Fragment>
       <div className="page-content">
       <MetaTags>
-            <title>Crypto Tableau de bord | Mozas</title>
+            <title>Crypto Tableau de bord | Mozah</title>
           </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}

@@ -50,7 +50,7 @@ const Register = () => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>S&#39;enregistrer | Mozas</title>
+        <title>S&#39;enregistrer | Mozah</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/login" className="text-dark">
@@ -67,7 +67,7 @@ const Register = () => {
                     <Col className="col-7">
                       <div className="text-primary p-4">
                         <h5 className="text-primary">Création de compte</h5>
-                        <p>Creer votre compte Mozas.</p>
+                        <p>Creer votre compte Mozah.</p>
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -202,7 +202,7 @@ const Register = () => {
                           <Link to="#" className="text-primary">
                             Conditions d&#39;utilisation
                           </Link>{" "}
-                          de Mozas
+                          de Mozah
                         </p>
                       </div>
                     </Form>
@@ -217,7 +217,7 @@ const Register = () => {
                     Se connecter
                   </Link>{" "}
                 </p>
-                <p>© {new Date().getFullYear()} Mozas.</p>
+                <p>© {new Date().getFullYear()} Mozah.</p>
               </div>
             </Col>
           </Row>

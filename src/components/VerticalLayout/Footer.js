@@ -7,7 +7,7 @@ const Footer = () => {
       <footer className="footer">
         <Container fluid={true}>
           <Row>
-            <Col md={6}>{new Date().getFullYear()} © Mozas.</Col>
+            <Col md={6}>{new Date().getFullYear()} © Mozah.</Col>
             <Col md={6} />
           </Row>
         </Container>

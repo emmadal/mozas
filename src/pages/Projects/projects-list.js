@@ -126,7 +126,7 @@ const ProjectsList = () => {
       />
       <div className="page-content">
         <MetaTags>
-          <title>Liste des projets | Mozas - Admin</title>
+          <title>Liste des projets | Mozah - Admin</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}

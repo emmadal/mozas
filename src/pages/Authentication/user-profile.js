@@ -71,11 +71,11 @@ const UserProfile = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Profile | Tableau de bord | Mozas</title>
+          <title>Profile | Tableau de bord | Mozah</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}
-          <Breadcrumb title="Mozas" breadcrumbItem="Profile" />
+          <Breadcrumb title="Mozah" breadcrumbItem="Profile" />
 
           <Row>
             <Col sm="8">

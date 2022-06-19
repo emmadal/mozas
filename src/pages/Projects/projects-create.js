@@ -74,7 +74,7 @@ const ProjectsCreate = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Création de projets | Mozas - Admin</title>
+          <title>Création de projets | Mozah - Admin</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}

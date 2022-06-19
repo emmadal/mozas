@@ -42,7 +42,7 @@ const ForgetPasswordPage = props => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>Mot de passe oublié | Mozas</title>
+        <title>Mot de passe oublié | Mozah</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/login" className="text-dark">
@@ -144,7 +144,7 @@ const ForgetPasswordPage = props => {
                     Connexion
                   </Link>{" "}
                 </p>
-                <p>© {new Date().getFullYear()} Mozas.</p>
+                <p>© {new Date().getFullYear()} Mozah.</p>
               </div>
             </Col>
           </Row>

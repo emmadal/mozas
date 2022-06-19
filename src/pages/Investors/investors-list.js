@@ -22,7 +22,7 @@ const InvestorsList = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Liste des investisseurs | Mozas - Admin</title>
+          <title>Liste des investisseurs | Mozah - Admin</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}

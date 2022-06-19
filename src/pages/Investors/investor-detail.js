@@ -23,7 +23,7 @@ const InvestorDetail = props => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Détails investisseur | Tableau de bord | Mozas</title>
+          <title>Détails investisseur | Tableau de bord | Mozah</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}

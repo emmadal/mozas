@@ -42,7 +42,7 @@ const ProjectsOverview = () => {
       />
       <div className="page-content">
         <MetaTags>
-          <title>Resumé du projet | Tableau de bord | Mozas</title>
+          <title>Resumé du projet | Tableau de bord | Mozah</title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}

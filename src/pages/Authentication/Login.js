@@ -66,7 +66,7 @@ const Login = props => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>Connexion | Mozas</title>
+        <title>Connexion | Mozah</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/login" className="text-dark">
@@ -203,7 +203,7 @@ const Login = props => {
                     Creer un nouveau compte{" "}
                   </Link>{" "}
                 </p>
-                <p>© {new Date().getFullYear()} Mozas. </p>
+                <p>© {new Date().getFullYear()} Mozah. </p>
               </div>
             </Col>
           </Row>
