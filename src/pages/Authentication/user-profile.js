@@ -1,18 +1,17 @@
 import MetaTags from "react-meta-tags";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Container,
   Row,
   Col,
   Card,
-  Alert,
   CardBody,
   Button,
   Label,
   Input,
   FormFeedback,
-  Form,
   UncontrolledAlert,
+  Form,
 } from "reactstrap"
 
 // Formik Validation
@@ -31,6 +30,7 @@ import { updateUserProfile } from "helpers/firebase_helper";
 const UserProfile = () => {
   const {user, setUser} = useContext(UserContext)
   const [actionType, setActionType] = useState('')
+  const [loading1, setLoading1] = useState(false)
   const [update, setUpdate] = useState(false)
 
   const validation = useFormik({
@@ -51,10 +51,11 @@ const UserProfile = () => {
     }),
     onSubmit: async (values) => {
       if(actionType === "update_profile"){
+        setLoading1(!loading1)
         const {fullName, wallet} = values
         const res = await updateUserProfile(user, { fullName, wallet })
         if(res){
-          console.log('res: ', res)
+          setLoading1(false)
           setUpdate(!update);
           setUser(res)
         }
@@ -193,7 +194,10 @@ const UserProfile = () => {
                     </div>
                     <div className="text-center mt-4">
                       <Button type="submit" color="danger">
-                        Mettre a jour le profile
+                        Mettre a jour le profile{" "}
+                        {loading1 ? (
+                          <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                        ) : null}
                       </Button>
                     </div>
                   </Form>

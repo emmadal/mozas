@@ -7,10 +7,8 @@ import paginationFactory, {
   PaginationProvider,
 } from "react-bootstrap-table2-paginator"
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
-import { UserContext } from "App"
 
-const ProjectsRelated = () => {
-  const { user } = useContext(UserContext)
+const ProjectsRelated = ({projects}) => {
     const [modal, setModal] = useState(false)
     const [modal1, setModal1] = useState(false)
 
@@ -57,7 +55,7 @@ const ProjectsRelated = () => {
   }
 
   // Table Data
-  const productData = user?.projects
+  const productData = projects
 
   const defaultSorted = [
     {

@@ -39,7 +39,7 @@ const Register = () => {
         const res = await registerUser(values)
         if (res) {
           setLoading(false)
-          SetSuccessMsg("Votre compte a ete crée ave succès")
+          SetSuccessMsg("Votre compte a ete crée avec succès. Veuillez vous connecter")
         }
       } catch (error) {
         setErr("Veuillez verifier votre connexion internet")

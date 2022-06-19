@@ -10,7 +10,7 @@ import {
   Input,
   Label
 } from "reactstrap"
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation, useParams, useNavigate } from "react-router-dom"
 import SweetAlert from "react-bootstrap-sweetalert"
 import { PayPalButtons } from "@paypal/react-paypal-js"
 
@@ -50,12 +50,14 @@ const CARD_ELEMENT_OPTIONS = {
 
 const Payment = () => {
   const { state } = useLocation()
+  const navigate = useNavigate()
   const {user} = useContext(UserContext)
   const project_name = state.project.name
   const project_budget = state.project.budget
   const projectId = state.project.id
   const elements = useElements()
   const [success, setSuccess] = useState(false)
+  const [metamask_err, setMetamask_err] = useState(true)
   const stripe = useStripe()
   const { price } = useParams()
   const [methodType, setMethodType] = useState('')
@@ -98,59 +100,63 @@ const Payment = () => {
       })
   }
   const onApprove = async (data, actions) => {
-    const order = await actions.order.capture()
-    if(order.status === 'COMPLETED'){
-        setSuccess(!success)
-        const req = {
-          id: order.id,
-          amount: order.purchase_units[0].amount.value,
-          currency: order.purchase_units[0].amount.currency_code,
-          payment_method: "Paypal",
-          project_name,
-          creation_time: order.update_time,
-          uid: user.uid
-        }
-        await addTransaction(req)
-        if (price >= 1000 && price < 2500) {
-          const profit = parseFloat(String((price * 1.5) / 100)).toFixed(2)
-          const income = { id: String(new Date().getTime()), profit }
-          const project = {
-            projectId,
-            project_name,
-            project_budget,
-            token: 20,
-            amount_invested: price,
-          }
-          const token = { id: String(new Date().getTime()), token: 20 }
-          await sendToken(user?.uid, token, project, income)
-        }
-        if (price >= 2500 && price < 5000) {
-          const profit = parseFloat(String((price * 1.5) / 100)).toFixed(2)
-          const income = { id: String(new Date().getTime()), profit }
-          const project = {
-            projectId,
-            project_name,
-            project_budget,
-            token: 40,
-            amount_invested: price
-          }
-          const token = { id: String(new Date().getTime()), token: 40 }
-          await sendToken(user?.uid, token, project, income)
-        }
-        if (price >= 5000) {
-          const profit = parseFloat(String((price * 1.5) / 100)).toFixed(2)
-          const income = { id: String(new Date().getTime()), profit }
-          const token = { id: String(new Date().getTime()), token: 100 }
-          const project = {
-            projectId,
-            project_name,
-            project_budget,
-            token: 100,
-            amount_invested: price
-          }
-          await sendToken(user?.uid, token, project, income)
-        }
-    }
+     if (user.metamask_acc.length > 0) {
+       const order = await actions.order.capture()
+       if (order.status === "COMPLETED") {
+         setSuccess(!success)
+         const req = {
+           id: order.id,
+           amount: order.purchase_units[0].amount.value,
+           currency: order.purchase_units[0].amount.currency_code,
+           payment_method: "Paypal",
+           project_name,
+           creation_time: order.update_time,
+           uid: user.uid,
+         }
+         await addTransaction(req)
+         if (price >= 1000 && price < 2500) {
+           const profit = parseFloat(String((price * 1.5) / 100)).toFixed(2)
+           const income = { id: String(new Date().getTime()), profit }
+           const project = {
+             projectId,
+             project_name,
+             project_budget,
+             token: 20,
+             amount_invested: price,
+           }
+           const token = { id: String(new Date().getTime()), token: 20 }
+           await sendToken(user?.uid, token, project, income)
+         }
+         if (price >= 2500 && price < 5000) {
+           const profit = parseFloat(String((price * 1.5) / 100)).toFixed(2)
+           const income = { id: String(new Date().getTime()), profit }
+           const project = {
+             projectId,
+             project_name,
+             project_budget,
+             token: 40,
+             amount_invested: price,
+           }
+           const token = { id: String(new Date().getTime()), token: 40 }
+           await sendToken(user?.uid, token, project, income)
+         }
+         if (price >= 5000) {
+           const profit = parseFloat(String((price * 1.5) / 100)).toFixed(2)
+           const income = { id: String(new Date().getTime()), profit }
+           const token = { id: String(new Date().getTime()), token: 100 }
+           const project = {
+             projectId,
+             project_name,
+             project_budget,
+             token: 100,
+             amount_invested: price,
+           }
+           await sendToken(user?.uid, token, project, income)
+         }
+       }
+     } else {
+      setMetamask_err(false)
+     }
   }
   const onError = (err) => console.log(err)
   const handleChange = e => setMethodType(e.target.value)
@@ -273,6 +279,14 @@ const Payment = () => {
               success
               confirmBtnBsStyle="success"
               onConfirm={() => setSuccess(false)}
+            ></SweetAlert>
+          ) : null}
+          {!metamask_err ? (
+            <SweetAlert
+              title="Mettez à jour votre addresse Metamask avant de continuer"
+              error
+              confirmBtnBsStyle="error"
+              onConfirm={() => navigate("/profile")}
             ></SweetAlert>
           ) : null}
         </Container>

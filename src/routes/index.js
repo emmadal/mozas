@@ -45,7 +45,7 @@ const authProtectedRoutes = [
 
   //Investors
   { path: "/investors-list", component: <InvestorsList /> },
-  { path: "/investor/:id", component: <InvestorDetail /> },
+  { path: "/investor/:uid", component: <InvestorDetail /> },
 ]
 
 const publicRoutes = [

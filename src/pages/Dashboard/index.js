@@ -14,7 +14,6 @@ import {
   ModalFooter,
   Table,
 } from "reactstrap";
-import { Link } from "react-router-dom";
 
 import modalimage1 from "../../assets/images/product/img-7.png";
 import modalimage2 from "../../assets/images/product/img-4.png";
@@ -102,24 +101,7 @@ const Dashboard = () => {
       await getUserTransactions()
     })()
   }, [])
-
-  if (!user) {
-    return (
-      <div id="preloader">
-        <div id="status">
-          <div className="spinner-chase">
-            <div className="chase-dot" />
-            <div className="chase-dot" />
-            <div className="chase-dot" />
-            <div className="chase-dot" />
-            <div className="chase-dot" />
-            <div className="chase-dot" />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
+  
   return (
     <React.Fragment>
       <div className="page-content">
@@ -168,7 +150,7 @@ const Dashboard = () => {
 
           <Row>
             <Col sm="12">
-              <ProjectsRelated />
+              <ProjectsRelated projects={user.projects} />
             </Col>
           </Row>
 

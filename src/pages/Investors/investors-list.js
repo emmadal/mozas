@@ -1,21 +1,44 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import MetaTags from "react-meta-tags"
 import { Link } from "react-router-dom"
-import { map } from "lodash"
-import {
-  Col,
-  Container,
-  Row,
-  Table,
-} from "reactstrap"
-
+import { Col, Container, Row, Table } from "reactstrap"
+import { getAllInvestors } from "helpers/firebase_helper"
 //Import Component
 import Breadcrumbs from "components/Common/Breadcrumb"
 
 const InvestorsList = () => {
-  const investors = []
+  const [investors, setInvestors] = useState([])
+
+  const computeToken = tokenArr => {
+    let token = 0
+    for (const i of tokenArr) {
+      token += i.token
+    }
+    return token
+  }
+
+  const computeIncome = incomeArr => {
+    let p = parseFloat("0")
+    for (const i of incomeArr) {
+      p += Number(i.profit)
+    }
+    return p
+  }
+
+  const computeInvestment = investmentArr => {
+    let sum = 0
+    for (const i of investmentArr) {
+      sum += Number(i.amount)
+    }
+    return sum
+  }
 
   useEffect(() => {
+    const getInvestors = async () => {
+      const res = await getAllInvestors()
+      setInvestors([...res])
+    }
+    getInvestors()
   }, [])
 
   return (
@@ -26,7 +49,10 @@ const InvestorsList = () => {
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Investisseurs" breadcrumbItem="Liste des investisseurs" />
+          <Breadcrumbs
+            title="Investisseurs"
+            breadcrumbItem="Liste des investisseurs"
+          />
 
           <Row>
             <Col>
@@ -37,48 +63,44 @@ const InvestorsList = () => {
                       ID
                     </th>
                     <th scope="col">Nom</th>
-                    <th scope="col">Pays</th>
-                    <th scope="col">Adresse</th>
-                    <th scope="col">Projets</th>
-                    <th scope="col">Investissement</th>
+                    <th scope="col">Adresse Metamask</th>
+                    <th scope="col">Token gagné</th>
+                    <th scope="col">Bénéfice</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {map(investors, (investor, index) => (
-                    <tr key={investor?.id}>
-                      <td>{index + 1}</td>
-                      <td>
-                        <h5 className="text-truncate font-size-14">
-                          <Link
-                            to={`/investor-detail/${investor?.id}`}
-                            className="text-dark"
-                          >
-                            {investor?.name}
-                          </Link>
-                        </h5>
-                      </td>
-                      <td>
-                        <h5 className="text-truncate font-size-14">
-                          {investor?.country}
-                        </h5>
-                      </td>
-                      <td>
-                        <h5 className="text-truncate font-size-14">
-                          {investor?.address}
-                        </h5>
-                      </td>
-                      <td>
-                        <h5 className="text-truncate font-size-14">
-                          {investor?.investors?.length}
-                        </h5>
-                      </td>
-                      <td>
-                        <h5 className="text-truncate font-size-14">
-                          {investor?.globalInvestment}
-                        </h5>
-                      </td>
-                    </tr>
-                  ))}
+                  {investors
+                    .filter(i => i.metamask_acc.length > 0)
+                    .map((investor, index) => (
+                      <tr key={investor?.id}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <h5 className="text-truncate font-size-14">
+                            <Link
+                              to={`/investor/${investor?.uid}`}
+                              className="text-dark"
+                            >
+                              {investor?.fullName}
+                            </Link>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5 className="text-truncate font-size-14">
+                            {investor?.metamask_acc}
+                          </h5>
+                        </td>
+                        <td>
+                          <h5 className="text-truncate font-size-14">
+                            {computeToken(investor?.token)}
+                          </h5>
+                        </td>
+                        <td>
+                          <h5 className="text-truncate font-size-14">
+                            {computeIncome(investor?.income)}
+                          </h5>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </Table>
             </Col>

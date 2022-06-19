@@ -375,6 +375,19 @@ export const getProjectsDetails = id => {
 }
 
 /**
+ * Add investor
+ */
+export const addInvestor = data => {
+  const collection = firebase.firestore().collection("investors")
+  return new Promise((resolve, reject) => {
+    collection
+      .add({ ...data })
+      .then(() => resolve(true))
+      .catch(err => reject(err))
+  })
+}
+
+/**
  * Get all investors
  */
 export const getAllInvestors = () => {
@@ -387,7 +400,7 @@ export const getAllInvestors = () => {
         res.docs.map(doc => e.push(doc.data()))
         resolve(e)
       })
-      .catch(err => reject(this._handleError(err)))
+      .catch(err => reject(err))
   })
 }
 
@@ -452,7 +465,9 @@ export const sendToken = (userId, data, project, income) => {
         income: firebase.firestore.FieldValue.arrayUnion(income) ?? [],
       })
       .then(() => {
-        resolve(true)
+        getUserByUID(userId).then((user) => {
+          addInvestor(user).then(() => resolve(true))
+        })
       })
       .catch(err => reject(err))
   })

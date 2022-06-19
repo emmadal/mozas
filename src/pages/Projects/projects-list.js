@@ -92,9 +92,7 @@ const ProjectsList = () => {
     toggle()
   }
 
-  const handleDeleteProject = arg => {
-    // dispatch(onDeleteProject(arg))
-  }
+  const handleDeleteProject = arg => {}
 
   //delete order
   const [deleteModal, setDeleteModal] = useState(false)
