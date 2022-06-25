@@ -6,15 +6,16 @@ import paginationFactory, {
   PaginationProvider,
 } from "react-bootstrap-table2-paginator"
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
-import { Card, CardBody, Col, Row } from "reactstrap"
+import { Card, CardBody, Col, Row, Badge } from "reactstrap"
 
-const LatestTranaction = ({transaction}) => {
-
+const LatestAdminTranaction = ({ transaction }) => {
   const selectRow = {
     mode: "checkbox",
   }
-  const [modal, setModal] = useState(false)
-  const [modal1, setModal1] = useState(false)
+    const [modal, setModal] = useState(false)
+    const [modal1, setModal1] = useState(false)
+    const [isEdit, setIsEdit] = useState(false)
+
 
   //pagination customization
   const pageOptions = {
@@ -25,6 +26,14 @@ const LatestTranaction = ({transaction}) => {
   const { SearchBar } = Search
 
   const toggleViewModal = () => setModal1(!modal1)
+
+  const toggle = () => {
+    setModal(!modal)
+  }
+
+  const toLowerCase1 = str => {
+    return str.toLowerCase()
+  }
 
   const EcommerceOrderColumns = toggleModal => [
     {
@@ -39,14 +48,14 @@ const LatestTranaction = ({transaction}) => {
       ),
     },
     {
-      dataField: "creation_time",
-      text: "Date",
+      dataField: "fullName",
+      text: "Nom & Prénoms",
       sort: true,
-      formatter: (cellContent, row) => (
-        <Link to="#" className="text-body fw-bold">
-          {new Date(row.creation_time).toLocaleString()}
-        </Link>
-      ),
+    },
+    {
+      dataField: "project_name",
+      text: "Nom du projet",
+      sort: true,
     },
     {
       dataField: "amount",
@@ -54,11 +63,39 @@ const LatestTranaction = ({transaction}) => {
       sort: true,
     },
     {
+      dataField: "payment_status",
+      text: "Status",
+      sort: true,
+      // eslint-disable-next-line react/display-name
+      formatter: (cellContent, row) => (
+        <Badge
+          className={"font-size-12 badge-soft-" + row.badgeclass}
+          color="success"
+          pill
+        >
+          {row.payment_status}
+        </Badge>
+      ),
+    },
+    {
+      dataField: "creation_time",
+      text: "Date",
+      sort: true,
+      formatter: (cellContent, row) => (
+        <Link to="#" className="text-body fw-bold">
+          {new Date(row.creation_time).toLocaleDateString("fr-FR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </Link>
+      ),
+    },
+    {
       dataField: "payment_method",
       isDummyField: true,
       text: "Méthode de paiement",
       sort: true,
-
       // eslint-disable-next-line react/display-name
       formatter: (cellContent, row) => (
         <>
@@ -73,15 +110,24 @@ const LatestTranaction = ({transaction}) => {
         </>
       ),
     },
+    // {
+    //   dataField: "view",
+    //   isDummyField: true,
+    //   text: "Voir les détails",
+    //   sort: true,
+    //   // eslint-disable-next-line react/display-name
+    //   formatter: () => (
+    //     <Button
+    //       type="button"
+    //       color="primary"
+    //       className="btn-sm btn-rounded"
+    //       onClick={toggleViewModal}
+    //     >
+    //       Voir Détails
+    //     </Button>
+    //   ),
+    // },
   ]
-
-  const toggle = () => {
-    setModal(!modal)
-  }
-
-  const toLowerCase1 = str => {
-    return str.toLowerCase()
-  }
 
   const defaultSorted = [
     {
@@ -92,10 +138,11 @@ const LatestTranaction = ({transaction}) => {
 
   return (
     <React.Fragment>
-      {/* <EcommerceOrdersModal isOpen={modal1} toggle={toggleViewModal} /> */}
       <Card>
         <CardBody>
-          <div className="mb-4 h4 card-title">Transactions</div>
+          <div className="mb-4 h4 card-title">
+            Liste complète des transactions
+          </div>
           <PaginationProvider
             pagination={paginationFactory(pageOptions)}
             keyField="id"
@@ -114,7 +161,7 @@ const LatestTranaction = ({transaction}) => {
                   <React.Fragment>
                     <Row>
                       <Col xl="12">
-                        <div className="table-responsive">
+                        <div className="table-responsive text-center">
                           <BootstrapTable
                             keyField="id"
                             responsive
@@ -146,4 +193,4 @@ const LatestTranaction = ({transaction}) => {
   )
 }
 
-export default LatestTranaction
+export default LatestAdminTranaction

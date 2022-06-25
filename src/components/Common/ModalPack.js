@@ -73,7 +73,7 @@ const ModalPack = ({ show, onCloseClick, project }) => {
                   <div className="d-flex flex-column text-center">
                     <span>
                       <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-success me-4"></i>{" "}
-                      40 jetons
+                      50 jetons
                     </span>
                     <span>
                       <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-success me-4"></i>{" "}

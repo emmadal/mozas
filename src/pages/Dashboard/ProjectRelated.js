@@ -1,12 +1,12 @@
 import React, {useContext, useState} from "react"
 import { Row, Col, Card, CardBody } from "reactstrap"
 import BootstrapTable from "react-bootstrap-table-next"
-import { Link } from "react-router-dom"
 import paginationFactory, {
   PaginationListStandalone,
   PaginationProvider,
 } from "react-bootstrap-table2-paginator"
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit"
+import { set } from "lodash"
 
 const ProjectsRelated = ({projects}) => {
     const [modal, setModal] = useState(false)
@@ -55,11 +55,11 @@ const ProjectsRelated = ({projects}) => {
   }
 
   // Table Data
-  const productData = projects
+  const productData = [...new set(projects)]
 
   const defaultSorted = [
     {
-      dataField: "projectId",
+      dataField: "id",
       order: "asc",
     },
   ]

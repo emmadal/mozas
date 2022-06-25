@@ -46,7 +46,6 @@ export const registerUser = (data) => {
       .then(
         res => {
           addNewUser(res.user, data).then((e) => resolve(e))
-          // resolve(firebase.auth().currentUser)
         },
         error => {
           reject(error.message)
@@ -62,16 +61,12 @@ export const addNewUser = (user, data) => {
   return new Promise((resolve, reject) => {
     const collection = firebase.firestore().collection("users")
     const details = {
-      id: new Date().getTime(),
       uid: user?.uid,
       metamask_acc: "",
       fullName: user?.displayName ?? data.name,
       email: user?.email ?? "",
       photo: user?.photoURL ?? "",
       phoneNumber: user?.phoneNumber ?? "",
-      token: [],
-      projects: [],
-      income: [],
       type: "user",
       createdDtm: firebase.firestore.FieldValue.serverTimestamp(),
       lastLoginTime: firebase.firestore.FieldValue.serverTimestamp(),
@@ -84,7 +79,7 @@ export const addNewUser = (user, data) => {
           resolve(true)
         },
         error => {
-          reject(this._handleError(error))
+          reject(error)
         }
       )
   })
@@ -118,7 +113,9 @@ export const getUserByUID = userUID => {
     collection
       .doc(`${userUID}`)
       .get()
-      .then(e => resolve(e.data()))
+      .then(e => {
+        resolve(e.data())
+      })
       .catch(err => reject(err.message))
   })
 }
@@ -327,12 +324,13 @@ export const updateUserProfile = (user, data) => {
       .doc(`${user?.uid}`)
       .update({
         fullName: data?.fullName ?? user?.displayName,
+        phoneNumber: data?.phoneNumber ?? user?.phoneNumber,
         metamask_acc: data?.wallet ?? user?.metamask_acc,
       })
       .then(() => {
         getUserByUID(user?.uid).then(e => resolve(e))
       })
-      .catch((err) => reject(err))
+      .catch(err => reject(err))
   })
 }
 
@@ -377,11 +375,17 @@ export const getProjectsDetails = id => {
 /**
  * Add investor
  */
-export const addInvestor = data => {
+export const addInvestor = ({
+  fullName,
+  income,
+  uid,
+  metamask_acc,
+  id,
+}) => {
   const collection = firebase.firestore().collection("investors")
   return new Promise((resolve, reject) => {
     collection
-      .add({ ...data })
+      .add({ fullName, income, uid, metamask_acc, id })
       .then(() => resolve(true))
       .catch(err => reject(err))
   })
@@ -419,6 +423,57 @@ export const getInvestorsDetails = id => {
 }
 
 /**
+ * Affiliate project
+ */
+export const affiliateProject = ({ fullName, uid }, project) => {
+  const collection = firebase.firestore().collection("project_related")
+  return new Promise((resolve, reject) => {
+    const query = collection
+      .where("uid", "==", uid)
+      .where("project_name", "==", project.project_name)
+    query.get().then(e => {
+      if (e.empty) {
+        const id = String(new Date().getTime())
+        collection
+          .doc(id)
+          .set({ fullName, uid, id, ...project })
+          .then(() => resolve(true))
+      } else {
+        const r = []
+        e.docs.map(u => r.push(u.data()))
+        collection
+          .doc(`${r[0].id}`)
+          .update({
+            token: r[0].token + project.token,
+            amount_invested: r[0].amount_invested + project.amount_invested,
+            income: r[0].income + project.income,
+          })
+          .then(() => resolve(true))
+      }
+    }).catch((err) => reject(err))
+  })
+}
+
+/**
+ * Get related project by userId
+ */
+export const getRelatedProject = () => {
+  const collection = firebase.firestore().collection("project_related")
+  return new Promise((resolve, reject) => {
+    const data = []
+    collection
+      .get()
+      .then(res => {
+        if (!res.empty) {
+          res.docs.map(e => data.push(e.data()))
+          resolve(data)
+        }
+      })
+      .catch(err => reject(err))
+  })
+}
+
+/**
  * Create transaction
  */
 export const addTransaction = (data) => {
@@ -452,22 +507,19 @@ export const getTransactions = userId => {
 }
 
 /**
- * Send token to user after payment
+ * Get all transactions
  */
-export const sendToken = (userId, data, project, income) => {
-  const collection = firebase.firestore().collection("users")
+export const getAllTransactions = () => {
+  const collection = firebase.firestore().collection("transactions")
   return new Promise((resolve, reject) => {
+    const data = []
     collection
-      .doc(`${userId}`)
-      .update({
-        token: firebase.firestore.FieldValue.arrayUnion(data) ?? [],
-        projects: firebase.firestore.FieldValue.arrayUnion(project) ?? [],
-        income: firebase.firestore.FieldValue.arrayUnion(income) ?? [],
-      })
-      .then(() => {
-        getUserByUID(userId).then((user) => {
-          addInvestor(user).then(() => resolve(true))
-        })
+      .get()
+      .then(res => {
+        if (!res.empty) {
+          res.docs.map(e => data.push(e.data()))
+          resolve(data)
+        }
       })
       .catch(err => reject(err))
   })

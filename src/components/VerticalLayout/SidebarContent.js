@@ -11,7 +11,7 @@ import { UserContext } from "App"
 //Navigation
 import {useLocation} from 'react-router-dom'
 
-const SidebarContent = props => {
+const SidebarContent = () => {
   const ref = useRef()
   const { user } = useContext(UserContext)
   const [usertype, setUserType] = useState('')
@@ -110,42 +110,8 @@ const SidebarContent = props => {
                     <li>
                       <Link to="/dashboard">Accueil</Link>
                     </li>
-                    <li>
-                      <Link to="/dashboard-crypto">Crypto</Link>
-                    </li>
                   </ul>
                 </li>
-
-                <li>
-                  <Link to="/#" className="has-arrow">
-                    <i className="bx bx-bitcoin"></i>
-                    <span>Investissement</span>
-                  </Link>
-                  <ul className="sub-menu" aria-expanded="false">
-                    <li>
-                      <Link to="/crypto-wallet">Wallet</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-buy-sell">Achats/Ventes</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-exchange">Echanges</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-lending">Prêt</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-orders">Commandes</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-kyc-application">KYC</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-ico-landing">ICO Landing</Link>
-                    </li>
-                  </ul>
-                </li>
-
                 <li>
                   <Link to="/#" className="has-arrow">
                     <i className="bx bx-briefcase-alt-2"></i>
@@ -177,52 +143,20 @@ const SidebarContent = props => {
                 </li>
               </>
             ) : (
-              <>
+              <ul>
                 <li>
-                  <Link to="/#" className="has-arrow">
-                    <i className="bx bx-bitcoin"></i>
-                    <span>Investissement</span>
+                  <Link to="/dashboard">
+                    <i className="bx bx-home-circle"></i>
+                    <span>Tableau de bord</span>
                   </Link>
-                  <ul className="sub-menu" aria-expanded="false">
-                    <li>
-                      <Link to="/crypto-wallet">Wallet</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-buy-sell">Achats/Ventes</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-exchange">Echanges</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-lending">Prêt</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-orders">Commandes</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-kyc-application">KYC</Link>
-                    </li>
-                    <li>
-                      <Link to="/crypto-ico-landing">ICO Landing</Link>
-                    </li>
-                  </ul>
                 </li>
-
                 <li>
-                  <Link to="/#" className="has-arrow ">
+                  <Link to="/projects-list">
                     <i className="bx bx-briefcase-alt-2"></i>
-                    <span>Projets</span>
+                    <span>Liste des projets</span>
                   </Link>
-                  <ul className="sub-menu" aria-expanded="false">
-                    <li>
-                      <Link to="/projects-grid">Grille des projets</Link>
-                    </li>
-                    <li>
-                      <Link to="/projects-list">Liste des projets</Link>
-                    </li>
-                  </ul>
                 </li>
-              </>
+              </ul>
             )}
           </ul>
         </div>

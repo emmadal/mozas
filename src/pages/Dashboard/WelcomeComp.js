@@ -25,7 +25,7 @@ const WelcomeComp = () => {
         </div>
         <CardBody className="pt-0">
           <Row>
-            <Col sm="4">
+            <Col sm="2">
               <div className="avatar-md profile-user-wid mb-4">
                 <img
                   src={user?.photoURL ?? avatar1}
@@ -35,8 +35,8 @@ const WelcomeComp = () => {
               </div>
             </Col>
 
-            <Col sm="8">
-              <div className="pt-4">
+            <Col sm="10">
+              <div className="pt-4 text-center">
                 <Row>
                   <Col sm="12">
                     <h5 className="font-size-20 text-truncate">

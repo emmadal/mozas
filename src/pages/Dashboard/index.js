@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import MetaTags from "react-meta-tags";
 import {
   Container,
@@ -7,7 +7,6 @@ import {
   Button,
   Card,
   CardBody,
-  Input,
   Modal,
   ModalHeader,
   ModalBody,
@@ -22,15 +21,22 @@ import modalimage2 from "../../assets/images/product/img-4.png";
 import WelcomeComp from "./WelcomeComp";
 import ProjectsRelated from "./ProjectRelated";
 import LatestTranaction from "./LatestTranaction";
+import LatestAdminTranaction from "./LatestAdminTranaction"
 
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 import { UserContext } from "App";
-import { getTransactions, getUserByUID } from "helpers/firebase_helper";
+import {
+  getTransactions,
+  getUserByUID,
+  getAllTransactions,
+  getRelatedProject,
+} from "helpers/firebase_helper"
 
 const Dashboard = () => {
   const [modal, setmodal] = useState(false)
   const [transactions, setTransactions] = useState([])
+  const [relatedProject, setRelatedProject] = useState([])
   const { user, setUser } = useContext(UserContext)
 
   const getUser = async () => {
@@ -39,8 +45,16 @@ const Dashboard = () => {
   }
 
   const getUserTransactions = async () => {
-    const res = await getTransactions(user?.uid)
-    setTransactions([...res])
+    if(user.type === "user") {
+      const relatedProjec = await getRelatedProject()
+      const getTrans = await getTransactions(user?.uid)
+      setRelatedProject([...relatedProjec.filter(e => e.uid === user.uid)])
+      setTransactions([...getTrans])
+    }
+    if (user.type === "admin") {
+      const res = await getAllTransactions()
+      setTransactions([...res])
+    }
   }
 
   const computeToken = tokenArr => {
@@ -52,9 +66,9 @@ const Dashboard = () => {
   }
 
   const computeIncome = incomeArr => {
-    let p = parseFloat('0')
+    let p = 0
     for (const i of incomeArr) {
-      p += Number(i.profit)
+      p += i.income
     }
     return p
   }
@@ -62,7 +76,7 @@ const Dashboard = () => {
   const computeInvestment = investmentArr => {
     let sum = 0
     for (const i of investmentArr) {
-      sum += Number(i.amount)
+      sum += Number(i.amount_invested)
     }
     return sum
   }
@@ -71,22 +85,40 @@ const Dashboard = () => {
     {
       title: "Projets",
       iconClass: "bx-list-ul",
-      description: user?.projects.length,
+      description: relatedProject?.length ?? 0,
     },
     {
       title: "Financement(€)",
       iconClass: "bx-money",
-      description: computeInvestment(transactions),
+      description: computeInvestment(relatedProject ?? []),
     },
     {
       title: "Jeton",
       iconClass: "bx-purchase-tag-alt",
-      description: computeToken(user.token),
+      description: computeToken(relatedProject ?? []),
     },
     {
-      title: "Gains(€)",
+      title: "Bénéfice(€)",
       iconClass: "bx-archive-in",
-      description: computeIncome(user.income),
+      description: computeIncome(relatedProject ?? []),
+    },
+  ]
+
+  const adminReports = [
+    {
+      title: "Total Projets",
+      iconClass: "bx-list-ul",
+      description: 0,
+    },
+    {
+      title: "Montant Total",
+      iconClass: "bx-money",
+      description: 0,
+    },
+    {
+      title: "Benefice(€)",
+      iconClass: "bx-archive-in",
+      description: 0,
     },
   ]
 
@@ -97,7 +129,7 @@ const Dashboard = () => {
   }, [])
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       await getUserTransactions()
     })()
   }, [])
@@ -119,44 +151,52 @@ const Dashboard = () => {
             <Col sm="8">
               <Row>
                 {/* Reports Render */}
-                {reports.map((report, key) => (
-                  <Col md="4" key={"_col_" + key}>
-                    <Card className="mini-stats-wid">
-                      <CardBody>
-                        <div className="d-flex">
-                          <div className="flex-grow-1">
-                            <p className="text-muted fw-medium">
-                              {report.title}
-                            </p>
-                            <h4 className="mb-0">{report.description}</h4>
+                {(user.type === "user" ? reports : adminReports).map(
+                  (report, key) => (
+                    <Col md="4" key={"_col_" + key}>
+                      <Card className="mini-stats-wid">
+                        <CardBody>
+                          <div className="d-flex">
+                            <div className="flex-grow-1">
+                              <p className="text-muted fw-medium">
+                                {report.title}
+                              </p>
+                              <h4 className="mb-0">{report.description}</h4>
+                            </div>
+                            <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
+                              <span className="avatar-title rounded-circle bg-primary">
+                                <i
+                                  className={
+                                    "bx " + report.iconClass + " font-size-24"
+                                  }
+                                ></i>
+                              </span>
+                            </div>
                           </div>
-                          <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
-                            <span className="avatar-title rounded-circle bg-primary">
-                              <i
-                                className={
-                                  "bx " + report.iconClass + " font-size-24"
-                                }
-                              ></i>
-                            </span>
-                          </div>
-                        </div>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                ))}
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  )
+                )}
               </Row>
             </Col>
           </Row>
 
           <Row>
             <Col sm="12">
-              <ProjectsRelated projects={user.projects} />
+              {user.type === "user" ? (
+                <ProjectsRelated projects={relatedProject} />
+              ) : null}
             </Col>
           </Row>
 
           <Row>
             <Col sm="12">
-              <LatestTranaction transaction={transactions}/>
+              {user.type === "user" ? (
+                <LatestTranaction transaction={transactions} />
+              ) : (
+                <LatestAdminTranaction transaction={transactions} />
+              )}
             </Col>
           </Row>
         </Container>
