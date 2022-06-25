@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import { getProjectsDetails } from "helpers/firebase_helper";
 
 const ProjectsOverview = () => {
-  const [projectDetail, setProjectDetail] = useState(null);
+  const [projectDetail, setProjectDetail] = useState();
   const [showModal, setShowModal] = useState(false);
   const params = useParams()
 

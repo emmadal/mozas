@@ -14,7 +14,6 @@ import {useLocation} from 'react-router-dom'
 const SidebarContent = () => {
   const ref = useRef()
   const { user } = useContext(UserContext)
-  const [usertype, setUserType] = useState('')
   const location = useLocation()
   // Use ComponentDidMount and ComponentDidUpdate method symultaniously
   useEffect(() => {
@@ -43,10 +42,6 @@ const SidebarContent = () => {
     ref.current.recalculate()
   })
 
-  useEffect(() => {
-    setUserType(user?.type)
-  }, [])
-
   function scrollElement(item) {
     if (item) {
       const currentPosition = item.offsetTop
@@ -56,50 +51,50 @@ const SidebarContent = () => {
     }
   }
 
-  function activateParentDropdown(item) {
-    item.classList.add("active")
-    const parent = item.parentElement
-    const parent2El = parent.childNodes[1]
-    if (parent2El && parent2El.id !== "side-menu") {
-      parent2El.classList.add("mm-show")
-    }
+   function activateParentDropdown(item) {
+     item.classList.add("active")
+     const parent = item.parentElement
+     const parent2El = parent.childNodes[1]
+     if (parent2El && parent2El.id !== "side-menu") {
+       parent2El.classList.add("mm-show")
+     }
 
-    if (parent) {
-      parent.classList.add("mm-active")
-      const parent2 = parent.parentElement
+     if (parent) {
+       parent.classList.add("mm-active")
+       const parent2 = parent.parentElement
 
-      if (parent2) {
-        parent2.classList.add("mm-show") // ul tag
+       if (parent2) {
+         parent2.classList.add("mm-show") // ul tag
 
-        const parent3 = parent2.parentElement // li tag
+         const parent3 = parent2.parentElement // li tag
 
-        if (parent3) {
-          parent3.classList.add("mm-active") // li
-          parent3.childNodes[0].classList.add("mm-active") //a
-          const parent4 = parent3.parentElement // ul
-          if (parent4) {
-            parent4.classList.add("mm-show") // ul
-            const parent5 = parent4.parentElement
-            if (parent5) {
-              parent5.classList.add("mm-show") // li
-              parent5.childNodes[0].classList.add("mm-active") // a tag
-            }
-          }
-        }
-      }
-      scrollElement(item)
-      return false
-    }
-    scrollElement(item)
-    return false
-  }
+         if (parent3) {
+           parent3.classList.add("mm-active") // li
+           parent3.childNodes[0].classList.add("mm-active") //a
+           const parent4 = parent3.parentElement // ul
+           if (parent4) {
+             parent4.classList.add("mm-show") // ul
+             const parent5 = parent4.parentElement
+             if (parent5) {
+               parent5.classList.add("mm-show") // li
+               parent5.childNodes[0].classList.add("mm-active") // a tag
+             }
+           }
+         }
+       }
+       scrollElement(item)
+       return false
+     }
+     scrollElement(item)
+     return false
+   }
 
   return (
     <React.Fragment>
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
-            {usertype === "admin" ? (
+            {user?.type === "admin" ? (
               <>
                 <li>
                   <Link to="/#" className="has-arrow">
@@ -143,20 +138,20 @@ const SidebarContent = () => {
                 </li>
               </>
             ) : (
-              <ul>
+              <>
                 <li>
-                  <Link to="/dashboard">
+                  <Link to="/dashboard" className=" ">
                     <i className="bx bx-home-circle"></i>
                     <span>Tableau de bord</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to="/projects-list">
+                  <Link to="/projects-list" className=" ">
                     <i className="bx bx-briefcase-alt-2"></i>
                     <span>Liste des projets</span>
                   </Link>
                 </li>
-              </ul>
+              </>
             )}
           </ul>
         </div>

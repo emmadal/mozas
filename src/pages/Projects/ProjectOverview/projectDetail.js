@@ -1,5 +1,5 @@
 import React from "react";
-import { map, get } from "lodash";
+import { map } from "lodash";
 import { Card, CardBody, Col, Row } from "reactstrap";
 
 const ProjectDetail = ({ project }) => {
@@ -18,7 +18,7 @@ const ProjectDetail = ({ project }) => {
           </div>
         </div>
 
-        <h5 className="font-size-15 mt-4">Détails du projet :</h5>
+        <h5 className="font-size-15 mt-4">Description du projet :</h5>
 
         <p className="text-muted text-wrap word-wrap">{project?.desc}</p>
 
