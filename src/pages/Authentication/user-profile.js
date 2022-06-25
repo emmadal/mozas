@@ -41,22 +41,28 @@ const UserProfile = () => {
       email: user?.email,
       fullName: user?.fullName || "",
       wallet: user?.metamask_acc || "",
+      phoneNumber: user?.phoneNumber || "",
       old_password: "",
       newpassword1: "",
       newpassword2: "",
     },
     validationSchema: Yup.object({
       fullName: Yup.string().required("Entrez votre Nom & Prénoms"),
+      phoneNumber: Yup.string().required("Entrez votre Telephone mobile"),
       wallet: Yup.string().required("Entrez votre adresse Metamask"),
     }),
-    onSubmit: async (values) => {
-      if(actionType === "update_profile"){
+    onSubmit: async values => {
+      if (actionType === "update_profile") {
         setLoading1(!loading1)
-        const {fullName, wallet} = values
-        const res = await updateUserProfile(user, { fullName, wallet })
-        if(res){
+        const { fullName, wallet, phoneNumber } = values
+        const res = await updateUserProfile(user, {
+          fullName,
+          wallet,
+          phoneNumber,
+        })
+        if (res) {
           setLoading1(false)
-          setUpdate(!update);
+          setUpdate(!update)
           setUser(res)
         }
       }
@@ -165,6 +171,32 @@ const UserProfile = () => {
                       validation.errors.fullName ? (
                         <FormFeedback type="invalid">
                           {validation.errors.fullName}
+                        </FormFeedback>
+                      ) : null}
+
+                      <Label className="form-label mt-4">
+                        Telephone mobile(suivi du code indicatif)
+                      </Label>
+                      <Input
+                        name="phoneNumber"
+                        placeholder="Ex: +2250707070707"
+                        className="form-control"
+                        type="tel"
+                        defaultValue="1-(555)-555-5555"
+                        onChange={validation.handleChange}
+                        onBlur={validation.handleBlur}
+                        value={validation.values.phoneNumber || ""}
+                        invalid={
+                          validation.touched.phoneNumber &&
+                          validation.errors.phoneNumber
+                            ? true
+                            : false
+                        }
+                      />
+                      {validation.touched.phoneNumber &&
+                      validation.errors.phoneNumber ? (
+                        <FormFeedback type="invalid">
+                          {validation.errors.phoneNumber}
                         </FormFeedback>
                       ) : null}
 
