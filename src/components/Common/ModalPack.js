@@ -31,24 +31,16 @@ const ModalPack = ({ show, onCloseClick, project }) => {
               <Card outline color="text-primary border border-primary">
                 <CardBody>
                   <CardTitle className="mb-4 fs-4 text-center text-decoration-underline">
-                    Standard
+                    Offre Standard
                   </CardTitle>
-                  <div className="d-flex flex-column text-center">
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-primary me-4"></i>{" "}
-                      20 jetons
+                  <div className="d-flex flex-column">
+                    <span className="fs-5 fw-bold text-center">
+                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-24px text-primary"></i>{" "}
+                      20 jetons offerts
                     </span>
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-primary me-4"></i>{" "}
-                      Lorem
-                    </span>
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-primary me-4"></i>{" "}
-                      Lorem
-                    </span>
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-primary me-4"></i>{" "}
-                      Lorem
+                    <span className="fs-5 fw-bold text-center">
+                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-24px text-primary"></i>{" "}
+                      20% de Retour sur investissement
                     </span>
                   </div>
                   <hr className="text-muted" />
@@ -68,24 +60,16 @@ const ModalPack = ({ show, onCloseClick, project }) => {
               <Card outline color="text-success border border-success">
                 <CardBody>
                   <CardTitle className="mb-4 fs-4 text-center text-decoration-underline">
-                    Premium
+                    Offre Premium
                   </CardTitle>
                   <div className="d-flex flex-column text-center">
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-success me-4"></i>{" "}
-                      50 jetons
+                    <span className="fs-5 fw-bold text-center">
+                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-24px text-primary"></i>{" "}
+                      50 jetons offerts
                     </span>
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-success me-4"></i>{" "}
-                      Lorem
-                    </span>
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-success me-4"></i>{" "}
-                      Lorem
-                    </span>
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-success me-4"></i>{" "}
-                      Lorem
+                    <span className="fs-5 fw-bold text-center">
+                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-24px text-primary"></i>{" "}
+                      25% de Retour sur investissement
                     </span>
                   </div>
                   <hr className="text-muted" />
@@ -106,24 +90,16 @@ const ModalPack = ({ show, onCloseClick, project }) => {
               <Card outline color="text-warning border border-warning">
                 <CardBody>
                   <CardTitle className="mb-4 fs-4 text-center text-decoration-underline">
-                    Bronze
+                    Offre Bronze
                   </CardTitle>
                   <div className="d-flex flex-column text-center">
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-warning me-4"></i>{" "}
-                      100 jetons
+                    <span className="fs-5 fw-bold text-center">
+                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-24px text-primary"></i>{" "}
+                      100 jetons offerts
                     </span>
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-warning me-4"></i>{" "}
-                      Lorem
-                    </span>
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-warning me-4"></i>{" "}
-                      Lorem
-                    </span>
-                    <span>
-                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-18px text-warning me-4"></i>{" "}
-                      Lorem
+                    <span className="fs-5 fw-bold text-center">
+                      <i className="mdi mdi-checkbox-marked-circle-outline mdi-24px text-primary"></i>{" "}
+                      30% de Retour sur investissement
                     </span>
                   </div>
                   <hr className="text-muted" />
