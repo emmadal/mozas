@@ -1,7 +1,6 @@
 import React, {useContext} from "react"
 import { Row, Col, Card, CardBody } from "reactstrap"
-import { Link } from "react-router-dom"
-import avatar1 from "../../assets/images/users/avatar-1.jpg"
+import Avatar from "react-avatar"
 import profileImg from "../../assets/images/profile-img.png"
 import { UserContext } from "App"
 
@@ -27,11 +26,15 @@ const WelcomeComp = () => {
           <Row>
             <Col sm="2">
               <div className="avatar-md profile-user-wid mb-4">
-                <img
-                  src={user?.photoURL ?? avatar1}
-                  alt={`${user?.fullName}`}
-                  className="img-thumbnail rounded-circle"
-                />
+                {!user?.photo.length ? (
+                  <Avatar name={user?.fullName} size="60" round={true} />
+                ) : (
+                  <img
+                    src={user?.photo}
+                    alt="Header Avatar"
+                    className="img-thumbnail rounded-circle"
+                  />
+                )}
               </div>
             </Col>
 
@@ -44,7 +47,6 @@ const WelcomeComp = () => {
                     </h5>
                     <p className="text-muted">{user?.email}</p>
                   </Col>
-              
                 </Row>
               </div>
             </Col>

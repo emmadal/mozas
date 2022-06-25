@@ -3,9 +3,8 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
 } from "reactstrap"
-
+import Avatar from "react-avatar"
 import { Link, useNavigate } from "react-router-dom"
 
 // users
@@ -45,11 +44,15 @@ const ProfileMenu = props => {
           id="page-header-user-dropdown"
           tag="button"
         >
-          <img
-            className="rounded-circle header-profile-user"
-            src={user1}
-            alt="Header Avatar"
-          />
+          {!user?.photo.length ? (
+            <Avatar name={user?.fullName} size="35" round={true} />
+          ) : (
+            <img
+              src={user?.photo}
+              alt="Header Avatar"
+              className="rounded-circle header-profile-user"
+            />
+          )}
           <span className="d-none d-xl-inline-block ms-2 me-1">
             {user?.fullName}
           </span>

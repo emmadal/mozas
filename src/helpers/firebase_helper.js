@@ -185,6 +185,30 @@ export const uploadProjectFiles = (files, refName) => {
 }
 
 /**
+ * Upload user picture profile
+ */
+export const uploadProfilePicture = (file, refName) => {
+  const storage = firebase.storage()
+  return new Promise((resolve, reject) => {
+    const storageRef = storage
+      .ref(`${refName}`)
+      .child(`${file.name}`)
+      .put(file, { cacheControl: "no-store" })
+    storageRef
+      .then(() => {
+        storage
+          .ref(`${refName}`)
+          .child(`${file.name}`)
+          .getDownloadURL()
+          .then(fileURL => {
+            resolve([{ name: fileURL.split(".")[0], link: fileURL }])
+          })
+      })
+      .catch(err => reject(err))
+  })
+}
+
+/**
  * Add new project
  */
 export const addProject = ({
@@ -324,6 +348,7 @@ export const updateUserProfile = (user, data) => {
       .doc(`${user?.uid}`)
       .update({
         fullName: data?.fullName ?? user?.displayName,
+        photo: data?.photo ?? user?.photo,
         phoneNumber: data?.phoneNumber ?? user?.phoneNumber,
         metamask_acc: data?.wallet ?? user?.metamask_acc,
       })

@@ -1,5 +1,6 @@
 import MetaTags from "react-meta-tags";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
+import Avatar from "react-avatar"
 import {
   Container,
   Row,
@@ -20,18 +21,23 @@ import { useFormik } from "formik";
 
 //Import Breadcrumb
 import Breadcrumb from "../../components/Common/Breadcrumb";
-
-import avatar from "../../assets/images/users/avatar-1.jpg";
 import { UserContext } from "App";
 
 //Api call
-import { updateUserProfile } from "helpers/firebase_helper";
+import {
+  updateUserProfile,
+  uploadProfilePicture,
+} from "helpers/firebase_helper"
 
 const UserProfile = () => {
   const {user, setUser} = useContext(UserContext)
   const [actionType, setActionType] = useState('')
   const [loading1, setLoading1] = useState(false)
+  const [loading2, setLoading2] = useState(false)
+  const [error, setError] = useState("")
+  const [imageURL, setImageURL] = useState("")
   const [update, setUpdate] = useState(false)
+  const ref = useRef()
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -73,6 +79,31 @@ const UserProfile = () => {
     },
   })
 
+  const uploadPicture = () => {
+    document.getElementById("input_file").click()
+    document
+      .getElementById("input_file")
+      .addEventListener("change", async () => {
+        setLoading2(!loading2)
+        const pic = await uploadProfilePicture(ref.current.files[0], "profile")
+        console.log(pic[0].link)
+        setImageURL(pic[0].link)
+        if (pic.length) {
+          const res = await updateUserProfile(user, {
+            photo: pic[0].link,
+            fullName: user?.fullName,
+            wallet: user?.metamask_acc,
+            phoneNumber: user?.phoneNumber,
+          })
+          if(res) {
+            setLoading2(false)
+            setUpdate(!update)
+            setUser(res)
+          }
+        }
+      })
+  }
+
 
   return (
     <React.Fragment>
@@ -90,13 +121,17 @@ const UserProfile = () => {
               {success ? <Alert color="success">{success}</Alert> : null} */}
               <Card>
                 <CardBody>
-                  <div className="d-flex">
-                    <div className="ms-3">
-                      <img
-                        src={avatar}
-                        alt=""
-                        className="avatar-md rounded-circle img-thumbnail"
-                      />
+                  <div className="d-flex align-items-center justify-content-center">
+                    <div className="ms-3 me-2">
+                      {!user?.photo.length ? (
+                        <Avatar name={user?.fullName} size="70" round={true} />
+                      ) : (
+                        <img
+                          src={user?.photo ?? imageURL}
+                          alt="profile picture"
+                          className="avatar-md rounded-circle img-thumbnail"
+                        />
+                      )}
                     </div>
                     <div className="flex-grow-1 align-self-center">
                       <div className="text-muted">
@@ -105,6 +140,27 @@ const UserProfile = () => {
                         <p className="mb-1">{user?.phoneNumber}</p>
                       </div>
                     </div>
+                    <Button
+                      type="submit"
+                      color="primary"
+                      className="float-end"
+                      onClick={e => {
+                        e.preventDefault()
+                        uploadPicture()
+                      }}
+                    >
+                      Telecharger une photo de profil{" "}
+                      {loading2 ? (
+                        <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                      ) : null}
+                    </Button>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="input_file"
+                      ref={ref}
+                      hidden
+                    />
                   </div>
                 </CardBody>
               </Card>
@@ -182,7 +238,6 @@ const UserProfile = () => {
                         placeholder="Ex: +2250707070707"
                         className="form-control"
                         type="tel"
-                        defaultValue="1-(555)-555-5555"
                         onChange={validation.handleChange}
                         onBlur={validation.handleBlur}
                         value={validation.values.phoneNumber || ""}
