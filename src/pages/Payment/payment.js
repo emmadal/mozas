@@ -148,7 +148,24 @@ const Payment = () => {
                   </CardTitle>
                   <Form id="payment-form">
                     <div className="mb-5">
-                      <div className="form-check mb-5">
+                      <div className="form-check mb-3">
+                        <Input
+                          type="radio"
+                          id="customRadioInline2"
+                          name="mobile"
+                          checked={methodType === "mobile"}
+                          value="mobile"
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <Label
+                          className="form-check-label"
+                          htmlFor="customRadioInline2"
+                        >
+                          Paiement mobile
+                        </Label>
+                      </div>
+                      <div className="form-check mb-3">
                         <Input
                           type="radio"
                           id="customRadioInline2"
@@ -166,10 +183,21 @@ const Payment = () => {
                         </Label>
                       </div>
                     </div>
-                    {methodType === "card" ? (
-                      <button className="btn btn-primary  mt-5" type="submit">
-                        Carte de credit
-                      </button>
+                    {methodType === "mobile" ? (
+                      <div>
+                        <button
+                          className="btn btn-warning mx-1"
+                          onClick={() => ""}
+                        >
+                          Orange Money
+                        </button>
+                        <button
+                          className="btn btn-primary mx-1"
+                          onClick={() => ""}
+                        >
+                          Wave Mobile
+                        </button>
+                      </div>
                     ) : methodType === "paypal" ? (
                       <PayPalButtons
                         createOrder={createOrder}
