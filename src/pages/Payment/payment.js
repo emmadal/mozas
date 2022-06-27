@@ -151,7 +151,7 @@ const Payment = () => {
                       <div className="form-check mb-3">
                         <Input
                           type="radio"
-                          id="customRadioInline2"
+                          id="customRadioInline1"
                           name="mobile"
                           checked={methodType === "mobile"}
                           value="mobile"
@@ -160,7 +160,7 @@ const Payment = () => {
                         />
                         <Label
                           className="form-check-label"
-                          htmlFor="customRadioInline2"
+                          htmlFor="customRadioInline1"
                         >
                           Paiement mobile
                         </Label>
