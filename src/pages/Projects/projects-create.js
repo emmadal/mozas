@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import MetaTags from 'react-meta-tags';
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
@@ -15,8 +15,7 @@ import {
   Label,
   Row,
   FormFeedback,
-  UncontrolledAlert,
-  Spinner,
+  UncontrolledAlert
 } from "reactstrap"
 
 // Formik Validation
@@ -26,8 +25,14 @@ import { useFormik } from "formik";
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
+import { addProject } from "helpers/firebase_helper"
+import { values } from "lodash";
+
+
 const ProjectsCreate = () => {
-  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState("")
+  const [success, setSuccess] = useState(false);
   const [selectedFiles, setselectedFiles] = useState([])
 
   function handleAcceptedFiles(files) {
@@ -61,12 +66,22 @@ const ProjectsCreate = () => {
       projectfiles: selectedFiles,
     },
     validationSchema: Yup.object({
-      projectname: Yup.string().required("Please Enter Your Project Name"),
-      projectdesc: Yup.string().required("Please Enter Your Project Description"),
-      projectbudget: Yup.string().required("Please Enter Your Porject Budget"),
+      projectname: Yup.string().required("Entrez le nom de votre projet"),
+      projectdesc: Yup.string().required(
+        "Entrez la description de votre projet"
+      ),
+      projectbudget: Yup.string()
+        .matches(/^[0-9]*$/, "Votre budget ne doit etre que des chiffres")
+        .required("Entre le budget de votre projet"),
     }),
-    onSubmit: (values) => {
-      // dispatch(addProjectSuccess(values))
+    onSubmit: async (values, { resetForm }) => {
+      setLoading(!loading)
+      const res = await addProject(values, selectedFiles)
+      if (res) {
+        resetForm({ values: "" })
+        setLoading(false)
+        setSuccess(true)
+      }
     },
   })
 
@@ -84,16 +99,21 @@ const ProjectsCreate = () => {
             <Col lg="12">
               <Card>
                 <CardBody>
-                  {projects.length && projects[1] === true ? (
-                    <UncontrolledAlert color="success">
-                      Projet ajouté avec succès
+                  {success ? (
+                    <UncontrolledAlert
+                      color="success"
+                      className="alert-dismissible fade show"
+                      role="alert"
+                      onClick={() => setSuccess(false)}
+                    >
+                      <i className="mdi mdi-check-all me-2"></i>Votre projet a été crée avec succès.
                     </UncontrolledAlert>
                   ) : null}
                   <CardTitle className="mb-4">
                     Créer un nouveau projet
                   </CardTitle>
                   <Form
-                    onSubmit={(e) => {
+                    onSubmit={e => {
                       e.preventDefault()
                       validation.handleSubmit()
                       return false
@@ -171,7 +191,7 @@ const ProjectsCreate = () => {
                         htmlFor="projectbudget"
                         className="col-form-label col-lg-3"
                       >
-                        Budget (FCFA)
+                        Budget (EUR)
                       </label>
                       <Col lg="9">
                         <Input
@@ -273,11 +293,13 @@ const ProjectsCreate = () => {
                     <Row className="justify-content-end">
                       <Col lg="9">
                         <Button type="submit" color="primary">
-                          Nouveau projet
+                          Nouveau projet{" "}
+                          {loading ? (
+                            <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                          ) : null}
                         </Button>
                       </Col>
                     </Row>
-
                   </Form>
                 </CardBody>
               </Card>

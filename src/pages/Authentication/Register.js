@@ -24,28 +24,32 @@ const Register = () => {
     enableReinitialize: true,
 
     initialValues: {
-      email: '',
-      name: '',
-      password: '',
+      email: "",
+      name: "",
+      password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Entrez votre Email"),
+      email: Yup.string().email("Assurez vous que c'est un email valide").required("Entrez votre Email"),
       name: Yup.string().required("Entrez votre Nom & Prénoms"),
-      password: Yup.string().required("Entrez votre Mot de passe"),
+      password: Yup.string()
+        .min(8, "Mot de passe doit être au moins de 8 caractères")
+        .required("Entrez votre Mot de passe"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       try {
         setLoading(!loading)
         const res = await registerUser(values)
         if (res) {
           setLoading(false)
-          SetSuccessMsg("Votre compte a ete crée avec succès. Veuillez vous connecter")
+          SetSuccessMsg(
+            "Votre compte a ete crée avec succès. Veuillez vous connecter"
+          )
         }
       } catch (error) {
         setErr("Veuillez verifier votre connexion internet")
       }
-    }
-  });
+    },
+  })
 
   return (
     <React.Fragment>

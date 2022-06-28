@@ -174,12 +174,10 @@ export const uploadProjectFiles = (files, refName) => {
             .child(`${i.name}`)
             .getDownloadURL()
             .then(fileURL => {
-              resolve([{ name: fileURL.split(".")[0], link: fileURL }])
+              resolve([{ link: fileURL }])
             })
         })
-        .catch(err => {
-          reject(this._handleError(err))
-        })
+        .catch(err => reject(err))
     }
   })
 }
@@ -218,10 +216,10 @@ export const addProject = ({
   projectfiles,
 }) => {
   const collection = firebase.firestore().collection("projects")
-  const id = new Date().getTime()
   return new Promise((resolve, reject) => {
+    const id = String(new Date().getTime())
     const data = {
-      id: `${id}`,
+      id,
       uid: firebase.auth().currentUser.uid,
       createdDate: firebase.firestore.FieldValue.serverTimestamp(),
       name: projectname,
@@ -231,21 +229,15 @@ export const addProject = ({
       members: [],
     }
     // upload file to firebase storage
-    this.uploadProjectFiles(projectfiles, "projectfiles")
+    uploadProjectFiles(projectfiles, "projectfiles")
       .then(files => {
         collection
           .doc(`${id}`)
           .set({ ...data, files })
-          .then(() => {
-            resolve(true)
-            console.log("Document successfully written!")
-          })
-          .catch(err => {
-            reject(this._handleError(err))
-            console.error("Error writing document: ", error)
-          })
+          .then(() => resolve(true))
+          .catch(err => reject(err))
       })
-      .catch(err => reject(this._handleError(err)))
+      .catch(err => reject(err))
   })
 }
 
