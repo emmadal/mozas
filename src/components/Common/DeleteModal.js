@@ -1,7 +1,7 @@
 import React from "react"
 import { Col, Modal, ModalBody, Row } from "reactstrap"
 
-const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
+const DeleteModal = ({ show, onDeleteClick, onCloseClick, loading }) => {
   return (
     <Modal isOpen={show} toggle={onCloseClick} centered={true}>
       <ModalBody className="py-3 px-5">
@@ -25,7 +25,10 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
                 className="btn btn-success btn-lg ms-2"
                 onClick={onDeleteClick}
               >
-                Oui, supprimez-le !
+                Oui, supprimez-le ! {""}
+                {loading ? (
+                  <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                ) : null}
               </button>
               <button
                 type="button"

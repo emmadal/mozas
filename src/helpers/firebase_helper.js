@@ -302,9 +302,8 @@ export const updateProject = ({ name, desc, status, budget, id }) => {
         status,
         budget,
       })
-      .then(e => {
-        console.log("data updated")
-        resolve(true)
+      .then(() => {
+        getAllProjects().then(projects => resolve(projects))
       })
       .catch(err => reject(err))
   })
@@ -313,22 +312,18 @@ export const updateProject = ({ name, desc, status, budget, id }) => {
 /**
  * Delete project
  */
-export const deleteProject = ({ id }) => {
+export const deleteProject = id => {
   const collection = firebase.firestore().collection("projects")
   return new Promise((resolve, reject) => {
     collection
       .doc(`${id}`)
       .delete()
       .then(() => {
-        resolve(true)
+        getAllProjects().then(projects => resolve(projects))
       })
-      .catch(err => {
-        console.log("unable to delete document: ", err)
-        this._handleError(reject(err))
-      })
+      .catch(err => reject(err))
   })
 }
-
 
 /**
  * Update user profile

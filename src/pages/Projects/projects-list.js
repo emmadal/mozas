@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import MetaTags from "react-meta-tags";
 import { Link } from "react-router-dom";
-import { map } from "lodash";
 import {
   Badge,
   Col,
@@ -18,23 +17,30 @@ import {
   Form,
   Input,
   FormFeedback,
+  UncontrolledAlert,
   Label,
-  Card,
-  CardBody,
-  CardTitle,
 } from "reactstrap"
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { UserContext } from "App"
 
 //Import Component
 import Breadcrumbs from "components/Common/Breadcrumb";
 import DeleteModal from "components/Common/DeleteModal";
-import { getAllProjects } from "helpers/firebase_helper";
+import {
+  updateProject,
+  getAllProjects,
+  deleteProject,
+} from "helpers/firebase_helper"
 
 const ProjectsList = () => {
-  const [project, setProject] = useState(null)
+  const [project, setProject] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [del, setDel] = useState(false)
   const [projects, setProjects] = useState([])
-  const [fileURL, setFileURL] = useState("")
+  const [deleteModal, setDeleteModal] = useState(false)
+  const { user } = useContext(UserContext)
   const [modal, setModal] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
 
@@ -43,18 +49,21 @@ const ProjectsList = () => {
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
     initialValues: {
-      id: (project && project.id) || "",
-      name: (project && project.name) || "",
-      budget: (project && project.budget) || "",
-      description: (project && project.description) || "",
-      status: (project && project.status) || "",
+      id: project?.id ?? "",
+      name: project?.name ?? "",
+      budget: project?.budget ?? "",
+      description: project?.description ?? "",
+      status: project?.status ?? "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Entrez le nom du projet"),
       description: Yup.string().required("Entrez la description du projet"),
+      budget: Yup.string()
+        .matches(/^[0-9]*$/, "Votre budget ne doit etre que des chiffres")
+        .required("Entre le budget de votre projet"),
       status: Yup.string().required("Veuillez choisir le status du projet"),
     }),
-    onSubmit: values => {
+    onSubmit: async values => {
       if (isEdit) {
         const newUpdateProject = {
           id: project?.id,
@@ -64,22 +73,23 @@ const ProjectsList = () => {
           status: values.status ?? project?.status,
         }
         // update project
-        // dispatch(onupdateProjectSuccess(newUpdateProject))
+        setLoading(!loading)
+        const res = await updateProject(newUpdateProject)
+        if (res.length) {
+          setProjects([...res])
+          setLoading(false)
+          setSuccess(true)
+          setIsEdit(false)
+          setModal(false)
+        }
       }
-      toggle()
     },
   })
 
-  const toggle = () => {
-    if (modal) {
-      setModal(false)
-      setProject(null)
-    } else {
-      setModal(true)
-    }
-  }
+  const toggle = () => setModal(!modal)
 
   const handleProjectClick = arg => {
+    setModal(!modal)
     setIsEdit(!isEdit)
     setProject({
       id: arg.id,
@@ -88,23 +98,24 @@ const ProjectsList = () => {
       description: arg.desc,
       status: arg.status,
     })
-    setFileURL(arg.files[0])
-    toggle()
   }
 
-  const handleDeleteProject = arg => {}
 
   //delete order
-  const [deleteModal, setDeleteModal] = useState(false)
-
   const onClickDelete = arg => {
     setProject(arg)
     setDeleteModal(true)
   }
 
-  const handleDeleteOrder = () => {
-    // dispatch(onDeleteProjectSuccess(project))
-    setDeleteModal(false)
+  const handleDeleteOrder = async() => {
+    setLoading(!loading)
+    const res = await deleteProject(project?.id)
+    if(res.length) {
+      setLoading(false)
+      setProjects([...res])
+      setDel(true)
+      setDeleteModal(false)
+    }
   }
 
   useEffect(() => {
@@ -119,6 +130,7 @@ const ProjectsList = () => {
     <React.Fragment>
       <DeleteModal
         show={deleteModal}
+        loading={loading}
         onDeleteClick={handleDeleteOrder}
         onCloseClick={() => setDeleteModal(false)}
       />
@@ -132,22 +144,54 @@ const ProjectsList = () => {
 
           <Row>
             <Col>
+              {success ? (
+                <UncontrolledAlert
+                  color="success"
+                  className="alert-dismissible fade show"
+                  role="alert"
+                  onClick={() => setSuccess(false)}
+                >
+                  <i className="mdi mdi-check-all me-2"></i>Votre projet a été
+                  mis à jour avec succès.
+                </UncontrolledAlert>
+              ) : del ? (
+                <UncontrolledAlert
+                  color="danger"
+                  className="alert-dismissible fade show"
+                  role="alert"
+                  onClick={() => setDel(false)}
+                >
+                  <i className="mdi mdi-check-all me-2"></i>Votre projet a été
+                  supprimé.
+                </UncontrolledAlert>
+              ) : null}
+
               <Table className="project-list-table table-nowrap align-middle table-borderless">
                 <thead>
                   <tr>
                     <th scope="col" style={{ width: "100px" }}>
                       ID
                     </th>
+                    <th scope="col">Image</th>
                     <th scope="col">Projets</th>
                     <th scope="col">Status</th>
                     <th scope="col">Budget(€)</th>
-                    <th scope="col">Action</th>
+                    {user?.type === "admin" ? (
+                      <th scope="col">Action</th>
+                    ) : null}
                   </tr>
                 </thead>
                 <tbody>
-                  {map(projects, (project, index) => (
+                  {projects.map((project, index) => (
                     <tr key={project?.id}>
                       <td>{index + 1}</td>
+                      <td>
+                        <img
+                          src={project.files[0].link}
+                          alt="profile picture"
+                          className="avatar-md rounded-circle img-thumbnail"
+                        />
+                      </td>
                       <td>
                         <h5 className="text-truncate font-size-14">
                           <Link
@@ -178,34 +222,35 @@ const ProjectsList = () => {
                           {project.budget}
                         </h5>
                       </td>
-
-                      <td>
-                        <UncontrolledDropdown>
-                          <DropdownToggle
-                            href="#"
-                            className="card-drop"
-                            tag="i"
-                          >
-                            <i className="mdi mdi-dots-horizontal font-size-18" />
-                          </DropdownToggle>
-                          <DropdownMenu className="dropdown-menu-end">
-                            <DropdownItem
+                      {user?.type === "admin" ? (
+                        <td>
+                          <UncontrolledDropdown>
+                            <DropdownToggle
                               href="#"
-                              onClick={() => handleProjectClick(project)}
+                              className="card-drop"
+                              tag="i"
                             >
-                              <i className="mdi mdi-pencil font-size-16 text-success me-1" />{" "}
-                              Modifier
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#"
-                              onClick={() => onClickDelete(project)}
-                            >
-                              <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />{" "}
-                              Supprimer
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </td>
+                              <i className="mdi mdi-dots-horizontal font-size-18" />
+                            </DropdownToggle>
+                            <DropdownMenu className="dropdown-menu-end">
+                              <DropdownItem
+                                href="#"
+                                onClick={() => handleProjectClick(project)}
+                              >
+                                <i className="mdi mdi-pencil font-size-16 text-success me-1" />{" "}
+                                Modifier
+                              </DropdownItem>
+                              <DropdownItem
+                                href="#"
+                                onClick={() => onClickDelete(project)}
+                              >
+                                <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />{" "}
+                                Supprimer
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </UncontrolledDropdown>
+                        </td>
+                      ) : null}
                     </tr>
                   ))}
                 </tbody>
@@ -271,7 +316,7 @@ const ProjectsList = () => {
 
                         <div className="mb-3">
                           <Label className="form-label">
-                            Budget du projet (FCFA)
+                            Budget du projet (EUR)
                           </Label>
                           <Input
                             name="budget"
@@ -300,17 +345,15 @@ const ProjectsList = () => {
                           </Label>
                           <Input
                             name="status"
-                            id="status1"
                             type="select"
                             className="form-select"
                             onChange={validation.handleChange}
                             onBlur={validation.handleBlur}
                             value={validation.values.status}
                           >
-                            <option></option>
-                            <option>En attente</option>
-                            <option>En cours</option>
-                            <option>Terminé</option>
+                            <option value="En attente">En attente</option>
+                            <option value="En cours">En cours</option>
+                            <option value="Terminé">Terminé</option>
                           </Input>
                           {validation.touched.status &&
                           validation.errors.status ? (
@@ -328,7 +371,10 @@ const ProjectsList = () => {
                             type="submit"
                             className="btn btn-success save-user"
                           >
-                            Mise à jour
+                            Mise à jour{" "}
+                            {loading ? (
+                              <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
+                            ) : null}
                           </button>
                         </div>
                       </Col>

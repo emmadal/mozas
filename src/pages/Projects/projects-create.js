@@ -26,12 +26,10 @@ import { useFormik } from "formik";
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 import { addProject } from "helpers/firebase_helper"
-import { values } from "lodash";
 
 
 const ProjectsCreate = () => {
   const [loading, setLoading] = useState(false)
-  const [err, setErr] = useState("")
   const [success, setSuccess] = useState(false);
   const [selectedFiles, setselectedFiles] = useState([])
 
@@ -79,6 +77,7 @@ const ProjectsCreate = () => {
       const res = await addProject(values, selectedFiles)
       if (res) {
         resetForm({ values: "" })
+        setselectedFiles([])
         setLoading(false)
         setSuccess(true)
       }
