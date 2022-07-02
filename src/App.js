@@ -15,6 +15,10 @@ import NonAuthLayout from "./components/NonAuthLayout"
 // Import scss
 import "./assets/scss/theme.scss"
 
+// 404 Format
+import Page404 from "pages/404/page-404"
+
+
 // create global store context
 export const UserContext = React.createContext(null);
 
@@ -58,12 +62,18 @@ const App = () => {
                 element={<VerticalLayout>{route?.component}</VerticalLayout>}
               />
             ))}
+          <Route
+            path="*"
+            element={
+              <VerticalLayout>
+                <Page404 />
+              </VerticalLayout>
+            }
+          />
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>
   )
 }
 
-
-// export default connect(mapStateToProps, null)(App)
 export default App

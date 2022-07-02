@@ -88,8 +88,11 @@ const ProjectsCreate = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Création de projets | Mozah - Admin</title>
-        </MetaTags>
+        <title>
+          Mozah Invest | Plateforme innovante d&#39;investissement participative
+          sur des projets couplée à la finance digitale
+        </title>
+      </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Projets" breadcrumbItem="Nouveau projet" />

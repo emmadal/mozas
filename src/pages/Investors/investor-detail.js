@@ -74,8 +74,11 @@ const InvestorDetail = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Détails investisseur | Tableau de bord | Mozah</title>
-        </MetaTags>
+        <title>
+          Mozah Invest | Plateforme innovante d&#39;investissement participative
+          sur des projets couplée à la finance digitale
+        </title>
+      </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs

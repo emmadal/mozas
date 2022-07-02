@@ -138,7 +138,10 @@ const Dashboard = () => {
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-          <title>Tableau de bord | Mozah - {`${user?.fullName}`}</title>
+          <title>
+            Mozah Invest | Plateforme innovante d&#39;investissement
+            participative sur des projets couplée à la finance digitale
+          </title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumb */}

@@ -54,7 +54,10 @@ const Register = () => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>S&#39;enregistrer | Mozah</title>
+        <title>
+          Mozah Invest | Plateforme innovante d&#39;investissement participative
+          sur des projets couplée à la finance digitale
+        </title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/login" className="text-dark">

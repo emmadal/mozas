@@ -26,6 +26,12 @@ import InvestorDetail from "../pages/Investors/investor-detail"
 // Payment 
 import Payment from "../pages/Payment/payment"
 
+// Home 
+import Home from "../pages/Home"
+
+// 404
+import Page404 from "../pages/404/page-404"
+
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard />, index: true },
   { path: "/dashboard-crypto", component: <DashboardCrypto /> },
@@ -49,10 +55,12 @@ const authProtectedRoutes = [
 ]
 
 const publicRoutes = [
+  { path: "/", component: <Home />, index: true },
   { path: "/logout", component: <Logout /> },
   { path: "/login", component: <Login /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
+  { path: "*", component: <Page404 /> },
 ]
 
 export { authProtectedRoutes, publicRoutes }

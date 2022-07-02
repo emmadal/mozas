@@ -42,7 +42,10 @@ const ProjectsOverview = () => {
       />
       <div className="page-content">
         <MetaTags>
-          <title>Resumé du projet | Tableau de bord | Mozah</title>
+          <title>
+            Mozah Invest | Plateforme innovante d&#39;investissement
+            participative sur des projets couplée à la finance digitale
+          </title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}

@@ -42,7 +42,10 @@ const ForgetPasswordPage = props => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>Mot de passe oublié | Mozah</title>
+        <title>
+          Mozah Invest | Plateforme innovante d&#39;investissement participative
+          sur des projets couplée à la finance digitale
+        </title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/login" className="text-dark">
