@@ -36,7 +36,10 @@ const Navbar_Page = props => {
   return (
     <React.Fragment>
       <nav
-        className={"navbar navbar-expand-lg navigation fixed-top sticky " + props.navClass}
+        className={
+          "navbar navbar-expand-lg navigation fixed-top sticky " +
+          props.navClass
+        }
       >
         <Container>
           <Link className="navbar-logo" to="/">
@@ -60,13 +63,18 @@ const Navbar_Page = props => {
           <NavbarToggler
             className="p-0"
             onClick={() => {
-              setisOpenMenu();
+              setisOpenMenu(!isOpenMenu)
             }}
           >
-            <i className="fa fa-fw fa-bars" />
+            <i className="fa fa-fw fa-bars my-3" />
           </NavbarToggler>
 
-          <Collapse id="topnav-menu-content" isOpen={isOpenMenu} navbar>
+          <Collapse
+            id="topnav-menu-content"
+            isOpen={isOpenMenu}
+            navbar
+            className="my-3"
+          >
             <ScrollspyNav
               scrollTargetIds={TargetId}
               scrollDuration="800"
@@ -94,7 +102,7 @@ const Navbar_Page = props => {
         </Container>
       </nav>
     </React.Fragment>
-  );
+  )
 };
 
 Navbar_Page.propTypes = {

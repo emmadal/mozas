@@ -63,63 +63,11 @@ const Section = () => {
                   {/* <Link to="#" className="btn btn-success me-1">
                     Get Whitepaper
                   </Link> */}
-                  <Link to="/register" className="btn btn-light">
+                  <Link to="/register" className="btn btn-light btn-lg">
                     Investissez maintenant !
                   </Link>
                 </div>
               </div>
-            </Col>
-            <Col lg="5" md="8" sm="10" className="ms-lg-auto">
-              <Card className="overflow-hidden mb-0 mt-5 mt-lg-0">
-                <CardHeader className="text-center">
-                  <h5 className="mb-0">ICO Countdown time</h5>
-                </CardHeader>
-                <CardBody>
-                  <div className="text-center">
-                    <h5>Time left to Ico :</h5>
-                    <div className="mt-4">
-                      <div className="counter-number ico-countdown">
-                        <Countdown date="2021/12/31" renderer={renderer} />
-                      </div>
-                    </div>
-
-                    <div className="mt-4">
-                      <Button type="button" color="success" className="w-md">
-                        Get Token
-                      </Button>
-                    </div>
-
-                    <div className="mt-5">
-                      <h4 className="font-weight-semibold">1 ETH = 2235 SKT</h4>
-                      <div className="clearfix mt-4">
-                        <h5 className="float-end font-size-14">5234.43</h5>
-                      </div>
-                      <div className="progress p-1 progress-xl softcap-progress">
-                        <div
-                          className="progress-bar bg-info"
-                          role="progressbar"
-                          style={{ width: "15%" }}
-                          aria-valuenow="15"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
-                          <div className="progress-label">15 %</div>
-                        </div>
-                        <div
-                          className="progress-bar progress-bar-striped progress-bar-animated"
-                          role="progressbar"
-                          style={{ width: "30%" }}
-                          aria-valuenow="30"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
-                          <div className="progress-label">30 %</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
             </Col>
           </Row>
         </Container>
