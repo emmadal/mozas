@@ -1,20 +1,8 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Card, CardBody } from "reactstrap";
-import { Link } from "react-router-dom";
-
-//Images
-import client1 from "assets/images/clients/1.png";
-import client2 from "assets/images/clients/2.png";
-import client3 from "assets/images/clients/3.png";
-import client4 from "assets/images/clients/4.png";
-import client5 from "assets/images/clients/5.png";
-import client6 from "assets/images/clients/6.png";
+import React from "react";
+import { Container, Row, Col } from "reactstrap";
 import financial from "assets/images/mozah/financial-grow.jpeg";
 
 const AboutUs = () => {
-  const [step1, setStep1] = useState(true);
-  const [step2, setStep2] = useState(false);
-
   return (
     <React.Fragment>
       <section className="section pt-4 bg-white" id="about">
@@ -50,11 +38,10 @@ const AboutUs = () => {
                   investissement allant de 10 à 25 % l&#39;année.
                 </p>
                 <p className="fs-5 text-muted text-justify">
-                  Notre vision est de construire un écosystème de projets
-                  rentables avec les membres de notre communauté pour se bâtir
-                  une indépendante financière ou chaque membre touchera des
-                  commissions sur tous les projets de l&#39écosystème sur une
-                  chaîne de génération.
+                  Notre vision est de construire un écosystème des projets
+                  rentables et non louables avec les membres de notre communauté pour se bâtir
+                  une indépendance financière ou chaque membre touchera des
+                  commissions durant une chaîne de production sur tous les projets de l&#39;écosystème.
                 </p>
               </div>
             </Col>

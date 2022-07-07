@@ -25,7 +25,7 @@ const Blog = () => {
       imgUrl: formation,
       tag: "Education",
       title: "École/ Institut",
-      desc: "Création de chaînes d’écoles privées de la maternelle au secondaire. Institut de formation professionnelle diplomante pour répondre aux objectifs de l'UNESCO de faire de l'éducation une priorité.",
+      desc: "Création de chaînes d’écoles privées de la maternelle au secondaire et d'Institut de Formation Professionnelle Diplomante pour répondre aux objectifs de l'UNESCO de faire de l'éducation une priorité.",
     },
   ]
   return (
