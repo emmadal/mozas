@@ -35,11 +35,11 @@ const AboutUs = () => {
                   comme le leader des projets à financement participatif conçu
                   par des experts afin d&#39;offrir aux investisseurs des
                   projets à fort taux de rentabilité avec un retour sur
-                  investissement allant de 10 à 25 % l&#39;année.
+                  investissement allant de 20 à 30 % l&#39;année.
                 </p>
                 <p className="fs-5 text-muted text-justify">
-                  Notre vision est de construire un écosystème des projets
-                  rentables et non louables avec les membres de notre communauté pour se bâtir
+                  Notre vision est de construire un écosystème de projets
+                  rentables avec les membres de notre communauté pour bâtir
                   une indépendance financière ou chaque membre touchera des
                   commissions durant une chaîne de production sur tous les projets de l&#39;écosystème.
                 </p>

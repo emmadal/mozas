@@ -9,7 +9,7 @@ const Pricing = () => {
     {
       id: 1,
       title: "STANDARD",
-      description: "20% de Retour sur investissement ",
+      description: "20% de Retour sur investissement",
       icon: "bx-check-shield",
       price: "100 - 750 euros",
       duration: "Par investissement",
@@ -43,7 +43,7 @@ const Pricing = () => {
       duration: "Par investissement",
       link: "/login",
       features: [
-        { title: "500 Token offerts" },
+        { title: "500 Tokens offerts" },
         { title: "150% de Rendement totaux" },
         { title: "30% de la valeur du Token/ an en USDT" },
       ],

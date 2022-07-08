@@ -67,7 +67,7 @@ const Payment = () => {
         // attribute transaction to user
         await addTransaction(req)
 
-        if (price >= 1000 && price < 2500) {
+        if (price >= 100 && price <= 750) {
           // compute user income
           const profit = parseFloat(String((price * 20) / 100)).toFixed(2)
 
@@ -76,7 +76,7 @@ const Payment = () => {
             projectId,
             project_name,
             project_budget,
-            token: 20,
+            token: 100,
             income: parseFloat(profit),
             amount_invested: price,
           }
@@ -84,7 +84,7 @@ const Payment = () => {
           // attribute project to investor
           await affiliateProject(user, project)
         }
-        if (price >= 2500 && price < 5000) {
+        if (price >= 800 && price <= 2500) {
           // compute user income
           const profit = parseFloat(String((price * 25) / 100)).toFixed(2)
 
@@ -93,7 +93,7 @@ const Payment = () => {
             projectId,
             project_name,
             project_budget,
-            token: 50,
+            token: 300,
             income: parseFloat(profit),
             amount_invested: price,
           }
@@ -101,7 +101,7 @@ const Payment = () => {
           // attribute project to investor
           await affiliateProject(user, project)
         }
-        if (price >= 5000) {
+        if (price >= 2750 && price <= 10000) {
           // compute user income
           const profit = parseFloat(String((price * 30) / 100)).toFixed(2)
 
@@ -110,7 +110,7 @@ const Payment = () => {
             projectId,
             project_name,
             project_budget,
-            token: 100,
+            token: 500,
             income: parseFloat(profit),
             amount_invested: price,
           }
