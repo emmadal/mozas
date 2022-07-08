@@ -31,11 +31,13 @@ import {
   getUserByUID,
   getAllTransactions,
   getRelatedProject,
+  getAllProjects,
 } from "helpers/firebase_helper"
 
 const Dashboard = () => {
   const [modal, setmodal] = useState(false)
   const [transactions, setTransactions] = useState([])
+  const [allprojects, setAllProjects] = useState([])
   const [relatedProject, setRelatedProject] = useState([])
   const { user, setUser } = useContext(UserContext)
 
@@ -54,6 +56,13 @@ const Dashboard = () => {
     if (user.type === "admin") {
       const res = await getAllTransactions()
       setTransactions([...res])
+    }
+  }
+
+  const getProjects = async () => {
+    if (user.type === "admin") {
+      const res = await getAllProjects()
+      setAllProjects([...res])
     }
   }
 
@@ -108,16 +117,20 @@ const Dashboard = () => {
     {
       title: "Total Projets",
       iconClass: "bx-list-ul",
-      description: 0,
+      description: allprojects?.length ?? 0,
     },
     {
-      title: "Montant Total",
+      title: "Montant Recolté(€)",
       iconClass: "bx-money",
-      description: 0,
+      description:
+        transactions.reduce(
+          (prev, curr) => Number(prev) + Number(curr?.amount),
+          0
+        ) ?? 0,
     },
     {
-      title: "Benefice(€)",
-      iconClass: "bx-archive-in",
+      title: "Jetons Distibués",
+      iconClass: "bx-aperture",
       description: 0,
     },
   ]
@@ -130,7 +143,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     (async () => {
-      await getUserTransactions()
+      await Promise.all([getUserTransactions(), getProjects()])
     })()
   }, [])
   
