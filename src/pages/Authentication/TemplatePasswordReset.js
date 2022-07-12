@@ -46,9 +46,11 @@ const ForgetPasswordPage = () => {
       try {
         if (values.password === values.confirm_password) {
           let code = new URL(document.location).searchParams
-          code.get("oobCode")
           setLoading(!loading)
-          const res = await ChangeUserPassword(code, values.password)
+          const res = await ChangeUserPassword(
+            code.get("oobCode"),
+            values.password
+          )
           if (res) {
             setForgetSuccessMsg("Votre mot de passe a été changé")
             setLoading(false)
