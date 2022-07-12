@@ -121,21 +121,35 @@ export const getUserByUID = userUID => {
 }
 
 /**
+ * Get user by Email
+ */
+export const getUserEmail = email => {
+  const collection = firebase.firestore().collection("users")
+  const e = []
+  return new Promise((resolve, reject) => {
+    collection.where("email", "==", email).get().then((res) => {
+      if(!res.empty){
+        res.docs.map(doc => e.push(doc.data()))
+        resolve(e)
+      } else {
+        resolve(false)
+      }
+    }).catch(err => reject(err.message))
+  })
+}
+
+/**
  * forget Password user with given details
  */
 export const forgetPassword = email => {
   return new Promise((resolve, reject) => {
     firebase
       .auth()
-      .sendPasswordResetEmail(email, {
-        url: window.location.protocol + "//" + window.location.host + "/login",
-      })
+      .sendPasswordResetEmail(email)
       .then(() => {
         resolve(true)
       })
-      .catch(error => {
-        reject(this._handleError(error))
-      })
+      .catch(err => reject(err.message))
   })
 }
 

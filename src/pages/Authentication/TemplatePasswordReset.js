@@ -1,5 +1,5 @@
-import MetaTags from "react-meta-tags";
-import React, { useState } from "react";
+import MetaTags from "react-meta-tags"
+import React, { useState } from "react"
 import {
   Row,
   Col,
@@ -13,18 +13,15 @@ import {
   Form,
 } from "reactstrap"
 
-import { Link } from "react-router-dom";
-
-import { getUserEmail, forgetPassword } from "helpers/firebase_helper"
-
+import { Link } from "react-router-dom"
 
 // Formik Validation
-import * as Yup from "yup";
-import { useFormik } from "formik";
+import * as Yup from "yup"
+import { useFormik } from "formik"
 
 // import images
-import profile from "../../assets/images/profile-img.png";
-import logo from "../../assets/images/logo.svg";
+import profile from "../../assets/images/profile-img.png"
+import logo from "../../assets/images/logo.svg"
 
 const ForgetPasswordPage = () => {
   const [forgetSuccessMsg, setForgetSuccessMsg] = useState("")
@@ -33,30 +30,19 @@ const ForgetPasswordPage = () => {
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
     initialValues: {
-      email: '',
+      password: "",
+      confirm_password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Veuillez entrer votre Email"),
+      password: Yup.string()
+        .min(8, "Mot de passe doit être au moins de 8 caractères")
+        .required("Entrez votre Mot de passe"),
     }),
-    onSubmit: async (values) => {
-      setLoading(!loading)
-      const res = await getUserEmail(values.email)
-      if (res) {
-        const req = await forgetPassword(values.email)
-        if (req) {
-          setForgetSuccessMsg(
-            `Un Lien de reinitialisation du mot de passe a été envoyé à ${values?.email}`
-          )
-          setLoading(false)
-        }
-      } else {
-        setLoading(false)
-        setForgetErrorMsg("Email introuvable ou compte inexistant")
-      }
-    }
-  });
+    onSubmit: async values => {
+      
+    },
+  })
   const [loading, setLoading] = useState(false)
-
 
   return (
     <React.Fragment>
@@ -80,8 +66,7 @@ const ForgetPasswordPage = () => {
                   <Row>
                     <Col xs={7}>
                       <div className="text-primary p-4">
-                        <h5 className="text-primary">Welcome Back !</h5>
-                        <p>Sign in to continue to Skote.</p>
+                        <h5 className="text-white">Changement de mot de passe</h5>
                       </div>
                     </Col>
                     <Col className="col-5 align-self-end">
@@ -91,7 +76,7 @@ const ForgetPasswordPage = () => {
                 </div>
                 <CardBody className="pt-0">
                   <div>
-                    <Link to="/login">
+                    <Link to="#">
                       <div className="avatar-md profile-user-wid mb-4">
                         <span className="avatar-title rounded-circle bg-light">
                           <img
@@ -130,24 +115,52 @@ const ForgetPasswordPage = () => {
                       }}
                     >
                       <div className="mb-3">
-                        <Label className="form-label">Email</Label>
+                        <Label className="form-label">
+                          Nouveau Mot de passe
+                        </Label>
                         <Input
-                          name="email"
-                          className="form-control"
-                          placeholder="Entrez votre Email"
-                          type="email"
+                          name="password"
+                          type="password"
+                          placeholder="Mot de passe"
                           onChange={validation.handleChange}
                           onBlur={validation.handleBlur}
-                          value={validation.values.email || ""}
+                          value={validation.values.password || ""}
                           invalid={
-                            validation.touched.email && validation.errors.email
+                            validation.touched.password &&
+                            validation.errors.password
                               ? true
                               : false
                           }
                         />
-                        {validation.touched.email && validation.errors.email ? (
+                        {validation.touched.password &&
+                        validation.errors.password ? (
                           <FormFeedback type="invalid">
-                            {validation.errors.email}
+                            {validation.errors.password}
+                          </FormFeedback>
+                        ) : null}
+                      </div>
+                      <div className="mb-3">
+                        <Label className="form-label">
+                          Confirmer votre nouveau Mot de passe
+                        </Label>
+                        <Input
+                          name="confirm_password"
+                          type="password"
+                          placeholder="Confirmation du mot de passe"
+                          onChange={validation.handleChange}
+                          onBlur={validation.handleBlur}
+                          value={validation.values.confirm_password || ""}
+                          invalid={
+                            validation.touched.confirm_password &&
+                            validation.errors.confirm_password
+                              ? true
+                              : false
+                          }
+                        />
+                        {validation.touched.confirm_password &&
+                        validation.errors.confirm_password ? (
+                          <FormFeedback type="invalid">
+                            {validation.errors.confirm_password}
                           </FormFeedback>
                         ) : null}
                       </div>
@@ -157,7 +170,7 @@ const ForgetPasswordPage = () => {
                             className="btn btn-primary w-md "
                             type="submit"
                           >
-                            Reinitialisation{" "}
+                            Changer le mot de passe{" "}
                             {loading ? (
                               <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
                             ) : null}
@@ -183,6 +196,6 @@ const ForgetPasswordPage = () => {
       </div>
     </React.Fragment>
   )
-};
+}
 
-export default ForgetPasswordPage;
+export default ForgetPasswordPage

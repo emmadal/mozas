@@ -11,7 +11,7 @@ const Logout = () => {
   useEffect(() => {
     logout().then(() => {
       setUser(null)
-      navigate("login", { replace: true })
+      navigate("/", { replace: true })
     })
   }, [])
 
