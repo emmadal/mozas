@@ -23,9 +23,13 @@ import { useFormik } from "formik"
 import profile from "../../assets/images/profile-img.png"
 import logo from "../../assets/images/logo.svg"
 
+import { ChangeUserPassword } from "helpers/firebase_helper"
+
+
 const ForgetPasswordPage = () => {
   const [forgetSuccessMsg, setForgetSuccessMsg] = useState("")
   const [forgetErrorMsg, setForgetErrorMsg] = useState("")
+  const [loading, setLoading] = useState(false)
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -39,11 +43,26 @@ const ForgetPasswordPage = () => {
         .required("Entrez votre Mot de passe"),
     }),
     onSubmit: async values => {
-      
+      try {
+        if (values.password === values.confirm_password) {
+          let code = new URL(document.location).searchParams
+          code.get("oobCode")
+          setLoading(!loading)
+          const res = await ChangeUserPassword(code, values.password)
+          if (res) {
+            setForgetSuccessMsg("Votre mot de passe a été changé")
+            setLoading(false)
+          }
+        } else {
+          setLoading(false)
+          setForgetErrorMsg("Les deux mots de pass ne correspondent pas.")
+        }
+      } catch (error) {
+        setForgetErrorMsg(error)
+      }
     },
   })
-  const [loading, setLoading] = useState(false)
-
+  
   return (
     <React.Fragment>
       <MetaTags>

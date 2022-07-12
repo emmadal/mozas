@@ -154,6 +154,19 @@ export const forgetPassword = email => {
 }
 
 /**
+ * Change user password
+ */
+export const ChangeUserPassword = (code, password) => {
+  return new Promise((resolve, reject) => {
+    firebase
+      .auth()
+      .confirmPasswordReset(code, password)
+      .then(() => resolve(true))
+      .catch(err => reject(err.message))
+  })
+}
+
+/**
  * Logout the user
  */
 export const logout = () => {
