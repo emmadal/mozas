@@ -43,9 +43,9 @@ const FAQs = () => {
                           setactiveTab("1")
                         }}
                       >
-                        <i className="bx bx-help-circle nav-icon d-block mb-2"/>
+                        <i className="bx bx-help-circle nav-icon d-block mb-2" />
                         <p className="font-weight-bold mb-0">
-                          Questions Generale
+                          Questions Générale
                         </p>
                       </NavLink>
                       <NavLink
@@ -54,8 +54,10 @@ const FAQs = () => {
                           setactiveTab("2")
                         }}
                       >
-                        <i className="bx bx-timer d-block nav-icon mb-2"/>
-                        <p className="font-weight-bold mb-0">Processus</p>
+                        <i className="bx bx-timer d-block nav-icon mb-2" />
+                        <p className="font-weight-bold mb-0">
+                          Processus d&#39;investissement
+                        </p>
                       </NavLink>
                     </Nav>
                   </Col>
@@ -65,34 +67,34 @@ const FAQs = () => {
                         <TabContent activeTab={activeTab}>
                           <TabPane tabId="1" id="buy">
                             <h4 className="card-title mb-4">
-                              General Questions
+                              Questions Générale
                             </h4>
 
                             {/* accoridan */}
                             <Accordian
-                              question1="What is Lorem Ipsum ?"
-                              answer1="Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators. To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words."
-                              question2="Why do we use it ?"
-                              answer2="If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual languages. The new common language will be more simple and regular than the existing European languages."
-                              question3="Where does it come from ?"
-                              answer3="It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental."
-                              question4="Where can I get some ?"
-                              answer4="To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is. The European languages are members of the same family. Their separate existence is a myth."
+                              question1="QUI EST MOZAH INVEST ?"
+                              answer1="Mozah Invest est une plateforme innovante d'investissement participative sur des projets couplés à la finance digitale. Une solution pour tous ceux qui sont déçus d'investir dans des projets sans rentabilité sur le long terme."
+                              question2="POURQUOI MOZAH INVEST ?"
+                              answer2="Mozah Invest vient se positionner comme le leader des projets à financement participatif conçu par des experts afin d'offrir aux investisseurs des projets à fort taux de rentabilité avec un retour sur investissement allant de 20 à 30 % l'année."
+                              question3="QUELS SONT LES OBJETIFS DE MOZAH INVEST ?"
+                              answer3="Notre vision est de construire un écosystème de projets rentables avec les membres de notre communauté pour bâtir une indépendance financière ou chaque membre touchera des commissions durant une chaîne de production sur tous les projets de l'écosystème."
+                              question4="MOZAH INVEST ET LA CRYPTOMONAIE QUELLE OFFRE ?"
+                              answer4="Finance digitale cryptomonnaie. Adossée à un Token Utilitaire pour créer une communauté ou chaque membre recevra gratuitement selon sa souscription des Tokens à épargner sur 12 mois et gagner des intérêts a partir de 20% de la valeur du Token selon le marché en USDT. Avoir un portefeuille METAMASK pour recevoir ses tokens."
                             />
                           </TabPane>
 
                           <TabPane tabId="2">
-                            <h4 className="card-title mb-4">Processus</h4>
+                            <h4 className="card-title mb-4">
+                              Processus d&#39;investissement
+                            </h4>
 
                             <Accordian
-                              question1="Why do we use it ?"
-                              answer1="Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators. To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words."
-                              question2="What is Lorem Ipsum ?"
-                              answer2="It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental."
-                              question3="Where can I get some ?"
-                              answer3="To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is. The European languages are members of the same family. Their separate existence is a myth."
-                              question4="Where does it come from ?"
-                              answer4="If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual languages. The new common language will be more simple and regular than the existing European languages."
+                              question1="COMMENT INVESTIR ?"
+                              answer1="Pour investir c'est imple et sécurisé. Faîtes votre choix parmi les projets proposés et participez à partir de 100 euros. Visualisez vos futurs paiements et validez vos souscriptions en ligne par Paypal en toute sécurité"
+                              question2="QUELLE EST LA DUREE D’INVESTISSEMENT ?"
+                              answer2="La durée est de cinq (05) années minimum."
+                              question3="QUELS SONT VOS GAINS, INTERETS ET REMBOURSEMENT ?"
+                              answer3="Vous recevez vos intérêts et vos remboursements dans votre portefeuille de paiement. Vous pouvez réinvestir ou virer votre gain vers votre compte bancaire."
                             />
                           </TabPane>
                         </TabContent>
