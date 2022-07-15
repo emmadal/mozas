@@ -36,7 +36,8 @@ const ProjectsGrid = props => {
       <div className="page-content">
         <MetaTags>
           <title>
-            Grille des projets | Tableau de bord | Mozah
+            Mozah Invest | Plateforme innovante d&#39;investissement
+            participative sur des projets couplée à la finance digitale
           </title>
         </MetaTags>
         <Container fluid>
@@ -81,7 +82,7 @@ const ProjectsGrid = props => {
         </Container>
       </div>
     </React.Fragment>
-  );
+  )
 };
 
 export default ProjectsGrid;
