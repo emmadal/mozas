@@ -8,8 +8,7 @@ import "./i18n"
 ReactDOM.render(
   <PayPalScriptProvider
     options={{
-      "client-id":
-        "ASXCGrhNZwvGmgjjDJlFXjouR1CEs3LDcvWsmaQIblIC-2pJVQaL2DFZx8HP5v_wmbPxY-AP2zpAneKz",
+      "client-id": process.env.REACT_APP_PAYPAL,
       currency: "EUR",
     }}
   >
