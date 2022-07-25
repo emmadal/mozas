@@ -16,7 +16,7 @@ const CardProject = ({ projects }) => {
   return (
     <React.Fragment>
       {projects && projects.length === 0 ? (
-        <h4 className="text-center">Aucun projet disponible</h4>
+        <h4 className="text-center">Aucun projet mis en avant</h4>
       ) : projects && projects.length ? null : (
         <Row>
           <Col xs="12">

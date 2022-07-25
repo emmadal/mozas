@@ -1,35 +1,28 @@
 import React, { useEffect, useState } from "react";
 import MetaTags from "react-meta-tags";
-import {
-  Col,
-  Container,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Row,
-} from "reactstrap";
-import { map } from "lodash";
+import { Container, Row } from "reactstrap"
 
 //Import Breadcrumb
 import Breadcrumbs from "components/Common/Breadcrumb";
 
 //Import Cards
 import CardProject from "./card-project";
+import { getProjectsPublished } from "helpers/firebase_helper";
 
 
-const ProjectsGrid = props => {
-  const [projects, setProjetcs] = useState([])
+const ProjectsGrid = () => {
+  const [projects, setProjects] = useState([])
 
-  const [page, setPage] = useState(1);
-  const [totalPage] = useState(5);
+  const getPusblished = async () => {
+    const res = await getProjectsPublished()
+    setProjects(res)
+  }
 
   useEffect(() => {
-    // dispatch(onGetProjectsSuccess())
-  }, []);
-
-  const handlePageClick = page => {
-    setPage(page);
-  };
+    ;(async () => {
+      await getPusblished()
+    })()
+  }, [])
 
   return (
     <React.Fragment>
@@ -37,47 +30,16 @@ const ProjectsGrid = props => {
         <MetaTags>
           <title>
             Mozah Invest | Plateforme innovante d&#39;investissement
-            participative sur des projets couplée à la finance digitale
+            participative sur des projets couplés à la finance digitale
           </title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Projects" breadcrumbItem="Projects Grid" />
+          <Breadcrumbs title="Projets" breadcrumbItem="Projets mis en avant" />
 
           <Row>
             {/* Import Cards */}
             <CardProject projects={projects} />
-          </Row>
-
-          <Row>
-            <Col lg="12">
-              <Pagination className="pagination pagination-rounded justify-content-end mb-2">
-                <PaginationItem disabled={page === 1}>
-                  <PaginationLink
-                    previous
-                    href="#"
-                    onClick={() => handlePageClick(page - 1)}
-                  />
-                </PaginationItem>
-                {map(Array(totalPage), (item, i) => (
-                  <PaginationItem active={i + 1 === page} key={i}>
-                    <PaginationLink
-                      onClick={() => handlePageClick(i + 1)}
-                      href="#"
-                    >
-                      {i + 1}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-                <PaginationItem disabled={page === totalPage}>
-                  <PaginationLink
-                    next
-                    href="#"
-                    onClick={() => handlePageClick(page + 1)}
-                  />
-                </PaginationItem>
-              </Pagination>
-            </Col>
           </Row>
         </Container>
       </div>

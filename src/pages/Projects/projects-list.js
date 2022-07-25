@@ -54,6 +54,7 @@ const ProjectsList = () => {
       budget: project?.budget ?? "",
       description: project?.description ?? "",
       status: project?.status ?? "",
+      isPublish: project?.isPublish ?? "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Entrez le nom du projet"),
@@ -62,6 +63,7 @@ const ProjectsList = () => {
         .matches(/^[0-9]*$/, "Votre budget ne doit etre que des chiffres")
         .required("Entre le budget de votre projet"),
       status: Yup.string().required("Veuillez choisir le status du projet"),
+      isPublish: Yup.string().required("Veuillez choisir l'etat du projet"),
     }),
     onSubmit: async values => {
       if (isEdit) {
@@ -71,6 +73,7 @@ const ProjectsList = () => {
           budget: values.budget ?? project?.budget,
           desc: values.description ?? project?.desc,
           status: values.status ?? project?.status,
+          isPublish: values.isPublish ?? project?.isPublish,
         }
         // update project
         setLoading(!loading)
@@ -97,6 +100,7 @@ const ProjectsList = () => {
       budget: arg.budget,
       description: arg.desc,
       status: arg.status,
+      isPublish: arg.isPublish,
     })
   }
 
@@ -136,7 +140,10 @@ const ProjectsList = () => {
       />
       <div className="page-content">
         <MetaTags>
-          <title>Liste des projets | Mozah - Admin</title>
+          <title>
+            Mozah Invest | Plateforme innovante d&#39;investissement
+            participative sur des projets couplés à la finance digitale
+          </title>
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}
@@ -176,9 +183,10 @@ const ProjectsList = () => {
                     <th scope="col">Projets</th>
                     <th scope="col">Status</th>
                     <th scope="col">Budget(€)</th>
-                    {user?.type === "admin" ? (
-                      <th scope="col">Action</th>
-                    ) : null}
+                    {user?.type === "admin" && (
+                      <th scope="col">Mettre en avant</th>
+                    )}
+                    {user?.type === "admin" && <th scope="col">Action</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -222,8 +230,23 @@ const ProjectsList = () => {
                           {project.budget}
                         </h5>
                       </td>
-                      {user?.type === "admin" ? (
+                      {user?.type === "admin" && (
                         <td>
+                          <h5 className="text-truncate font-size-32">
+                            <Badge
+                              color={
+                                project.isPublish === "Oui"
+                                  ? "success"
+                                  : "danger"
+                              }
+                            >
+                              {project?.isPublish}
+                            </Badge>
+                          </h5>
+                        </td>
+                      )}
+                      {user?.type === "admin" && (
+                        <td style={{ cursor: "pointer" }}>
                           <UncontrolledDropdown>
                             <DropdownToggle
                               href="#"
@@ -250,7 +273,7 @@ const ProjectsList = () => {
                             </DropdownMenu>
                           </UncontrolledDropdown>
                         </td>
-                      ) : null}
+                      )}
                     </tr>
                   ))}
                 </tbody>
@@ -359,6 +382,27 @@ const ProjectsList = () => {
                           validation.errors.status ? (
                             <FormFeedback type="invalid">
                               {validation.errors.status}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+
+                        <div className="mb-3">
+                          <Label className="form-label">Mettre en avant</Label>
+                          <Input
+                            name="isPublish"
+                            type="select"
+                            className="form-select"
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.isPublish}
+                          >
+                            <option value="Oui">Oui</option>
+                            <option value="Non">Non</option>
+                          </Input>
+                          {validation.touched.isPublish &&
+                          validation.errors.isPublish ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.isPublish}
                             </FormFeedback>
                           ) : null}
                         </div>

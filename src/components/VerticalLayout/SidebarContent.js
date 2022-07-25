@@ -114,7 +114,7 @@ const SidebarContent = () => {
                   </Link>
                   <ul className="sub-menu" aria-expanded="false">
                     <li>
-                      <Link to="/projects-grid">Grille des projets</Link>
+                      <Link to="/projects-grid">Projets mis en avant</Link>
                     </li>
                     <li>
                       <Link to="/projects-list">Liste des projets</Link>

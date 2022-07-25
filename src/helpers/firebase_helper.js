@@ -253,6 +253,7 @@ export const addProject = ({
       desc: projectdesc,
       budget: projectbudget,
       status: "En attente",
+      isPublish: "Non",
       members: [],
     }
     // upload file to firebase storage
@@ -282,6 +283,28 @@ export const getAllProjects = () => {
         resolve(e)
       })
       .catch(err => reject(err.message))
+  })
+}
+
+
+/**
+ * Get all projects when isPublish = Yes
+ */
+
+export const getProjectsPublished = () => {
+  const collection = firebase.firestore().collection("projects")
+  return new Promise((resolve, reject) => {
+    const data = []
+    const query = collection.where("isPublish", "==", "Oui")
+    query
+      .get()
+      .then(res => {
+        if (!res.empty) {
+          res.docs.map(e => data.push(e.data()))
+          resolve(data)
+        }
+      })
+      .catch(err => reject(err))
   })
 }
 
@@ -318,7 +341,7 @@ export const socialLoginUser = (data, type) => {
 /**
  * Update project
  */
-export const updateProject = ({ name, desc, status, budget, id }) => {
+export const updateProject = ({ name, desc, status, budget, id, isPublish }) => {
   const collection = firebase.firestore().collection("projects")
   return new Promise((resolve, reject) => {
     collection
@@ -328,6 +351,7 @@ export const updateProject = ({ name, desc, status, budget, id }) => {
         desc,
         status,
         budget,
+        isPublish,
       })
       .then(() => {
         getAllProjects().then(projects => resolve(projects))
