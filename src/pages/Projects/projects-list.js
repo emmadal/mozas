@@ -31,6 +31,7 @@ import {
   updateProject,
   getAllProjects,
   deleteProject,
+  getProjectsPublished,
 } from "helpers/firebase_helper"
 
 const ProjectsList = () => {
@@ -124,8 +125,13 @@ const ProjectsList = () => {
 
   useEffect(() => {
     const getProjects = async () => {
-      const res = await getAllProjects()
-      setProjects([...res])
+      if (user?.type === "admin") {
+        const res = await getAllProjects()
+        setProjects([...res])
+      } else {
+        const res = await getProjectsPublished()
+        setProjects([...res])
+      }
     }
     getProjects()
   }, [])
