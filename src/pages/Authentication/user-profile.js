@@ -154,7 +154,7 @@ const UserProfile = () => {
                   <div className="d-flex align-items-center justify-content-center">
                     <div className="ms-3 me-2">
                       {!user?.photo.length ? (
-                        <Avatar name={user?.fullName} size="70" round={true} />
+                        <Avatar name={user?.fullName} size="90" round={true} />
                       ) : (
                         <img
                           src={user?.photo ?? imageURL}
@@ -167,7 +167,6 @@ const UserProfile = () => {
                       <div className="text-muted">
                         <h5>{user?.fullName}</h5>
                         <p className="mb-1">{user?.email}</p>
-                        <p className="mb-1">{user?.phoneNumber}</p>
                       </div>
                     </div>
                     <Button
@@ -179,7 +178,7 @@ const UserProfile = () => {
                         uploadPicture()
                       }}
                     >
-                      Telecharger une photo de profil{" "}
+                      Telecharger une photo{" "}
                       {loading2 ? (
                         <i className="bx bx-loader bx-spin font-size-16 align-middle me-2"></i>
                       ) : null}

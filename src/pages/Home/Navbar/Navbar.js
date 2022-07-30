@@ -12,15 +12,11 @@ import { Link } from "react-router-dom";
 import ScrollspyNav from "./scrollSpy";
 
 //Import Images
-import logodark from "assets/images/logo-dark.png";
 import logolight from "assets/images/logo-light.png";
 
 const navItems = [
   { id: 1, idnm: "home", navheading: "Accueil" },
   { id: 2, idnm: "about", navheading: "Qui sommes nous" },
-  // { id: 3, idnm: "features", navheading: "Features" },
-  // { id: 3, idnm: "roadmap", navheading: "Roadmap" },
-  // { id: 4, idnm: "team", navheading: "Team" },
   { id: 5, idnm: "news", navheading: "Projets" },
   { id: 6, idnm: "faqs", navheading: "FAQs" },
 ];
@@ -43,21 +39,12 @@ const Navbar_Page = props => {
       >
         <Container>
           <Link className="navbar-logo" to="/">
-            {props.imglight !== true ? (
-              <img
-                src={logodark}
-                alt=""
-                height="19"
-                className="logo logo-dark"
-              />
-            ) : (
-              <img
-                src={logolight}
-                alt=""
-                height="19"
-                className="logo logo-light"
-              />
-            )}
+            <img
+              src={logolight}
+              alt=""
+              height="77"
+              // className="logo logo-light"
+            />
           </Link>
 
           <NavbarToggler
@@ -94,7 +81,7 @@ const Navbar_Page = props => {
               </Nav>
             </ScrollspyNav>
             <div className="ms-lg-2">
-              <Link to="/login" className="btn btn-outline-success w-xs">
+              <Link to="/login" className="btn btn-light w-xs">
                 Se connecter
               </Link>
             </div>

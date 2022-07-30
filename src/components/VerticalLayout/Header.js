@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 // import NotificationDropdown from "../CommonForBoth/TopbarDropdown/NotificationDropdown";
 import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
 import logo from "../../assets/images/logo.svg";
+import logoLightPng from "../../assets/images/logo-light.png"
 import logoLightSvg from "../../assets/images/logo-light.svg";
 
 const Header = props => {
@@ -59,13 +60,15 @@ const Header = props => {
             <div className="navbar-brand-box d-lg-none d-md-block">
               <Link to="/dashboard" className="logo logo-dark">
                 <span className="logo-sm">
-                  <img src={logo} alt="" height="22" />
+                  {/* <img src={logo} alt="" height="22" /> */}
+                  <img src={logoLightPng} alt="" height="50" />
                 </span>
               </Link>
 
               <Link to="/dashboard" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src={logoLightSvg} alt="" height="22" />
+                  {/* <img src={logoLightSvg} alt="" height="22" /> */}
+                  <img src={logoLightPng} alt="" height="50" />
                 </span>
               </Link>
             </div>
