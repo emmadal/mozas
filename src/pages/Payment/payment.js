@@ -9,8 +9,9 @@ import {
   Form,
   Input,
   Label,
+  FormFeedback,
 } from "reactstrap"
-import { useLocation, useParams, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import SweetAlert from "react-bootstrap-sweetalert"
 import { PayPalButtons } from "@paypal/react-paypal-js"
 
@@ -19,19 +20,49 @@ import Breadcrumbs from "components/Common/Breadcrumb"
 import { addTransaction, affiliateProject } from "helpers/firebase_helper"
 import { UserContext } from "App"
 
+import { useFormik } from "formik"
+
 const Payment = () => {
   const { state } = useLocation()
   const navigate = useNavigate()
   const { user } = useContext(UserContext)
-  const project_name = state.project.name
-  const project_budget = state.project.budget
-  const projectId = state.project.id
   const [success, setSuccess] = useState(false)
   const [err, setErr] = useState(false)
   const [metamask_err, setMetamask_err] = useState(true)
-  const params = useParams()
-  const price = Number(params.price)
   const [methodType, setMethodType] = useState("")
+
+
+  const validation = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+    validateOnMount: true,
+    initialValues: {
+      price: 0,
+    },
+    validate: (values) => {
+      const errors = {};
+      if (state.offer === "Offre Standard") {
+        if (values.price < 100 || values.price > 750) {
+          errors.price =
+            "L'investissement pour l'Offre Standard est compris entre  100 - 750 €"
+        }
+      }
+      if (state.offer === "Offre Premium") {
+        if (values.price < 800 || values.price > 2500) {
+          errors.price =
+            "L'investissement pour l'Offre Premium est compris entre  800 - 2500 €"
+        }
+      }
+      if (state.offer === "Offre Gold") {
+        if (values.price < 2750 || values.price > 10000) {
+          errors.price =
+            "L'investissement pour l'Offre Gold est compris entre  2750 - 10000 €"
+        }
+      }
+      return errors;
+    },
+    onSubmit: async values => {},
+  })
 
   // Paypal functions to create, approve and handle error order
   const createOrder = (data, actions, error) => {
@@ -41,7 +72,7 @@ const Payment = () => {
           description: "Collecte des fonds pour des projets",
           amount: {
             currency_code: "EUR",
-            value: price,
+            value: validation.values.price,
           },
         },
       ],
@@ -60,59 +91,68 @@ const Payment = () => {
           payment_status: "Payé",
           currency: order.purchase_units[0].amount.currency_code,
           payment_method: "Paypal",
-          project_name,
+          project_name: state.project.name,
           creation_time: order.update_time,
           uid: user.uid,
         }
         // attribute transaction to user
         await addTransaction(req)
 
-        if (price >= 100 && price <= 750) {
+        if (validation.values.price >= 100 && validation.values.price <= 750) {
           // compute user income
-          const profit = parseFloat(String((price * 20) / 100)).toFixed(2)
+          const profit = parseFloat(
+            String((validation.values.price * 20) / 100)
+          ).toFixed(2)
 
           // create an object for user related project
           const project = {
-            projectId,
-            project_name,
-            project_budget,
+            projectId: state.project.id,
+            project_name: state.project.name,
+            project_budget: state.project.budget,
             token: 100,
             income: parseFloat(profit),
-            amount_invested: price,
+            amount_invested: validation.values.price,
           }
 
           // attribute project to investor
           await affiliateProject(user, project)
         }
-        if (price >= 800 && price <= 2500) {
+        if (validation.values.price >= 800 && validation.values.price <= 2500) {
           // compute user income
-          const profit = parseFloat(String((price * 25) / 100)).toFixed(2)
+          const profit = parseFloat(
+            String((validation.values.price * 25) / 100)
+          ).toFixed(2)
 
           // create an object for user related project
           const project = {
-            projectId,
-            project_name,
-            project_budget,
+            projectId: state.project.id,
+            project_name: state.project.name,
+            project_budget: state.project.budget,
             token: 300,
             income: parseFloat(profit),
-            amount_invested: price,
+            amount_invested: validation.values.price,
           }
 
           // attribute project to investor
           await affiliateProject(user, project)
         }
-        if (price >= 2750 && price <= 10000) {
+        if (
+          validation.values.price >= 2750 &&
+          validation.values.price <= 10000
+        ) {
           // compute user income
-          const profit = parseFloat(String((price * 30) / 100)).toFixed(2)
+          const profit = parseFloat(
+            String((validation.values.price * 30) / 100)
+          ).toFixed(2)
 
           // create an object for user related project
           const project = {
-            projectId,
-            project_name,
-            project_budget,
+            projectId: state.project.id,
+            project_name: state.project.name,
+            project_budget: state.project.budget,
             token: 500,
             income: parseFloat(profit),
-            amount_invested: price,
+            amount_invested: validation.values.price,
           }
 
           // attribute project to investor
@@ -123,21 +163,19 @@ const Payment = () => {
       setMetamask_err(false)
     }
   }
-  const onError = err => {
-    console.log(err)
-    setErr(true)
-  }
+  const onError = err => setErr(true)
+
   const handleChange = e => setMethodType(e.target.value)
 
   return (
     <React.Fragment>
       <div className="page-content">
         <MetaTags>
-        <title>
-          Mozah Invest | Plateforme innovante d&#39;investissement participative
-          sur des projets couplée à la finance digitale
-        </title>
-      </MetaTags>
+          <title>
+            Mozah Invest | Plateforme innovante d&#39;investissement
+            participative sur des projets couplée à la finance digitale
+          </title>
+        </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}
           <Breadcrumbs title="Paiement" breadcrumbItem="paiement" />
@@ -150,7 +188,7 @@ const Payment = () => {
                     Méthode de paiement
                   </CardTitle>
                   <Form id="payment-form">
-                    <div className="mb-5">
+                    <div>
                       <div className="form-check mb-3">
                         <Input
                           type="radio"
@@ -202,17 +240,47 @@ const Payment = () => {
                         </button>
                       </div>
                     ) : methodType === "paypal" ? (
-                      <PayPalButtons
-                        createOrder={createOrder}
-                        onApprove={onApprove}
-                        onError={onError}
-                        style={{
-                          color: "blue",
-                          layout: "vertical",
-                          tagline: false,
-                          shape: "pill",
-                        }}
-                      />
+                      <>
+                        <div className="mb-4">
+                          <Label className="form-label mt-4">
+                            Montant pour l&#39;investissement
+                          </Label>
+                          <Input
+                            name="price"
+                            className="form-control"
+                            placeholder="Montant pour l'investissement"
+                            type="number"
+                            onChange={validation.handleChange}
+                            onBlur={validation.handleBlur}
+                            value={validation.values.price || ""}
+                            invalid={
+                              validation.touched.price &&
+                              validation.errors.price
+                                ? true
+                                : false
+                            }
+                          />
+                          {validation.touched.price &&
+                          validation.errors.price ? (
+                            <FormFeedback type="invalid">
+                              {validation.errors.price}
+                            </FormFeedback>
+                          ) : null}
+                        </div>
+                        {validation.isValid && (
+                          <PayPalButtons
+                            createOrder={createOrder}
+                            onApprove={onApprove}
+                            onError={onError}
+                            style={{
+                              color: "blue",
+                              layout: "horizontal",
+                              tagline: false,
+                              shape: "pill",
+                            }}
+                          />
+                        )}
+                      </>
                     ) : null}
                   </Form>
                 </CardBody>
@@ -241,9 +309,19 @@ const Payment = () => {
                   </h6>
                   <p className=" fw-bold">{state.project.status}</p>
                   <h6 className="text-muted fw-bold text-decoration-underline mt-3">
-                    Montant à investir{" "}
+                    Offre Choisie{" "}
                   </h6>
-                  <p className="text-danger fw-bold">{price} €</p>
+                  <p className=" fw-bold">{state.offer}</p>
+                  {validation.isValid && (
+                    <>
+                      <h6 className="text-muted fw-bold text-decoration-underline mt-3">
+                        Montant à investir{" "}
+                      </h6>
+                      <p className="text-danger fw-bold">
+                        {validation.values.price} €
+                      </p>
+                    </>
+                  )}
                 </CardBody>
               </Card>
             </Col>

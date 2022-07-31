@@ -41,7 +41,7 @@ const authProtectedRoutes = [
   { path: "/profile", component: <UserProfile /> },
 
   //payment
-  { path: "/payment/:projectId/:price", component: <Payment /> },
+  { path: "/payment/:projectId", component: <Payment /> },
 
   //Projects
   { path: "/projects-grid", component: <ProjectsGrid /> },

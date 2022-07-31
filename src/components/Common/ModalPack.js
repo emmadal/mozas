@@ -15,8 +15,8 @@ import {
 const ModalPack = ({ show, onCloseClick, project }) => {
   const navigate = useNavigate()
 
-  const navigateToPayment = (project, amount) => {
-    navigate(`/payment/${project?.id}/${amount}`, { state: { project } })
+  const navigateToPayment = (project, offer) => {
+    navigate(`/payment/${project?.id}`, { state: { project, offer } })
   }
 
   return (
@@ -57,7 +57,9 @@ const ModalPack = ({ show, onCloseClick, project }) => {
                   <div className="text-center">
                     <button
                       className="btn btn-primary btn-block block  w-100"
-                      onClick={() => navigateToPayment(project, 1000)}
+                      onClick={() =>
+                        navigateToPayment(project, "Offre Standard")
+                      }
                     >
                       Investir
                     </button>
@@ -96,7 +98,9 @@ const ModalPack = ({ show, onCloseClick, project }) => {
                   <div className="text-center">
                     <button
                       className="btn btn-success btn-block block  w-100"
-                      onClick={() => navigateToPayment(project, 2500)}
+                      onClick={() =>
+                        navigateToPayment(project, "Offre Premium")
+                      }
                     >
                       Investir
                     </button>
@@ -108,7 +112,7 @@ const ModalPack = ({ show, onCloseClick, project }) => {
               <Card outline color="text-warning border border-warning">
                 <CardBody>
                   <CardTitle className="mb-4 fs-4 text-center text-decoration-underline">
-                    Offre GOLD
+                    Offre Gold
                   </CardTitle>
                   <p className="fs-5">
                     <i className="mdi mdi-checkbox-marked-circle-outline text-warning"></i>{" "}
@@ -135,7 +139,7 @@ const ModalPack = ({ show, onCloseClick, project }) => {
                   <div className="text-center">
                     <button
                       className="btn btn-warning btn-block block w-100"
-                      onClick={() => navigateToPayment(project, 5000)}
+                      onClick={() => navigateToPayment(project, "Offre Gold")}
                     >
                       Investir
                     </button>
