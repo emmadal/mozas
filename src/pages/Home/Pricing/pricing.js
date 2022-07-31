@@ -17,7 +17,7 @@ const Pricing = () => {
       features: [
         { title: "100 Tokens offerts" },
         { title: "100% de Rendement totaux" },
-        { title: "12% de la valeur du Token / an en USDT" },
+        { title: "20% de la valeur du Token / an en USDT" },
       ],
     },
     {
@@ -31,7 +31,7 @@ const Pricing = () => {
       features: [
         { title: "300 Tokens offerts" },
         { title: "125% de Rendement totaux" },
-        { title: "20% de la valeur du Token/ an en USDT" },
+        { title: "25% de la valeur du Token/ an en USDT" },
       ],
     },
     {
