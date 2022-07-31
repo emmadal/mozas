@@ -21,7 +21,7 @@ const ProjectsOverview = () => {
   const params = useParams()
 
   const getProjectById = useCallback(async () => {
-    const res = await getProjectsDetails(params.id)
+    const res = await getProjectsDetails(params?.id)
     setProjectDetail(res)
   }, [params])
 

@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, } from "react";
 
 // Layout Related Components
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
-import { UserContext } from "App";
+import AuthContext from "context/AuthContext";
 
 const Layout = (props) => {
-  const {user} = useContext(UserContext)
+  const { state } = useContext(AuthContext)
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   const toggleMenuCallback = () => {};
@@ -23,7 +23,7 @@ const Layout = (props) => {
     window.scrollTo(0, 0);
   }, []);
 
-  if(!user){
+  if(!state?.uid){
     return (
       <div id="preloader">
         <div id="status">

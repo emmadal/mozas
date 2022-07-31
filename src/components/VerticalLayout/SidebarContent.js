@@ -5,14 +5,18 @@ import SimpleBar from "simplebar-react"
 
 // MetisMenu
 import MetisMenu from "metismenujs"
+
+// react-router-dom components
 import { Link } from "react-router-dom"
-import { UserContext } from "App"
 
 //Navigation
 import {useLocation} from 'react-router-dom'
 
+// App Context
+import AuthContext from "context/AuthContext"
+
 const SidebarContent = () => {
-  const { user } = useContext(UserContext)
+  const { state } = useContext(AuthContext)
   const location = useLocation()
   const ref = useRef()
 
@@ -78,9 +82,6 @@ const SidebarContent = () => {
           break
         }
       }
-      // if (matchingMenuItem) {
-      //   activateParentDropdown(matchingMenuItem)
-      // }
     }
     initMenu()
   }, [location.pathname])
@@ -93,7 +94,7 @@ const SidebarContent = () => {
     <React.Fragment>
       <SimpleBar className="h-100" ref={ref}>
         <div id="sidebar-menu">
-          {user?.type === "admin" ? (
+          {state?.type === "admin" ? (
             <ul className="metismenu list-unstyled" id="side-menu">
               <li>
                 <Link to="/dashboard" className="">
@@ -147,66 +148,6 @@ const SidebarContent = () => {
               </li>
             </ul>
           )}
-
-          {/* {user?.type === "admin" ? (
-            <ul className="metismenu list-unstyled" id="side-menu">
-              <li>
-                <Link to="/#" className="has-arrow">
-                  <i className="bx bx-home-circle"></i>
-                  <span>Tableau de bord</span>
-                </Link>
-                <ul className="sub-menu" aria-expanded="false">
-                  <li>
-                    <Link to="/dashboard">Accueil</Link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Link to="/#" className="has-arrow">
-                  <i className="bx bx-briefcase-alt-2"></i>
-                  <span>Projets</span>
-                </Link>
-                <ul className="sub-menu" aria-expanded="false">
-                  <li>
-                    <Link to="/projects-grid">Projets mis en avant</Link>
-                  </li>
-                  <li>
-                    <Link to="/projects-list">Liste des projets</Link>
-                  </li>
-                  <li>
-                    <Link to="/projects-create">Nouveau projet</Link>
-                  </li>
-                </ul>
-              </li>
-
-              <li>
-                <Link to="/#" className="has-arrow">
-                  <i className="bx bx-user"></i>
-                  <span>Investisseurs</span>
-                </Link>
-                <ul className="sub-menu" aria-expanded="false">
-                  <li>
-                    <Link to="/investors-list">Liste des investisseurs</Link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          ) : (
-            <ul className="metismenu list-unstyled" id="side-menu">
-              <li>
-                <Link to="/dashboard" className=" ">
-                  <i className="bx bx-home-circle"></i>
-                  <span>Tableau de bord</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/projects-list" className=" ">
-                  <i className="bx bx-briefcase-alt-2"></i>
-                  <span>Liste des projets</span>
-                </Link>
-              </li>
-            </ul>
-          )} */}
         </div>
       </SimpleBar>
     </React.Fragment>

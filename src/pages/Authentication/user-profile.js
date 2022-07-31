@@ -1,5 +1,5 @@
-import MetaTags from "react-meta-tags";
-import React, { useState, useContext, useRef } from "react";
+import MetaTags from "react-meta-tags"
+import React, { useState, useContext, useRef } from "react"
 import Dropzone from "react-dropzone"
 import Avatar from "react-avatar"
 import { Link } from "react-router-dom"
@@ -20,12 +20,14 @@ import {
 } from "reactstrap"
 
 // Formik Validation
-import * as Yup from "yup";
-import { useFormik } from "formik";
+import * as Yup from "yup"
+import { useFormik } from "formik"
 
 //Import Breadcrumb
-import Breadcrumb from "../../components/Common/Breadcrumb";
-import { UserContext } from "App";
+import Breadcrumb from "../../components/Common/Breadcrumb"
+
+// API call
+import AuthContext from "context/AuthContext"
 
 //Api call
 import {
@@ -34,7 +36,7 @@ import {
 } from "helpers/firebase_helper"
 
 const UserProfile = () => {
-  const { user, setUser } = useContext(UserContext)
+  const { state, dispatch } = useContext(AuthContext)
   const [actionType, setActionType] = useState("")
   const [loading1, setLoading1] = useState(false)
   const [loading2, setLoading2] = useState(false)
@@ -72,10 +74,10 @@ const UserProfile = () => {
     enableReinitialize: true,
 
     initialValues: {
-      email: user?.email,
-      fullName: user?.fullName || "",
-      wallet: user?.metamask_acc || "",
-      phoneNumber: user?.phoneNumber || "",
+      email: state?.email,
+      fullName: state?.fullName || "",
+      wallet: state?.metamask_acc || "",
+      phoneNumber: state?.phoneNumber || "",
       old_password: "",
       newpassword1: "",
       newpassword2: "",
@@ -89,7 +91,7 @@ const UserProfile = () => {
       if (actionType === "update_profile") {
         setLoading1(!loading1)
         const { fullName, wallet, phoneNumber } = values
-        const res = await updateUserProfile(user, {
+        const res = await updateUserProfile(state, {
           fullName,
           wallet,
           phoneNumber,
@@ -97,7 +99,7 @@ const UserProfile = () => {
         if (res) {
           setLoading1(false)
           setUpdate(!update)
-          setUser(res)
+          dispatch.getDetails(res)
         }
       }
 
@@ -114,19 +116,18 @@ const UserProfile = () => {
       .addEventListener("change", async () => {
         setLoading2(!loading2)
         const pic = await uploadProfilePicture(ref.current.files[0], "profile")
-        console.log(pic[0].link)
         setImageURL(pic[0].link)
         if (pic.length) {
-          const res = await updateUserProfile(user, {
+          const res = await updateUserProfile(state, {
             photo: pic[0].link,
-            fullName: user?.fullName,
-            wallet: user?.metamask_acc,
-            phoneNumber: user?.phoneNumber,
+            fullName: state?.fullName,
+            wallet: state?.metamask_acc,
+            phoneNumber: state?.phoneNumber,
           })
           if (res) {
             setLoading2(false)
             setUpdate(!update)
-            setUser(res)
+            dispatch.getDetails(res)
           }
         }
       })
@@ -153,11 +154,11 @@ const UserProfile = () => {
                 <CardBody>
                   <div className="d-flex align-items-center justify-content-center">
                     <div className="ms-3 me-2">
-                      {!user?.photo.length ? (
-                        <Avatar name={user?.fullName} size="90" round={true} />
+                      {!state?.photo.length ? (
+                        <Avatar name={state?.fullName} size="90" round={true} />
                       ) : (
                         <img
-                          src={user?.photo ?? imageURL}
+                          src={state?.photo ?? imageURL}
                           alt="profile picture"
                           className="avatar-md rounded-circle img-thumbnail"
                         />
@@ -165,8 +166,8 @@ const UserProfile = () => {
                     </div>
                     <div className="flex-grow-1 align-self-center">
                       <div className="text-muted">
-                        <h5>{user?.fullName}</h5>
-                        <p className="mb-1">{user?.email}</p>
+                        <h5>{state?.fullName}</h5>
+                        <p className="mb-1">{state?.email}</p>
                       </div>
                     </div>
                     <Button
@@ -486,6 +487,6 @@ const UserProfile = () => {
       </div>
     </React.Fragment>
   )
-};
+}
 
-export default UserProfile;
+export default UserProfile

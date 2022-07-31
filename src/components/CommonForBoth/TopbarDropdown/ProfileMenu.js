@@ -1,36 +1,21 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useContext } from "react"
 import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
 } from "reactstrap"
 import Avatar from "react-avatar"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
-// users
-import user1 from "../../../assets/images/users/avatar-1.jpg"
-import { UserContext } from "App"
-import { logout } from "helpers/firebase_helper"
+// App Context
+import AuthContext from "context/AuthContext"
 
-const ProfileMenu = props => {
+const ProfileMenu = () => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false)
-  const { user, setUser } = useContext(UserContext)
-  const navigate = useNavigate()
+  const { state, dispatch } = useContext(AuthContext)
 
-  const [username, setusername] = useState("Admin")
-
-  const logOut = () => {
-    logout().then(() => {
-      setUser(null)
-      navigate("/login", { replace: true })
-    })
-  }
-    
-
-  useEffect(() => {
-    setusername(user?.fullName)
-  }, [props.success])
+  const logOut = () => dispatch.signOut()
 
   return (
     <React.Fragment>
@@ -44,17 +29,17 @@ const ProfileMenu = props => {
           id="page-header-user-dropdown"
           tag="button"
         >
-          {!user?.photo.length ? (
-            <Avatar name={user?.fullName} size="35" round={true} />
+          {!state?.photo.length ? (
+            <Avatar name={state?.fullName} size="35" round={true} />
           ) : (
             <img
-              src={user?.photo}
+              src={state?.photo}
               alt="Header Avatar"
               className="rounded-circle header-profile-user"
             />
           )}
           <span className="d-none d-xl-inline-block ms-2 me-1">
-            {user?.fullName}
+            {state?.fullName}
           </span>
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
         </DropdownToggle>

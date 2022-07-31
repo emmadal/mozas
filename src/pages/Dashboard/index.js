@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import MetaTags from "react-meta-tags";
+import React, { useContext, useState, useEffect } from "react"
+import MetaTags from "react-meta-tags"
 import {
   Container,
   Row,
@@ -12,23 +12,26 @@ import {
   ModalBody,
   ModalFooter,
   Table,
-} from "reactstrap";
+} from "reactstrap"
 
-import modalimage1 from "../../assets/images/product/img-7.png";
-import modalimage2 from "../../assets/images/product/img-4.png";
+import modalimage1 from "../../assets/images/product/img-7.png"
+import modalimage2 from "../../assets/images/product/img-4.png"
 
 // Pages Components
-import WelcomeComp from "./WelcomeComp";
-import ProjectsRelated from "./ProjectRelated";
-import LatestTranaction from "./LatestTranaction";
+import WelcomeComp from "./WelcomeComp"
+import ProjectsRelated from "./ProjectRelated"
+import LatestTranaction from "./LatestTranaction"
 import LatestAdminTranaction from "./LatestAdminTranaction"
 
 //Import Breadcrumb
-import Breadcrumbs from "../../components/Common/Breadcrumb";
-import { UserContext } from "App";
+import Breadcrumbs from "../../components/Common/Breadcrumb"
+
+// App context
+import AuthContext from "context/AuthContext"
+
+// API call
 import {
   getTransactions,
-  getUserByUID,
   getAllTransactions,
   getRelatedProject,
   getAllProjects,
@@ -39,32 +42,34 @@ const Dashboard = () => {
   const [transactions, setTransactions] = useState([])
   const [allprojects, setAllProjects] = useState([])
   const [relatedProject, setRelatedProject] = useState([])
-  const { user, setUser } = useContext(UserContext)
-
-  const getUser = async () => {
-    const res = await getUserByUID(user?.uid)
-    setUser(res)
-  }
+  const { state } = useContext(AuthContext)
 
   const getUserTransactions = async () => {
-    if(user.type === "user") {
+    if (state.type === "user") {
       const relatedProjec = await getRelatedProject()
       const getTrans = await getTransactions(user?.uid)
       setRelatedProject([...relatedProjec.filter(e => e.uid === user.uid)])
       setTransactions([...getTrans])
     }
-    if (user.type === "admin") {
+    if (state.type === "admin") {
       const res = await getAllTransactions()
       setTransactions([...res])
     }
   }
 
   const getProjects = async () => {
-    if (user.type === "admin") {
+    if (state.type === "admin") {
       const res = await getAllProjects()
       setAllProjects([...res])
     }
   }
+
+  useEffect(() => {
+    ;(async () => {
+      await Promise.all([getUserTransactions(), getProjects()])
+    })()
+  }, [])
+
 
   const computeToken = tokenArr => {
     let token = 0
@@ -135,18 +140,6 @@ const Dashboard = () => {
     },
   ]
 
-  useEffect(() => {
-    ;(async () => {
-      await getUser()
-    })()
-  }, [])
-
-  useEffect(() => {
-    (async () => {
-      await Promise.all([getUserTransactions(), getProjects()])
-    })()
-  }, [])
-  
   return (
     <React.Fragment>
       <div className="page-content">
@@ -167,7 +160,7 @@ const Dashboard = () => {
             <Col sm="8">
               <Row>
                 {/* Reports Render */}
-                {(user.type === "user" ? reports : adminReports).map(
+                {(state.type === "user" ? reports : adminReports).map(
                   (report, key) => (
                     <Col md="4" key={"_col_" + key}>
                       <Card className="mini-stats-wid">
@@ -200,7 +193,7 @@ const Dashboard = () => {
 
           <Row>
             <Col sm="12">
-              {user.type === "user" ? (
+              {state.type === "user" ? (
                 <ProjectsRelated projects={relatedProject} />
               ) : null}
             </Col>
@@ -208,7 +201,7 @@ const Dashboard = () => {
 
           <Row>
             <Col sm="12">
-              {user.type === "user" ? (
+              {state.type === "user" ? (
                 <LatestTranaction transaction={transactions} />
               ) : (
                 <LatestAdminTranaction transaction={transactions} />
@@ -324,7 +317,6 @@ const Dashboard = () => {
       </Modal>
     </React.Fragment>
   )
-};
+}
 
-
-export default Dashboard;
+export default Dashboard

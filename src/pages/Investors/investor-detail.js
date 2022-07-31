@@ -14,7 +14,7 @@ const InvestorDetail = () => {
   const [investorDetail, setInvestorDetail] = useState(null)
 
   const getInvestorById = useCallback(async () => {
-    const res = await getUserByUID(params.uid)
+    const res = await getUserByUID(params?.uid)
     setInvestorDetail(res)
   }, [params])
 

@@ -1,12 +1,12 @@
-import React, {useContext} from "react"
+import React, { useContext } from "react"
 import { Row, Col, Card, CardBody } from "reactstrap"
 import Avatar from "react-avatar"
 import profileImg from "../../assets/images/profile-img.png"
-import { UserContext } from "App"
+import AuthContext from "context/AuthContext"
 
 const WelcomeComp = () => {
-  const { user } = useContext(UserContext)
-  
+  const { state } = useContext(AuthContext)
+
   return (
     <React.Fragment>
       <Card className="overflow-hidden">
@@ -26,11 +26,11 @@ const WelcomeComp = () => {
           <Row>
             <Col sm="2">
               <div className="avatar-md profile-user-wid mb-4">
-                {!user?.photo.length ? (
-                  <Avatar name={user?.fullName} size="60" round={true} />
+                {!state?.photo.length ? (
+                  <Avatar name={state?.fullName} size="60" round={true} />
                 ) : (
                   <img
-                    src={user?.photo}
+                    src={state?.photo}
                     alt="Header Avatar"
                     className="img-thumbnail rounded-circle"
                   />
@@ -43,9 +43,9 @@ const WelcomeComp = () => {
                 <Row>
                   <Col sm="12">
                     <h5 className="font-size-20 text-truncate">
-                      {user?.fullName}
+                      {state?.fullName}
                     </h5>
-                    <p className="text-muted">{user?.email}</p>
+                    <p className="text-muted">{state?.email}</p>
                   </Col>
                 </Row>
               </div>

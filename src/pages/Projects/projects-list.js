@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
-import MetaTags from "react-meta-tags";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react"
+import MetaTags from "react-meta-tags"
+import { Link } from "react-router-dom"
 import {
   Badge,
   Col,
@@ -20,13 +20,17 @@ import {
   UncontrolledAlert,
   Label,
 } from "reactstrap"
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { UserContext } from "App"
+import * as Yup from "yup"
+import { useFormik } from "formik"
+
+// App context
+import AuthContext from "context/AuthContext"
 
 //Import Component
-import Breadcrumbs from "components/Common/Breadcrumb";
-import DeleteModal from "components/Common/DeleteModal";
+import Breadcrumbs from "components/Common/Breadcrumb"
+import DeleteModal from "components/Common/DeleteModal"
+
+// API call
 import {
   updateProject,
   getAllProjects,
@@ -41,7 +45,7 @@ const ProjectsList = () => {
   const [del, setDel] = useState(false)
   const [projects, setProjects] = useState([])
   const [deleteModal, setDeleteModal] = useState(false)
-  const { user } = useContext(UserContext)
+  const { state } = useContext(AuthContext)
   const [modal, setModal] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
 
@@ -105,17 +109,16 @@ const ProjectsList = () => {
     })
   }
 
-
   //delete order
   const onClickDelete = arg => {
     setProject(arg)
     setDeleteModal(true)
   }
 
-  const handleDeleteOrder = async() => {
+  const handleDeleteOrder = async () => {
     setLoading(!loading)
     const res = await deleteProject(project?.id)
-    if(res.length) {
+    if (res.length) {
       setLoading(false)
       setProjects([...res])
       setDel(true)
@@ -125,7 +128,7 @@ const ProjectsList = () => {
 
   useEffect(() => {
     const getProjects = async () => {
-      if (user?.type === "admin") {
+      if (state?.type === "admin") {
         const res = await getAllProjects()
         setProjects([...res])
       } else {
@@ -189,10 +192,10 @@ const ProjectsList = () => {
                     <th scope="col">Projets</th>
                     <th scope="col">Status</th>
                     <th scope="col">Budget(€)</th>
-                    {user?.type === "admin" && (
+                    {state?.type === "admin" && (
                       <th scope="col">Mettre en avant</th>
                     )}
-                    {user?.type === "admin" && <th scope="col">Action</th>}
+                    {state?.type === "admin" && <th scope="col">Action</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -236,7 +239,7 @@ const ProjectsList = () => {
                           {project.budget}
                         </h5>
                       </td>
-                      {user?.type === "admin" && (
+                      {state?.type === "admin" && (
                         <td>
                           <h5 className="text-truncate font-size-32">
                             <Badge
@@ -251,7 +254,7 @@ const ProjectsList = () => {
                           </h5>
                         </td>
                       )}
-                      {user?.type === "admin" && (
+                      {state?.type === "admin" && (
                         <td style={{ cursor: "pointer" }}>
                           <UncontrolledDropdown>
                             <DropdownToggle
@@ -453,6 +456,6 @@ const ProjectsList = () => {
       </div>
     </React.Fragment>
   )
-};
+}
 
-export default ProjectsList;
+export default ProjectsList

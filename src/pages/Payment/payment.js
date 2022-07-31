@@ -18,19 +18,18 @@ import { PayPalButtons } from "@paypal/react-paypal-js"
 import MetaTags from "react-meta-tags"
 import Breadcrumbs from "components/Common/Breadcrumb"
 import { addTransaction, affiliateProject } from "helpers/firebase_helper"
-import { UserContext } from "App"
+import AuthContext from "context/AuthContext"
 
 import { useFormik } from "formik"
 
 const Payment = () => {
   const { state } = useLocation()
   const navigate = useNavigate()
-  const { user } = useContext(UserContext)
+  const { state: user } = useContext(AuthContext)
   const [success, setSuccess] = useState(false)
   const [err, setErr] = useState(false)
   const [metamask_err, setMetamask_err] = useState(true)
   const [methodType, setMethodType] = useState("")
-
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -39,8 +38,8 @@ const Payment = () => {
     initialValues: {
       price: 0,
     },
-    validate: (values) => {
-      const errors = {};
+    validate: values => {
+      const errors = {}
       if (state.offer === "Offre Standard") {
         if (values.price < 100 || values.price > 750) {
           errors.price =
@@ -59,7 +58,7 @@ const Payment = () => {
             "L'investissement pour l'Offre Gold est compris entre  2750 - 10000 €"
         }
       }
-      return errors;
+      return errors
     },
     onSubmit: async values => {},
   })

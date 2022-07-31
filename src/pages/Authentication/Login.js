@@ -1,5 +1,5 @@
-import MetaTags from "react-meta-tags";
-import React, { useState } from "react";
+import MetaTags from "react-meta-tags"
+import React, { useState, useContext } from "react"
 import {
   Row,
   Col,
@@ -13,23 +13,26 @@ import {
   Label,
 } from "reactstrap"
 
-import { Link, useNavigate } from "react-router-dom";
+// react-router-dom components
+import { Link, useNavigate } from "react-router-dom"
 
 // Formik validation
-import * as Yup from "yup";
-import { useFormik } from "formik";
-
+import * as Yup from "yup"
+import { useFormik } from "formik"
 
 // import images
-import profile from "assets/images/profile-img.png";
-import logo from "assets/images/logo.svg";
+import profile from "assets/images/profile-img.png"
+import logo from "assets/images/logo.svg"
 
-import { UserContext } from "App"
+// App context
+import AuthContext from "context/AuthContext"
+
+// API call
 import { loginUser, getUserByUID } from "helpers/firebase_helper"
 
-const Login = props => {
-  const { setUser } = React.useContext(UserContext)
-  const [err, setErr] = useState('')
+const Login = () => {
+  const { dispatch } = useContext(AuthContext)
+  const [err, setErr] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const validation = useFormik({
@@ -44,24 +47,22 @@ const Login = props => {
       email: Yup.string().required("Entrez votre Email"),
       password: Yup.string().required("Entrez votre Mot de passe"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       try {
         const { email, password } = values
         setLoading(!loading)
         const res = await loginUser(email, password)
         if (res) {
           setLoading(false)
-          getUserByUID(res.uid).then(e => {
-            setUser(e)
-            navigate("/dashboard", {replace: true})
-          })
+          navigate("/dashboard", { replace: true })
+          getUserByUID(res.uid).then(user => dispatch.getDetails(user))
         }
       } catch (error) {
         setLoading(false)
         setErr("Mot de passe ou email incorrect")
       }
-    }
-  });
+    },
+  })
 
   return (
     <React.Fragment>
@@ -214,6 +215,6 @@ const Login = props => {
       </div>
     </React.Fragment>
   )
-};
+}
 
-export default Login;
+export default Login

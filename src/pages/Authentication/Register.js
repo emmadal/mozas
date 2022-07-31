@@ -1,24 +1,35 @@
-import React, { useEffect, useContext, useState } from "react";
-import MetaTags from "react-meta-tags";
-import { UncontrolledAlert, Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
+import React, { useState } from "react"
+import MetaTags from "react-meta-tags"
+import {
+  UncontrolledAlert,
+  Row,
+  Col,
+  CardBody,
+  Card,
+  Container,
+  Input,
+  Label,
+  Form,
+  FormFeedback,
+} from "reactstrap"
 
 // Formik Validation
-import * as Yup from "yup";
-import { useFormik } from "formik";
+import * as Yup from "yup"
+import { useFormik } from "formik"
 
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 // import images
-import profileImg from "../../assets/images/profile-img.png";
-import logoImg from "../../assets/images/logo.svg";
-import { UserContext } from "App";
-import { registerUser } from "helpers/firebase_helper";
+import profileImg from "../../assets/images/profile-img.png"
+import logoImg from "../../assets/images/logo.svg"
+
+//API call
+import { registerUser } from "helpers/firebase_helper"
 
 const Register = () => {
-  const [err, setErr] = useState('')
+  const [err, setErr] = useState("")
   const [successMsg, SetSuccessMsg] = useState("")
   const [loading, setLoading] = useState(false)
-  const [user, serUser] = useState(false)
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -29,7 +40,9 @@ const Register = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Assurez vous que c'est un email valide").required("Entrez votre Email"),
+      email: Yup.string()
+        .email("Assurez vous que c'est un email valide")
+        .required("Entrez votre Email"),
       name: Yup.string().required("Entrez votre Nom & Prénoms"),
       password: Yup.string()
         .min(8, "Mot de passe doit être au moins de 8 caractères")
@@ -232,6 +245,6 @@ const Register = () => {
       </div>
     </React.Fragment>
   )
-};
+}
 
-export default Register;
+export default Register
